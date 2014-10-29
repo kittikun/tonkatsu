@@ -1,0 +1,5 @@
+*.opensdf
+*.filters
+*.sdf
+*.suo
+build/win/out/
