@@ -13,23 +13,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/scoped_ptr.hpp>
-#include <iostream>
+#ifndef PLATEFORM_H
+#define PLATEFORM_H
 
-#include <Core/log.h>
-#include <Bible/d20.h>
+#if defined(_WIN32)
 
-int main(int argc, char* argv[])
-{
-	Tonkatsu::Core::Log::Initialize();
+#if defined EXPORT_KATSU_API
+#define KATSU_API __declspec(dllexport)
+#else
+#define KATSU_API __declspec(dllimport)
+#endif
 
-	LOGC << "Hello World!";
+#else
 
-	boost::scoped_ptr<Bible::D20> dice(new Bible::D20());
+#define KATSU_API
 
-	dice->Roll();
+#endif
 
-	std::cin.get();
-
-	return 0;
-}
+#endif // PLATEFORM_H

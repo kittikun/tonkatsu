@@ -1,4 +1,4 @@
-//  Copyright (C) 2013  kittikun
+﻿//  Copyright (C) 2013  kittikun
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -24,30 +24,30 @@
 #include <boost/log/sources/record_ostream.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 
-#define LOGB BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Builder)
-#define LOGC BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Core)
-#define LOGD BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Database)
-#define LOGGFX BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_GFX)
-#define LOGI BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Io)
-#define LOGP BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Perfmon)
-#define LOGW BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Warning)
-#define LOGE BOOST_LOG_SEV(Tonkatsu::log::boost_log::get(), Tonkatsu::log::Log_Error)
+#include "platform.h"
+
+#define LOGC BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Core)
+#define LOGW BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Warning)
+#define LOGE BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Error)
 
 namespace Tonkatsu
 {
-	namespace log
+	namespace Core
 	{
-		enum ELogLevel
+		namespace Log
 		{
-			Log_Core,
-			Log_Warning,
-			Log_Error
-		};
+			enum ELogLevel
+			{
+				Log_Core,
+				Log_Warning,
+				Log_Error
+			};
 
-		void initialize();
+			BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(boost_log, boost::log::sources::severity_logger_mt<ELogLevel>);
 
-		BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(boost_log, boost::log::sources::severity_logger_mt<ELogLevel>)
-	};
-} // namespace ramen
+			KATSU_API void Initialize();
+		}
+	}
+} // namespace Tonkatsu
 
 #endif // LOG_H

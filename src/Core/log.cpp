@@ -1,4 +1,4 @@
-//  Copyright (C) 2013  kittikun
+﻿//  Copyright (C) 2013  kittikun
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,48 +35,51 @@ namespace sinks = boost::log::sinks;
 
 namespace Tonkatsu
 {
-	namespace log
+	namespace Core
 	{
-		std::ostream& operator<<(std::ostream& strm, ELogLevel level)
+		namespace Log
 		{
-			static const char* strings[] =
+			BOOST_LOG_ATTRIBUTE_KEYWORD(severity, "Severity", ELogLevel);
+
+			std::ostream& operator<<(std::ostream& strm, ELogLevel level)
 			{
-				"core",
-				"WARNING",
-				"ERROR",
-			};
+				static const char* strings[] =
+				{
+					"core",
+					"WARNING",
+					"ERROR",
+				};
 
-			if (static_cast<std::size_t>(level) < sizeof(strings) / sizeof(*strings))
-				strm << strings[level];
-			else
-				strm << static_cast<int>(level);
+				if (static_cast<std::size_t>(level) < sizeof(strings) / sizeof(*strings))
+					strm << strings[level];
+				else
+					strm << static_cast<int>(level);
 
-			return strm;
-		}
+				return strm;
+			}
 
-		void initialize()
-		{
-			logging::add_console_log(std::cout, keywords::format = expr::format("%1%: [%2%] %3%")
-				% expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%H:%M:%S")
-				% severity
-				% expr::message);
+			void Initialize()
+			{
+				logging::add_console_log(std::cout, keywords::format = expr::format("%1%: [%2%] %3%")
+					% expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%H:%M:%S")
+					% severity
+					% expr::message);
 
-			logging::add_common_attributes();
+				logging::add_common_attributes();
 
 #if defined(_WIN32)
-			boost::shared_ptr<logging::core> core = logging::core::get();
-			boost::shared_ptr<sinks::synchronous_sink< sinks::debug_output_backend>> debugSink(new sinks::synchronous_sink<sinks::debug_output_backend>());
+				boost::shared_ptr<logging::core> core = logging::core::get();
+				boost::shared_ptr<sinks::synchronous_sink< sinks::debug_output_backend>> debugSink(new sinks::synchronous_sink<sinks::debug_output_backend>());
 
-			debugSink->set_filter(expr::is_debugger_present());
-			debugSink->set_formatter(expr::format("%1%: [%2%] %3%\n")
-				% expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%H:%M:%S")
-				% severity
-				% expr::message);
+				debugSink->set_filter(expr::is_debugger_present());
+				debugSink->set_formatter(expr::format("%1%: [%2%] %3%\n")
+					% expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%H:%M:%S")
+					% severity
+					% expr::message);
 
-			core->add_sink(debugSink);
+				core->add_sink(debugSink);
 #endif
-		}
-
-		BOOST_LOG_ATTRIBUTE_KEYWORD(severity, "Severity", ELogLevel)
-	} // namespace log
-} // namespace ramen
+			}
+		} // namespace Log
+	} // namespace Core
+} // namespace Tonkatsu
