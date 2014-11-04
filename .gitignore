@@ -4,3 +4,4 @@
 *.suo
 build/win/out/
 *.user
+build/linux/
