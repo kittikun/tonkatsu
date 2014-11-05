@@ -16,22 +16,22 @@
 #include <boost/scoped_ptr.hpp>
 #include <iostream>
 
-#include <Core/log.h>
-#include <DnD5/dice.h>
-#include <DnD5/race.h>
+#include <Core/Log.h>
+#include <DnD5/Dice.h>
+#include <DnD5/Race.h>
 
 int main(int argc, char* argv[])
 {
-	Tonkatsu::Core::Log::Initialize();
+    Tonkatsu::Core::Log::Initialize();
 
-	LOGC << "Hello World!";
+    LOGC << "Hello World!";
 
-	boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice());
-	boost::scoped_ptr<DnD5::IRace> character(new DnD5::Dwarf());
+    boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice());
+    boost::scoped_ptr<DnD5::IRace> character(new DnD5::Dwarf());
 
-	dice->Roll20();
+    dice->Roll20();
 
-	std::cin.get();
+    std::cin.get();
 
-	return 0;
+    return 0;
 }

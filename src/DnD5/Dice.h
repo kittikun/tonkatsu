@@ -5,23 +5,28 @@
 #define DICE_H
 
 #include <cstdint>
+#include <memory>
 
-#include <Core/platform.h>
+#include <Core/Platform.h>
 
 namespace DnD5
 {
-	class KATSU_API Dice
-	{
-	public:
-		Dice();
+    class DiceImpl;
+    template class KATSU_API std::unique_ptr<DiceImpl>;
 
-		uint8_t Roll6();
-		uint8_t Roll20();
+    class KATSU_API Dice
+    {
+    public:
+        Dice();
+        ~Dice();
 
-	private:
-		class DiceImpl;
-		DiceImpl* impl;
-	};
+        uint8_t Roll6();
+        uint8_t Roll20();
+
+    private:
+
+        std::unique_ptr<DiceImpl> impl;
+    };
 } // namespace DnD5
 
 #endif // DICE_H
