@@ -20,7 +20,7 @@
 #include <DnD5/Dice.h>
 #include <DnD5/Race.h>
 
-int main(int argc, char* argv[])
+int main(int, char**)
 {
     Tonkatsu::Core::Log::Initialize();
 
