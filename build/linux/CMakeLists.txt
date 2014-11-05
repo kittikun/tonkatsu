@@ -12,9 +12,9 @@ set(CORE_PATH	${SRC_PATH}/Core)
 set(CORE_SRC 	${CORE_PATH}/log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
-set(DND5_PATH   ${SRC_PATH}/Bible)
-set(DND5_PATH_SRC    ${DND5_PATH}/d20.cpp)
-add_library(dnd5 SHARED ${BIBLE_SRC})
+set(DND5_PATH   ${SRC_PATH}/DnD5)
+set(DND5_SRC    ${DND5_PATH}/d20.cpp)
+add_library(dnd5 SHARED ${DND5_SRC})
 
 set(EXE_PATH ${SRC_PATH}/Server)
 set(EXE_SRC ${EXE_PATH}/main.cpp)
