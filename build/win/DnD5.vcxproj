@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\DnD5\character.h" />
-    <ClInclude Include="..\..\src\DnD5\d20.h" />
-    <ClInclude Include="..\..\src\DnD5\definitions.h" />
-    <ClInclude Include="..\..\src\DnD5\race.h" />
+    <ClInclude Include="..\..\src\DnD5\Character.h" />
+    <ClInclude Include="..\..\src\DnD5\Definitions.h" />
+    <ClInclude Include="..\..\src\DnD5\Dice.h" />
+    <ClInclude Include="..\..\src\DnD5\Race.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\DnD5\d20.cpp" />
+    <ClCompile Include="..\..\src\DnD5\Dice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\DnD5\LICENSE" />

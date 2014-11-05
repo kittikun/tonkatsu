@@ -9,11 +9,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUT_PATH})
 
 set(CORE_PATH	${SRC_PATH}/Core)
-set(CORE_SRC 	${CORE_PATH}/log.cpp)
+set(CORE_SRC 	${CORE_PATH}/Log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
 set(DND5_PATH   ${SRC_PATH}/DnD5)
-set(DND5_SRC    ${DND5_PATH}/d20.cpp)
+set(DND5_SRC    ${DND5_PATH}/Dice.cpp)
 add_library(dnd5 SHARED ${DND5_SRC})
 
 set(EXE_PATH ${SRC_PATH}/Server)

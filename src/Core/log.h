@@ -27,6 +27,7 @@
 #include "platform.h"
 
 #define LOGC BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Core)
+#define LOGD BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_DnD5)
 #define LOGW BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Warning)
 #define LOGE BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Error)
 
@@ -39,6 +40,7 @@ namespace Tonkatsu
 			enum ELogLevel
 			{
 				Log_Core,
+				Log_DnD5,
 				Log_Warning,
 				Log_Error
 			};

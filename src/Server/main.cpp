@@ -17,7 +17,7 @@
 #include <iostream>
 
 #include <Core/log.h>
-#include <DnD5/d20.h>
+#include <DnD5/dice.h>
 #include <DnD5/race.h>
 
 int main(int argc, char* argv[])
@@ -26,11 +26,11 @@ int main(int argc, char* argv[])
 
 	LOGC << "Hello World!";
 
-	boost::scoped_ptr<DnD5::D20> dice(new DnD5::D20());
+	boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice());
+	boost::scoped_ptr<DnD5::IRace> character(new DnD5::Dwarf());
 
-	DnD5::IRace* character = static_cast<DnD5::IRace*>(new DnD5::Dwarf());
+	dice->Roll20();
 
-	dice->Roll();
 	std::cin.get();
 
 	return 0;
