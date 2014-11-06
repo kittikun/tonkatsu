@@ -13,7 +13,6 @@
 namespace DnD5
 {
 	class DiceImpl;
-	template class KATSU_API std::unique_ptr < DiceImpl > ;
 
 	class KATSU_API Dice
 	{
@@ -27,9 +26,9 @@ namespace DnD5
 		const std::array<uint8_t, 6> CharacterRoll() const;
 
 	private:
-
 		std::unique_ptr<DiceImpl> impl;
 	};
 } // namespace DnD5
+
 
 #endif // DICE_H

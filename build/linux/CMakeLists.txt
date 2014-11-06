@@ -13,7 +13,8 @@ set(CORE_SRC 	${CORE_PATH}/Log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
 set(DND5_PATH   ${SRC_PATH}/DnD5)
-set(DND5_SRC    ${DND5_PATH}/Dice.cpp)
+set(DND5_SRC    ${DND5_PATH}/Dice.cpp
+                ${DND5_PATH}/Character.cpp)
 add_library(dnd5 SHARED ${DND5_SRC})
 
 set(EXE_PATH ${SRC_PATH}/Server)

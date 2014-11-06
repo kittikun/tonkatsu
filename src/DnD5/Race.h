@@ -113,4 +113,4 @@ namespace DnD5
 	typedef SpecificRace<ERace::Halfling, ESubRaceHalfling, ESubRaceHalfling::Halfling_Stout> StoutHalfling;
 } // namespace DnD5
 
-#endif RACE_H
+#endif // RACE_H

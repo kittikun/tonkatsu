@@ -3,6 +3,7 @@
 
 #include "Dice.h"
 
+#include <algorithm>
 #include <ctime>
 #include <numeric>
 #include <boost/random/uniform_int_distribution.hpp>
@@ -10,9 +11,9 @@
 
 namespace DnD5
 {
-	class DiceImpl {
+  class DiceImpl {
 	public:
-		DiceImpl() : rng((uint32_t)std::time(nullptr)) {}
+    DiceImpl() : rng((uint32_t)std::time(nullptr)) {}
 
 		inline uint8_t Roll6() { return Roll(6); }
 		inline uint8_t Roll20() { return Roll(20); }
@@ -62,16 +63,16 @@ namespace DnD5
 	{
 	}
 
-	Dice::~Dice()
-	{
-	}
+  	Dice::~Dice()
+  	{
+  	}
 
-	inline uint8_t Dice::Roll6() const
+	uint8_t Dice::Roll6() const
 	{
 		return impl->Roll6();
 	}
 
-	inline uint8_t Dice::Roll20() const
+	uint8_t Dice::Roll20() const
 	{
 		return impl->Roll20();
 	}
