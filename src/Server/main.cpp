@@ -13,8 +13,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/scoped_ptr.hpp>
+#include <array>
 #include <iostream>
+#include <boost/format.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #include <Core/Log.h>
 #include <DnD5/Dice.h>
@@ -22,16 +24,21 @@
 
 int main(int, char**)
 {
-    Tonkatsu::Core::Log::Initialize();
+	Tonkatsu::Core::Log::Initialize();
 
-    LOGC << "Hello World!";
+	LOGC << "Hello World!";
 
-    boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice());
-    boost::scoped_ptr<DnD5::IRace> character(new DnD5::Dwarf());
+	boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice{});
+	boost::scoped_ptr<DnD5::IRace> party0(new DnD5::MountainDwarf{});
+	boost::scoped_ptr<DnD5::IRace> party1(new DnD5::Human{});
 
-    dice->Roll20();
+	LOGC << boost::format("Rolled a D20, got %1%") % (uint32_t)dice->Roll20();
 
-    std::cin.get();
+	std::array<uint8_t, 6> abilities = dice->CharacterRoll();
 
-    return 0;
+	std::for_each(abilities.begin(), abilities.end(), [](uint8_t& n) { LOGC << (uint32_t)n; });
+
+	std::cin.get();
+
+	return 0;
 }

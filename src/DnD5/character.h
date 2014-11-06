@@ -5,18 +5,21 @@
 #define CHARACTER_H
 
 #include <cstdint>
-#include "definitions.h"
+#include <memory>
+
+#include "Definitions.h"
+#include "Race.h"
 
 namespace DnD5
 {
-	struct Abilities
+	class Character
 	{
-		uint8_t Strenght;
-		uint8_t Dexterity;
-		uint8_t Constitution;
-		uint8_t Intelligence;
-		uint8_t Wisdom;
-		uint8_t Charisma;
+		explicit Character(Abilities, Class, std::shared_ptr<IRace> race);
+
+	private:
+		Abilities abilities;
+		Class profession;
+		std::shared_ptr<IRace> race;
 	};
 }
 

@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\src\DnD5\Race.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\DnD5\Character.cpp" />
     <ClCompile Include="..\..\src\DnD5\Dice.cpp" />
   </ItemGroup>
   <ItemGroup>

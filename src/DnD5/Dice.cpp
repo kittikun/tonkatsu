@@ -3,53 +3,81 @@
 
 #include "Dice.h"
 
-#include <boost/format.hpp>
+#include <ctime>
+#include <numeric>
 #include <boost/random/uniform_int_distribution.hpp>
 #include <boost/random/mersenne_twister.hpp>
 
-#include <Core/log.h>
-
 namespace DnD5
 {
-    class DiceImpl {
-    public:
-        DiceImpl() : rng((uint32_t)std::time(nullptr)) {}
+	class DiceImpl {
+	public:
+		DiceImpl() : rng((uint32_t)std::time(nullptr)) {}
 
-        inline uint8_t Roll6() { return Roll(6); }
-        inline uint8_t Roll20() { return Roll(20); }
+		inline uint8_t Roll6() { return Roll(6); }
+		inline uint8_t Roll20() { return Roll(20); }
 
-    private:
-        uint8_t Roll(uint8_t max) {
-            boost::random::uniform_int_distribution<> dist(1, max);
-            uint8_t res = dist(rng);
+		std::array<uint8_t, 6> CharacterRoll()
+		{
+			std::array<uint8_t, 6> res;
 
-            LOGD << boost::format("Rolled a D%1%, got %2%") % (uint32_t)max % (uint32_t)res;
+			std::for_each(res.begin(), res.end(), [this](uint8_t& n) { n = AbilityRoll(); });
 
-            return res;
-        }
+			return res;
+		}
 
-        boost::random::mt19937 rng;
-    };
+	private:
+		uint8_t Roll(uint8_t max) {
+			boost::random::uniform_int_distribution<> dist(1, max);
+			uint8_t res = dist(rng);
 
-    //----------------------------------------------------------------------------------------------
-    // DICE
-    //----------------------------------------------------------------------------------------------
-    Dice::Dice()
-        : impl(new DiceImpl())
-    {
-    }
+			return res;
+		}
 
-    Dice::~Dice()
-    {
-    }
+		// PlayerDnDBasicRules_v0.2 p7 (Determine Ability Scores)
+		//
+		// Roll four 6 - sided dice and record the total of
+		// the highest three dice on a piece of scratch paper.
+		uint8_t AbilityRoll()
+		{
+			std::array<uint8_t, 4> pool;
 
-    inline uint8_t Dice::Roll6()
-    {
-        return impl->Roll6();
-    }
+			for (int i = 0; i < 4; ++i)
+				pool[i] = Roll6();
 
-    inline uint8_t Dice::Roll20()
-    {
-        return impl->Roll20();
-    }
+			std::sort(pool.begin(), pool.end());
+
+			return std::accumulate(pool.begin() + 1, pool.end(), 0);
+		}
+
+	private:
+		boost::random::mt19937 rng;
+	};
+
+	//----------------------------------------------------------------------------------------------
+	// DICE
+	//----------------------------------------------------------------------------------------------
+	Dice::Dice()
+		: impl(new DiceImpl())
+	{
+	}
+
+	Dice::~Dice()
+	{
+	}
+
+	inline uint8_t Dice::Roll6() const
+	{
+		return impl->Roll6();
+	}
+
+	inline uint8_t Dice::Roll20() const
+	{
+		return impl->Roll20();
+	}
+
+	const std::array<uint8_t, 6> Dice::CharacterRoll() const
+	{
+		return impl->CharacterRoll();
+	}
 } // namespace DnD5

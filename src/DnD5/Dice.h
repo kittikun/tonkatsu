@@ -4,6 +4,7 @@
 #ifndef DICE_H
 #define DICE_H
 
+#include <array>
 #include <cstdint>
 #include <memory>
 
@@ -11,22 +12,24 @@
 
 namespace DnD5
 {
-    class DiceImpl;
-    template class KATSU_API std::unique_ptr<DiceImpl>;
+	class DiceImpl;
+	template class KATSU_API std::unique_ptr < DiceImpl > ;
 
-    class KATSU_API Dice
-    {
-    public:
-        Dice();
-        ~Dice();
+	class KATSU_API Dice
+	{
+	public:
+		Dice();
+		~Dice();
 
-        uint8_t Roll6();
-        uint8_t Roll20();
+		uint8_t Roll6() const;
+		uint8_t Roll20() const;
 
-    private:
+		const std::array<uint8_t, 6> CharacterRoll() const;
 
-        std::unique_ptr<DiceImpl> impl;
-    };
+	private:
+
+		std::unique_ptr<DiceImpl> impl;
+	};
 } // namespace DnD5
 
 #endif // DICE_H
