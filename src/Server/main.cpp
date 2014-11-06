@@ -24,21 +24,21 @@
 
 int main(int, char**)
 {
-	Tonkatsu::Core::Log::Initialize();
+    Tonkatsu::Core::Log::Initialize();
 
-	LOGC << "Hello World!";
+    LOGC << "Hello World!";
 
-	boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice{});
-	boost::scoped_ptr<DnD5::IRace> party0(new DnD5::MountainDwarf{});
-	boost::scoped_ptr<DnD5::IRace> party1(new DnD5::Human{});
+    boost::scoped_ptr<DnD5::Dice> dice(new DnD5::Dice{});
+    boost::scoped_ptr<DnD5::IRace> party0(new DnD5::MountainDwarf{});
+    boost::scoped_ptr<DnD5::IRace> party1(new DnD5::Human{});
 
-	LOGC << boost::format("Rolled a D20, got %1%") % (uint32_t)dice->Roll20();
+    LOGC << boost::format("Rolled a D20, got %1%") % (uint32_t)dice->Roll20();
 
-	auto abilities = dice->CharacterRoll();
+    auto abilities = dice->CharacterRoll();
 
-	std::for_each(begin(abilities), end(abilities), [](uint8_t& n) { LOGC << (uint32_t)n; });
+    std::for_each(begin(abilities), end(abilities), [](uint8_t& n) { LOGC << (uint32_t)n; });
 
-	std::cin.get();
+    std::cin.get();
 
-	return 0;
+    return 0;
 }

@@ -12,23 +12,22 @@
 
 namespace DnD5
 {
-	class DiceImpl;
+    class DiceImpl;
 
-	class KATSU_API Dice
-	{
-	public:
-		Dice();
-		~Dice();
+    class KATSU_API Dice
+    {
+    public:
+        Dice();
+        ~Dice();
 
-		uint8_t Roll6() const;
-		uint8_t Roll20() const;
+        uint8_t Roll6() const;
+        uint8_t Roll20() const;
 
-		const std::array<uint8_t, 6> CharacterRoll() const;
+        const std::array<uint8_t, 6> CharacterRoll() const;
 
-	private:
-		std::unique_ptr<DiceImpl> impl;
-	};
+    private:
+        std::unique_ptr<DiceImpl> impl;
+    };
 } // namespace DnD5
-
 
 #endif // DICE_H
