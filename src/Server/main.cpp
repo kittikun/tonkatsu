@@ -34,9 +34,9 @@ int main(int, char**)
 
 	LOGC << boost::format("Rolled a D20, got %1%") % (uint32_t)dice->Roll20();
 
-	std::array<uint8_t, 6> abilities = dice->CharacterRoll();
+	auto abilities = dice->CharacterRoll();
 
-	std::for_each(abilities.begin(), abilities.end(), [](uint8_t& n) { LOGC << (uint32_t)n; });
+	std::for_each(begin(abilities), end(abilities), [](uint8_t& n) { LOGC << (uint32_t)n; });
 
 	std::cin.get();
 

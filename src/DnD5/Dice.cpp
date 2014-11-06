@@ -21,7 +21,7 @@ namespace DnD5
 		{
 			std::array<uint8_t, 6> res;
 
-			std::for_each(res.begin(), res.end(), [this](uint8_t& n) { n = AbilityRoll(); });
+			std::for_each(begin(res), end(res), [this](uint8_t& n) { n = AbilityRoll(); });
 
 			return res;
 		}
@@ -45,9 +45,9 @@ namespace DnD5
 			for (int i = 0; i < 4; ++i)
 				pool[i] = Roll6();
 
-			std::sort(pool.begin(), pool.end());
+			std::sort(begin(pool), end(pool));
 
-			return std::accumulate(pool.begin() + 1, pool.end(), 0);
+			return std::accumulate(begin(pool) + 1, end(pool), 0);
 		}
 
 	private:
