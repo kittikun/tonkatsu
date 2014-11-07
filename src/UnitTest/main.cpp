@@ -13,23 +13,5 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <array>
-#include <iostream>
-#include <numeric>
-#include <boost/format.hpp>
-#include <boost/scoped_ptr.hpp>
-
-#include <Core/Log.h>
-#include <DnD5/Dice.h>
-#include <DnD5/Race.h>
-
-int main(int, char**)
-{
-    Tonkatsu::Core::Log::Initialize();
-
-    LOGC << "Hello World!";
-
-    std::cin.get();
-
-    return 0;
-}
+#define BOOST_TEST_MODULE "Tonkatsu Unit Tests"
+#include <boost/test/unit_test.hpp>
