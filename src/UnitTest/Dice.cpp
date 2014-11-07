@@ -16,9 +16,9 @@
 #include <boost/test/unit_test.hpp>
 
 #include <numeric>
-#include <boost\scoped_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 
-#include <DnD5\Dice.h>
+#include <DnD5/Dice.h>
 
 BOOST_AUTO_TEST_SUITE(DnD5_Dice)
 

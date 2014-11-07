@@ -8,6 +8,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUT_PATH})
 
+find_package(Boost COMPONENTS log system thread unit_test_framework REQUIRED)
+if (Boost_FOUND)
+  add_definitions(-DBOOST_ALL_DYN_LINK)
+endif(Boost_FOUND)
+
+include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH})
+
 set(CORE_PATH	${SRC_PATH}/Core)
 set(CORE_SRC 	${CORE_PATH}/Log.cpp)
 add_library(core SHARED ${CORE_SRC})
@@ -17,17 +24,18 @@ set(DND5_SRC    ${DND5_PATH}/Dice.cpp
                 ${DND5_PATH}/Character.cpp)
 add_library(dnd5 SHARED ${DND5_SRC})
 
+set(TEST_PATH   ${SRC_PATH}/UnitTest)
+set(TEST_SRC    ${TEST_PATH}/main.cpp
+                ${TEST_PATH}/Dice.cpp)
+add_executable(unittest ${TEST_SRC})
+target_link_libraries(unittest ${Boost_LIBRARIES} dnd5)
+
+
 set(EXE_PATH ${SRC_PATH}/Server)
 set(EXE_SRC ${EXE_PATH}/main.cpp)
 add_executable(server ${EXE_SRC})
+target_link_libraries(server ${Boost_LIBRARIES} core dnd5)
 
-find_package(Boost COMPONENTS log system thread REQUIRED)
-if (Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH})
-  #set(EXTRA_LIBS ${Boost_LIBRARIES})
-  target_link_libraries(server ${Boost_LIBRARIES} core dnd5)
-  add_definitions(-DBOOST_ALL_DYN_LINK)
-endif(Boost_FOUND)
 
 
 
