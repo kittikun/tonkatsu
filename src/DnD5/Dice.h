@@ -23,7 +23,7 @@ namespace DnD5
         uint8_t Roll6() const;
         uint8_t Roll20() const;
 
-        const std::array<uint8_t, 6> CharacterRoll() const;
+        const std::array<uint8_t, 6> AbilityRoll() const;
 
     private:
         std::unique_ptr<DiceImpl> impl;

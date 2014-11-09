@@ -4,6 +4,8 @@
 #ifndef RACE_H
 #define RACE_H
 
+#include <cstdint>
+
 namespace DnD5
 {
     enum class ERace : uint8_t {
@@ -33,8 +35,8 @@ namespace DnD5
     {
     public:
         virtual ~IRace() {}
-        virtual ERace getRace() const = 0;
-        virtual int8_t getSubRace() const = 0;
+        virtual ERace Race() const = 0;
+        virtual int8_t SubRace() const = 0;
     };
 
     template <ERace r>
@@ -62,14 +64,14 @@ namespace DnD5
             }
         }
 
-        virtual ERace getRace() const { return race; }
-        virtual int8_t getSubRace() const override { return -1; }
+        virtual ERace Race() const { return race; }
+        virtual int8_t SubRace() const override { return -1; }
 
     private:
         const ERace race;
     };
 
-    template <ERace r, typename SubRace, SubRace s>
+    template <ERace r, typename ESubRace, ESubRace s>
     class SpecificRace final : public IRace
     {
     public:
@@ -95,12 +97,12 @@ namespace DnD5
             }
         }
 
-        ERace getRace() const { return race; }
-        int8_t getSubRace() const { return (int8_t)subRace; }
+        ERace Race() const { return race; }
+        int8_t SubRace() const { return (int8_t)subRace; }
 
     private:
         const ERace race;
-        const SubRace subRace;
+        const ESubRace subRace;
     };
 
     typedef GeneralRace<ERace::Human>  Human;

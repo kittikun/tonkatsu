@@ -6,14 +6,15 @@
 #include <algorithm>
 #include <ctime>
 #include <numeric>
-#include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/mersenne_twister.hpp>
+#include <random>
+
 
 namespace DnD5
 {
     class DiceImpl {
     public:
-        DiceImpl() : rng((uint32_t)std::time(nullptr)) {}
+        DiceImpl() : rng((uint32_t)std::time(nullptr)) {
+		}
 
         inline uint8_t Roll6() { return Roll(6); }
         inline uint8_t Roll20() { return Roll(20); }
@@ -29,7 +30,7 @@ namespace DnD5
 
     private:
         uint8_t Roll(uint8_t max) {
-            boost::random::uniform_int_distribution<> dist(1, max);
+            std::uniform_int_distribution<> dist(1, max);
             uint8_t res = dist(rng);
 
             return res;
@@ -48,11 +49,11 @@ namespace DnD5
 
             std::sort(begin(pool), end(pool));
 
-            return std::accumulate(begin(pool) + 1, end(pool), 0);
+            return std::accumulate(cbegin(pool) + 1, cend(pool), 0);
         }
 
     private:
-        boost::random::mt19937 rng;
+        std::mt19937 rng;
     };
 
     //----------------------------------------------------------------------------------------------
@@ -77,7 +78,7 @@ namespace DnD5
         return impl->Roll20();
     }
 
-    const std::array<uint8_t, 6> Dice::CharacterRoll() const
+    const std::array<uint8_t, 6> Dice::AbilityRoll() const
     {
         return impl->CharacterRoll();
     }
