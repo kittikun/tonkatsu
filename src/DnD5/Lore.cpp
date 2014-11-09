@@ -53,6 +53,9 @@ namespace DnD5
 					res = (isMale) ? RandomElement(DwarvenMaleNames) : RandomElement(DwarvenFemaleNames);
 					break;
 				}
+
+			default:
+			  break;
 			}
 
 			return res;
@@ -68,6 +71,9 @@ namespace DnD5
 					res = RandomElement(DwarvenClanNames);
 					break;
 				}
+
+			default:
+			  break;
 			}
 
 			return res;

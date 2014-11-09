@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <ctime>
+#include <iterator>
 #include <numeric>
 #include <random>
 
@@ -23,7 +24,7 @@ namespace DnD5
         {
             std::array<uint8_t, 6> res;
 
-            std::for_each(begin(res), end(res), [this](uint8_t& n) { n = AbilityRoll(); });
+            std::for_each(std::begin(res), std::end(res), [this](uint8_t& n) { n = AbilityRoll(); });
 
             return res;
         }
@@ -47,9 +48,9 @@ namespace DnD5
             for (int i = 0; i < 4; ++i)
                 pool[i] = Roll6();
 
-            std::sort(begin(pool), end(pool));
+            std::sort(std::begin(pool), std::end(pool));
 
-            return std::accumulate(cbegin(pool) + 1, cend(pool), 0);
+            return std::accumulate(std::begin(pool) + 1, std::end(pool), 0);
         }
 
     private:

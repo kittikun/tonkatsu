@@ -18,9 +18,11 @@
 #include <chrono>
 #include <numeric>
 #include <memory>
+#include <iterator>
 
 #include <DnD5/Dice.h>
-#include "include\minicsv.h"
+
+#include "minicsv.h"
 
 struct DiceFixture {
 	DiceFixture() :
@@ -54,7 +56,7 @@ BOOST_AUTO_TEST_CASE(Roll6)
 		time[i] = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 	}
 
-	size_t avg = std::accumulate(cbegin(time), cend(time), (std::chrono::milliseconds::rep)0) / time.size();
+	size_t avg = std::accumulate(begin(time), end(time), (std::chrono::milliseconds::rep)0) / time.size();
 
 	if (os.is_open())
 	{
@@ -78,7 +80,7 @@ BOOST_AUTO_TEST_CASE(Roll20)
 		time[i] = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 	}
 
-	size_t avg = std::accumulate(cbegin(time), cend(time), (std::chrono::milliseconds::rep)0) / time.size();
+	size_t avg = std::accumulate(begin(time), end(time), (std::chrono::milliseconds::rep)0) / time.size();
 
 	if (os.is_open())
 	{
@@ -95,7 +97,7 @@ BOOST_AUTO_TEST_CASE(AbilityRoll)
 
 		for (int i = 0; i < 1000; ++i) {
 			auto aRoll = dice->AbilityRoll();
-			auto acc = std::accumulate(cbegin(aRoll), cend(aRoll), 0);
+			auto acc = std::accumulate(begin(aRoll), end(aRoll), 0);
 
 			BOOST_CHECK(acc > 0);
 			BOOST_CHECK(acc <= (18 * 6));
@@ -104,7 +106,7 @@ BOOST_AUTO_TEST_CASE(AbilityRoll)
 
 		time[i] = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 	}
-	size_t avg = std::accumulate(cbegin(time), cend(time), (std::chrono::milliseconds::rep)0) / time.size();
+	size_t avg = std::accumulate(begin(time), end(time), (std::chrono::milliseconds::rep)0) / time.size();
 
 	if (os.is_open())
 	{
