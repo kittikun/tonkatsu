@@ -29,7 +29,15 @@ struct DiceFixture {
 		dice(new DnD5::Dice()),
 		os("DnD5_Dice.csv", std::ios_base::app)
 	{
+		static bool initalized = false;
+
 		os.set_delimiter(',');
+
+		if (!initalized && os.is_open())
+		{
+			os << "Test Name" << "time (ms)" << NEWLINE;
+			initalized = true;
+		}
 	}
 
 	~DiceFixture() {}
