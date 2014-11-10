@@ -35,7 +35,7 @@ struct DiceFixture {
 
 		if (!initalized && os.is_open())
 		{
-			os << "Test Name" << "time (ms)" << NEWLINE;
+			os << "Roll6" << "Roll20" << "AbilityRoll" << NEWLINE;
 			initalized = true;
 		}
 	}
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(Roll6)
 
 	if (os.is_open())
 	{
-		os << "Roll6" << avg << NEWLINE;
+		os << avg << "";
 	}
 }
 
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(Roll20)
 
 	if (os.is_open())
 	{
-		os << "Roll20" << avg << NEWLINE;
+		os << avg << "";
 	}
 }
 
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(AbilityRoll)
 
 	if (os.is_open())
 	{
-		os << "AbilityRoll" << avg << NEWLINE;
+		os << avg << NEWLINE;
 	}
 }
 
