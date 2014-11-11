@@ -261,7 +261,7 @@ namespace DnD5
 
 				case ERace::Human:
 				{
-					switch (race.get()->SubRace())
+					switch (static_cast<ESubRaceHuman>(race.get()->SubRace()))
 					{
 						case ESubRaceHuman::Human_Calishite:
 							res = (isMale) ? RandomElement(HumanCalishiteMaleNames) : RandomElement(HumanCalishiteFemaleNames);
@@ -334,7 +334,7 @@ namespace DnD5
 
 				case ERace::Human:
 				{
-					switch (race.get()->SubRace())
+					switch (static_cast<ESubRaceHuman>(race.get()->SubRace()))
 					{
 						case ESubRaceHuman::Human_Calishite:
 							res = RandomElement(HumanCalishiteFamilyNames);

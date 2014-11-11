@@ -32,7 +32,7 @@ namespace DnD5
     private:
         uint8_t Roll(uint8_t max) {
             std::uniform_int_distribution<> dist(1, max);
-            uint8_t res = dist(rng);
+			uint8_t res = (uint8_t)dist(rng);
 
             return res;
         }
@@ -50,7 +50,7 @@ namespace DnD5
 
             std::sort(std::begin(pool), std::end(pool));
 
-            return std::accumulate(std::begin(pool) + 1, std::end(pool), 0);
+			return std::accumulate(std::begin(pool) + 1, std::end(pool), (uint8_t)0);
         }
 
     private:
