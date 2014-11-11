@@ -3,24 +3,23 @@
 
 #include "Lore.h"
 
-#include <random>
+#include <cstdlib>
 #include <vector>
 
 #include "Race.h"
 
 namespace DnD5
 {
-
-    namespace Lore
-    {
+	namespace Lore
+	{
 		// PlayerDnDBasicRules_v0.2 p13 (Dwarven Names)
-        const std::vector<std::string> DwarvenMaleNames = {
-            "Adrik", "Alberich", "Baern", "Barendd", "Brottor",
-            "Bruenor", "Dain", "Darrak", "Delg", "Eberk", "Einkil", "Fargrim",
-            "Flint", "Gardain", "Harbek", "Kildrak", "Morgran", "Orsik",
-            "Oskar", "Rangrim", "Rurik", "Taklinn", "Thoradin", "Thorin",
-            "Tordek", "Traubon", "Travok", "Ulfgar", "Veit", "Vondal"
-        };
+		const std::vector<std::string> DwarvenMaleNames = {
+			"Adrik", "Alberich", "Baern", "Barendd", "Brottor",
+			"Bruenor", "Dain", "Darrak", "Delg", "Eberk", "Einkil", "Fargrim",
+			"Flint", "Gardain", "Harbek", "Kildrak", "Morgran", "Orsik",
+			"Oskar", "Rangrim", "Rurik", "Taklinn", "Thoradin", "Thorin",
+			"Tordek", "Traubon", "Travok", "Ulfgar", "Veit", "Vondal"
+		};
 
 		// PlayerDnDBasicRules_v0.2 p13 (Dwarven Names)
 		const std::vector<std::string> DwarvenFemaleNames = {
@@ -49,14 +48,13 @@ namespace DnD5
 
 		// PlayerDnDBasicRules_v0.2 p14 (Elf Names)
 		const std::vector<std::string> ElfFemaleNames = {
-				"Adrie", "Althaea", "Anastrianna",
-				"Andraste", "Antinua", "Bethrynna", "Birel", "Caelynn",
-				"Drusilia", "Enna", "Felosial", "Ielenia", "Jelenneth", "Keyleth",
-				"Leshanna", "Lia", "Meriele", "Mialee", "Naivara", "Quelenna",
-				"Quillathe", "Sariel", "Shanairra", "Shava", "Silaqui",
-				"Theirastra", "Thia", "Vadania", "Valanthe", "Xanaphia"
+			"Adrie", "Althaea", "Anastrianna",
+			"Andraste", "Antinua", "Bethrynna", "Birel", "Caelynn",
+			"Drusilia", "Enna", "Felosial", "Ielenia", "Jelenneth", "Keyleth",
+			"Leshanna", "Lia", "Meriele", "Mialee", "Naivara", "Quelenna",
+			"Quillathe", "Sariel", "Shanairra", "Shava", "Silaqui",
+			"Theirastra", "Thia", "Vadania", "Valanthe", "Xanaphia"
 		};
-
 
 		// PlayerDnDBasicRules_v0.2 p15 (Elf Names)
 		const std::vector<std::string> ElfFamilyNames = {
@@ -96,7 +94,7 @@ namespace DnD5
 		// PlayerDnDBasicRules_v0.2 p18 (Human Names and Ethnicities)
 		const std::vector<std::string> HumanCalishiteFemaleNames = {
 			"Atala", "Ceidil", "Hama", "Jasmal", "Meilil", "Seipora", "Yasheira",
-			"Zasheida" 
+			"Zasheida"
 		};
 
 		// PlayerDnDBasicRules_v0.2 p18 (Human Names and Ethnicities)
@@ -234,11 +232,8 @@ namespace DnD5
 
 		std::string RandomElement(const std::vector<std::string>& list)
 		{
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::uniform_int_distribution<> dist(0, (int)list.size() - 1);
-
-			return list[dist(rng)];
+			// Previously used std::mt19937 here but performance was bad and rand() is more than enough for this case
+			return list[rand() % list.size()];
 		}
 
 		std::string GenerateFirstName(const std::shared_ptr<IRace>& race, bool isMale)
@@ -247,69 +242,69 @@ namespace DnD5
 
 			switch (race.get()->Race())
 			{
-				case ERace::Dwarf: 
-					res = (isMale) ? RandomElement(DwarvenMaleNames) : RandomElement(DwarvenFemaleNames);
-					break;
+			case ERace::Dwarf:
+				res = (isMale) ? RandomElement(DwarvenMaleNames) : RandomElement(DwarvenFemaleNames);
+				break;
 
-				case ERace::Elf: 
-					res = (isMale) ? RandomElement(ElfMaleNames) : RandomElement(ElfFemaleNames);
-					break;
+			case ERace::Elf:
+				res = (isMale) ? RandomElement(ElfMaleNames) : RandomElement(ElfFemaleNames);
+				break;
 
-				case ERace::Halfling: 
-					res = (isMale) ? RandomElement(HalflingMaleNames) : RandomElement(HalflingFemaleNames);
-					break;
+			case ERace::Halfling:
+				res = (isMale) ? RandomElement(HalflingMaleNames) : RandomElement(HalflingFemaleNames);
+				break;
 
-				case ERace::Human:
+			case ERace::Human:
+			{
+				switch (static_cast<ESubRaceHuman>(race.get()->SubRace()))
 				{
-					switch (static_cast<ESubRaceHuman>(race.get()->SubRace()))
-					{
-						case ESubRaceHuman::Human_Calishite:
-							res = (isMale) ? RandomElement(HumanCalishiteMaleNames) : RandomElement(HumanCalishiteFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Calishite:
+					res = (isMale) ? RandomElement(HumanCalishiteMaleNames) : RandomElement(HumanCalishiteFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Chondathan:
-							res = (isMale) ? RandomElement(HumanChondathanMaleNames) : RandomElement(HumanChondathanFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Chondathan:
+					res = (isMale) ? RandomElement(HumanChondathanMaleNames) : RandomElement(HumanChondathanFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Damaran:
-							res = (isMale) ? RandomElement(HumanDamaranMaleNames) : RandomElement(HumanDamaranFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Damaran:
+					res = (isMale) ? RandomElement(HumanDamaranMaleNames) : RandomElement(HumanDamaranFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Illuskan:
-							res = (isMale) ? RandomElement(HumanIlluskanMaleNames) : RandomElement(HumanIlluskanFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Illuskan:
+					res = (isMale) ? RandomElement(HumanIlluskanMaleNames) : RandomElement(HumanIlluskanFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Mulan:
-							res = (isMale) ? RandomElement(HumanMulanMaleNames) : RandomElement(HumanMulanFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Mulan:
+					res = (isMale) ? RandomElement(HumanMulanMaleNames) : RandomElement(HumanMulanFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Rashemi:
-							res = (isMale) ? RandomElement(HumanRashemiMaleNames) : RandomElement(HumanRashemiFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Rashemi:
+					res = (isMale) ? RandomElement(HumanRashemiMaleNames) : RandomElement(HumanRashemiFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Shou:
-							res = (isMale) ? RandomElement(HumanRashemiMaleNames) : RandomElement(HumanRashemiFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Shou:
+					res = (isMale) ? RandomElement(HumanRashemiMaleNames) : RandomElement(HumanRashemiFemaleNames);
+					break;
 
-						// PlayerDnDBasicRules_v0.2 p19 (Human Names and Ethnicities)
-						// Tethyrians primarily use Chondathan names.
-						case ESubRaceHuman::Human_Tethyrian:
-							res = (isMale) ? RandomElement(HumanChondathanMaleNames) : RandomElement(HumanChondathanFemaleNames);
-							break;
+					// PlayerDnDBasicRules_v0.2 p19 (Human Names and Ethnicities)
+					// Tethyrians primarily use Chondathan names.
+				case ESubRaceHuman::Human_Tethyrian:
+					res = (isMale) ? RandomElement(HumanChondathanMaleNames) : RandomElement(HumanChondathanFemaleNames);
+					break;
 
-						case ESubRaceHuman::Human_Turami:
-							res = (isMale) ? RandomElement(HumanTuramiMaleNames) : RandomElement(HumanTuramiFemaleNames);
-							break;
+				case ESubRaceHuman::Human_Turami:
+					res = (isMale) ? RandomElement(HumanTuramiMaleNames) : RandomElement(HumanTuramiFemaleNames);
+					break;
 
-					default:
-						break;
-					}
-
+				default:
 					break;
 				}
 
+				break;
+			}
+
 			default:
-			  break;
+				break;
 			}
 
 			return res;
@@ -321,71 +316,71 @@ namespace DnD5
 
 			switch (race.get()->Race())
 			{
-				case ERace::Dwarf:
-					res = RandomElement(DwarvenClanNames);
-					break;
+			case ERace::Dwarf:
+				res = RandomElement(DwarvenClanNames);
+				break;
 
-				case ERace::Elf:
-					res = RandomElement(ElfFamilyNames);
-					break;
+			case ERace::Elf:
+				res = RandomElement(ElfFamilyNames);
+				break;
 
-				case ERace::Halfling:
-					res = RandomElement(HalflingFamilyNames);
+			case ERace::Halfling:
+				res = RandomElement(HalflingFamilyNames);
 
-				case ERace::Human:
+			case ERace::Human:
+			{
+				switch (static_cast<ESubRaceHuman>(race.get()->SubRace()))
 				{
-					switch (static_cast<ESubRaceHuman>(race.get()->SubRace()))
-					{
-						case ESubRaceHuman::Human_Calishite:
-							res = RandomElement(HumanCalishiteFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Calishite:
+					res = RandomElement(HumanCalishiteFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Chondathan:
-							res = RandomElement(HumanChondathanFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Chondathan:
+					res = RandomElement(HumanChondathanFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Damaran:
-							res = RandomElement(HumanDamaranFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Damaran:
+					res = RandomElement(HumanDamaranFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Illuskan:
-							res = RandomElement(HumanIlluskanFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Illuskan:
+					res = RandomElement(HumanIlluskanFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Mulan:
-							res = RandomElement(HumanMulanFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Mulan:
+					res = RandomElement(HumanMulanFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Rashemi:
-							res = RandomElement(HumanRashemiFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Rashemi:
+					res = RandomElement(HumanRashemiFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Shou:
-							res = RandomElement(HumanShouFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Shou:
+					res = RandomElement(HumanShouFamilyNames);
+					break;
 
-						// PlayerDnDBasicRules_v0.2 p19 (Human Names and Ethnicities)
-						// Tethyrians primarily use Chondathan names.
-						case ESubRaceHuman::Human_Tethyrian:
-							res = RandomElement(HumanChondathanFamilyNames);
-							break;
+					// PlayerDnDBasicRules_v0.2 p19 (Human Names and Ethnicities)
+					// Tethyrians primarily use Chondathan names.
+				case ESubRaceHuman::Human_Tethyrian:
+					res = RandomElement(HumanChondathanFamilyNames);
+					break;
 
-						case ESubRaceHuman::Human_Turami:
-							res = RandomElement(HumanTuramiFamilyNames);
-							break;
+				case ESubRaceHuman::Human_Turami:
+					res = RandomElement(HumanTuramiFamilyNames);
+					break;
 
-						default:
-							break;
-					}
-
+				default:
 					break;
 				}
 
+				break;
+			}
+
 			default:
-			  break;
+				break;
 			}
 
 			return res;
 		}
-    } // namespace Lore
+	} // namespace Lore
 } // namespace DnD5
