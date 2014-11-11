@@ -14,16 +14,31 @@
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/test/unit_test.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include <DnD5/Lore.h>
+#include <DnD5/Race.h>
 
 #include "TestFramework.h"
 
 struct LoreFixture : public BaseFixture<LoreFixture> {
 	LoreFixture() :
-		BaseFixture("DnD5_Lore.csv", { "FirstName", "LastName" })
+		BaseFixture("DnD5_Lore.csv", { "GenerateFirstName", "GenerateLastName" })
 	{
+		for (int i = 0; i < (int)DnD5::ESubRaceDwarf::Count; ++i)
+			races.emplace_back(std::make_shared<DnD5::Dwarf>(static_cast<DnD5::ESubRaceDwarf>(i)));
+
+		for (int i = 0; i < (int)DnD5::ESubRaceElf::Count; ++i)
+			races.emplace_back(std::make_shared<DnD5::Elf>(static_cast<DnD5::ESubRaceElf>(i)));
+
+		for (int i = 0; i < (int)DnD5::ESubRaceHalfling::Count; ++i)
+			races.emplace_back(std::make_shared<DnD5::Halfling>(static_cast<DnD5::ESubRaceHalfling>(i)));
+
+		for (int i = 0; i < (int)DnD5::ESubRaceHuman::Count; ++i)
+			races.emplace_back(std::make_shared<DnD5::Human>(static_cast<DnD5::ESubRaceHuman>(i)));
 	}
+
+	std::vector<std::shared_ptr<DnD5::IRace>> races;
 };
 
 BOOST_FIXTURE_TEST_SUITE(DnD5_Lore, LoreFixture);
@@ -31,15 +46,19 @@ BOOST_FIXTURE_TEST_SUITE(DnD5_Lore, LoreFixture);
 BOOST_AUTO_TEST_CASE(FirstName)
 {
 	TestFunc([&] {
-		BOOST_CHECK(DnD5::Lore::GenerateFirstName(DnD5::ERace::Dwarf, true).size() > 0);
-		BOOST_CHECK(DnD5::Lore::GenerateFirstName(DnD5::ERace::Dwarf, false).size() > 0);
+		for (const auto& iter : races) {
+			BOOST_CHECK(DnD5::Lore::GenerateFirstName(iter, true).size() > 0);
+			BOOST_CHECK(DnD5::Lore::GenerateFirstName(iter, false).size() > 0);
+		}
 	});
 }
 
 BOOST_AUTO_TEST_CASE(LastName)
 {
 	TestFunc([&] {
-		BOOST_CHECK(DnD5::Lore::GenerateLastName(DnD5::ERace::Dwarf).size() > 0);
+		for (const auto& iter : races) {
+			BOOST_CHECK(DnD5::Lore::GenerateLastName(iter).size() > 0);
+		}
 	});
 }
 

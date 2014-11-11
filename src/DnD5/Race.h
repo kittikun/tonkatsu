@@ -12,24 +12,45 @@ namespace DnD5
         Dwarf,
         Elf,
         Halfling,
-        Human
+		Human,
+		Count
     };
 
+	// PlayerDnDBasicRules_v0.2 p13 (Dwarf Traits)
     enum class ESubRaceDwarf : uint8_t {
         Dwarf_Hill,
-        Dwarf_Mountain
+		Dwarf_Mountain,
+		Count
     };
 
+	// PlayerDnDBasicRules_v0.2 p15 (Elf Traits)
     enum class ESubRaceElf : uint8_t {
         Elf_High,
         Elf_Wood,
-        Elf_Dark
+        Elf_Dark,
+		Count
     };
 
+	// PlayerDnDBasicRules_v0.2 p17 (Halfling Traits)
     enum class ESubRaceHalfling : uint8_t {
         Halfling_Lightfoot,
-        Halfling_Stout
+		Halfling_Stout,
+		Count
     };
+
+	// PlayerDnDBasicRules_v0.2 p18 (Human Names and Ethnicities)
+	enum class ESubRaceHuman : uint8_t {
+		Human_Calishite,
+		Human_Chondathan,
+		Human_Damaran,
+		Human_Illuskan,
+		Human_Mulan,
+		Human_Rashemi,
+		Human_Shou,
+		Human_Tethyrian,
+		Human_Turami,
+		Count
+	};
 
     class IRace
     {
@@ -39,43 +60,11 @@ namespace DnD5
         virtual int8_t SubRace() const = 0;
     };
 
-    template <ERace r>
-    class GeneralRace final : public IRace
-    {
-    public:
-        explicit GeneralRace() : race(r) {}
-        GeneralRace(const GeneralRace& other) : race(other.race) {}
-        GeneralRace(GeneralRace&& other) : race(other.race) {}
-        ~GeneralRace() {}
-
-        GeneralRace & operator=(const GeneralRace& other)
-        {
-            GeneralRace tmp(other);
-            *this = std::move(tmp);
-            return *this;
-        }
-
-        GeneralRace& operator= (GeneralRace&& other)
-        {
-            if (this != &other)
-            {
-                std::move(race, other.race);
-                return *this;
-            }
-        }
-
-        virtual ERace Race() const { return race; }
-        virtual int8_t SubRace() const override { return -1; }
-
-    private:
-        const ERace race;
-    };
-
-    template <ERace r, typename ESubRace, ESubRace s>
+    template <ERace r, typename ESubRace>
     class SpecificRace final : public IRace
     {
     public:
-        explicit SpecificRace() : race(r), subRace(s) {}
+		explicit SpecificRace(ESubRace s) : race(r), subRace(s) {}
         SpecificRace(const SpecificRace& other) : race(other.race), subRace(other.subRace) {}
         SpecificRace(SpecificRace&& other) : race(other.race), subRace(other.subRace) {}
         ~SpecificRace() {}
@@ -105,14 +94,10 @@ namespace DnD5
         const ESubRace subRace;
     };
 
-    typedef GeneralRace<ERace::Human>  Human;
-    typedef SpecificRace<ERace::Dwarf, ESubRaceDwarf, ESubRaceDwarf::Dwarf_Hill>  HillDwarf;
-    typedef SpecificRace<ERace::Dwarf, ESubRaceDwarf, ESubRaceDwarf::Dwarf_Mountain>  MountainDwarf;
-    typedef SpecificRace<ERace::Elf, ESubRaceElf, ESubRaceElf::Elf_Dark> DarkElf;
-    typedef SpecificRace<ERace::Elf, ESubRaceElf, ESubRaceElf::Elf_High> HighElf;
-    typedef SpecificRace<ERace::Elf, ESubRaceElf, ESubRaceElf::Elf_Wood> WoodElf;
-    typedef SpecificRace<ERace::Halfling, ESubRaceHalfling, ESubRaceHalfling::Halfling_Lightfoot> LightfootHalfling;
-    typedef SpecificRace<ERace::Halfling, ESubRaceHalfling, ESubRaceHalfling::Halfling_Stout> StoutHalfling;
+    typedef SpecificRace<ERace::Dwarf, ESubRaceDwarf>  Dwarf;
+    typedef SpecificRace<ERace::Elf, ESubRaceElf> Elf;
+    typedef SpecificRace<ERace::Halfling, ESubRaceHalfling> Halfling;
+	typedef SpecificRace<ERace::Human, ESubRaceHuman>  Human;
 } // namespace DnD5
 
 #endif // RACE_H

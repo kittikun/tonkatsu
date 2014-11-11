@@ -4,18 +4,19 @@
 #ifndef LORE_H
 #define LORE_H
 
+#include <memory>
 #include <string>
 
 #include <Core/Platform.h>
 
-#include "Race.h"
-
 namespace DnD5
 {
+	class IRace;
+
 	namespace Lore 
 	{
-		std::string KATSU_API GenerateFirstName(ERace race, bool isMale);
-		std::string KATSU_API GenerateLastName(ERace race);
+		std::string KATSU_API GenerateFirstName(const std::shared_ptr<IRace>& race, bool isMale);
+		std::string KATSU_API GenerateLastName(const std::shared_ptr<IRace>& race);
 	} // namespace Lore
 } // namespace DnD5
 
