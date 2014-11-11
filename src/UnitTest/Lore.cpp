@@ -17,17 +17,30 @@
 
 #include <DnD5/Lore.h>
 
-BOOST_AUTO_TEST_SUITE(DnD5_Lore);
+#include "TestFramework.h"
+
+struct LoreFixture : public BaseFixture<LoreFixture> {
+	LoreFixture() :
+		BaseFixture("DnD5_Lore.csv", { "FirstName", "LastName" })
+	{
+	}
+};
+
+BOOST_FIXTURE_TEST_SUITE(DnD5_Lore, LoreFixture);
 
 BOOST_AUTO_TEST_CASE(FirstName)
 {
-	BOOST_CHECK(DnD5::Lore::GenerateFirstName(DnD5::ERace::Dwarf, true).size() > 0);
-	BOOST_CHECK(DnD5::Lore::GenerateFirstName(DnD5::ERace::Dwarf, false).size() > 0);
+	TestFunc([&] {
+		BOOST_CHECK(DnD5::Lore::GenerateFirstName(DnD5::ERace::Dwarf, true).size() > 0);
+		BOOST_CHECK(DnD5::Lore::GenerateFirstName(DnD5::ERace::Dwarf, false).size() > 0);
+	});
 }
 
 BOOST_AUTO_TEST_CASE(LastName)
 {
-	BOOST_CHECK(DnD5::Lore::GenerateLastName(DnD5::ERace::Dwarf).size() > 0);
+	TestFunc([&] {
+		BOOST_CHECK(DnD5::Lore::GenerateLastName(DnD5::ERace::Dwarf).size() > 0);
+	});
 }
 
 

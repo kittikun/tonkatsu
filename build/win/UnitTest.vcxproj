@@ -147,9 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\UnitTest\Character.cpp" />
+    <ClCompile Include="..\..\src\UnitTest\include\minicsv.cpp" />
     <ClCompile Include="..\..\src\UnitTest\Lore.cpp" />
     <ClCompile Include="..\..\src\UnitTest\main.cpp" />
     <ClCompile Include="..\..\src\UnitTest\Dice.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\UnitTest\include\minicsv.h" />
+    <ClInclude Include="..\..\src\UnitTest\include\TestFramework.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

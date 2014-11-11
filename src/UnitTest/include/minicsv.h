@@ -202,13 +202,7 @@ csv::ifstream& operator >> (csv::ifstream& istm, T& val)
 
 	return istm;
 }
-template<>
-csv::ifstream& operator >> (csv::ifstream& istm, std::string& val)
-{
-	val = istm.get_delimited_str();
 
-	return istm;
-}
 
 template<typename T>
 csv::ofstream& operator << (csv::ofstream& ostm, const T& val)
@@ -222,20 +216,13 @@ csv::ofstream& operator << (csv::ofstream& ostm, const T& val)
 
 	return ostm;
 }
+
 template<>
-csv::ofstream& operator << (csv::ofstream& ostm, const char& val)
-{
-	if(val==NEWLINE)
-	{
-		ostm.get_ofstream() << std::endl;
+csv::ifstream& operator >> (csv::ifstream& istm, std::string& val);
 
-		ostm.set_after_newline(true);
-	}
-	else
-		ostm.get_ofstream() << val;
 
-	return ostm;
-}
+template<>
+csv::ofstream& operator << (csv::ofstream& ostm, const char& val);
 
 
 #endif // MiniCSV_H

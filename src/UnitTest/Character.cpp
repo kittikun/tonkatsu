@@ -18,8 +18,8 @@
 
 BOOST_AUTO_TEST_SUITE(DnD5_Character);
 
-BOOST_AUTO_TEST_CASE(CharacterRoll)
-{
-}
+//BOOST_AUTO_TEST_CASE(CharacterRoll)
+//{
+//}
 
 BOOST_AUTO_TEST_SUITE_END()

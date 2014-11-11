@@ -105,7 +105,7 @@
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib32-msvc-12.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib64-msvc-12.0 $(SolutionDir)out\$(Configuration)\$(platform)</Command>
+      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib32-msvc-12.0 $(SolutionDir)out\$(Configuration)\$(platform)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy Boost DLLs</Message>
@@ -151,7 +151,7 @@
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib32-msvc-12.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib64-msvc-12.0 $(SolutionDir)out\$(Configuration)\$(platform)</Command>
+      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib32-msvc-12.0 $(SolutionDir)out\$(Configuration)\$(platform)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy Boost DLLs</Message>
