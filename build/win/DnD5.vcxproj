@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\DnD5\Abilities.h" />
     <ClInclude Include="..\..\src\DnD5\Character.h" />
     <ClInclude Include="..\..\src\DnD5\Definitions.h" />
     <ClInclude Include="..\..\src\DnD5\Dice.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="..\..\src\DnD5\Race.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\DnD5\Abilities.cpp" />
     <ClCompile Include="..\..\src\DnD5\Character.cpp" />
     <ClCompile Include="..\..\src\DnD5\Dice.cpp" />
     <ClCompile Include="..\..\src\DnD5\Lore.cpp" />

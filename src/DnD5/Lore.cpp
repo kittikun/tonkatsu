@@ -12,6 +12,10 @@ namespace DnD5
 {
 	namespace Lore
 	{
+		//----------------------------------------------------------------------------------------------
+		// DWARF
+		//----------------------------------------------------------------------------------------------
+
 		// PlayerDnDBasicRules_v0.2 p13 (Dwarven Names)
 		const std::vector<std::string> DwarvenMaleNames = {
 			"Adrik", "Alberich", "Baern", "Barendd", "Brottor",
@@ -36,6 +40,10 @@ namespace DnD5
 			"Ironfist", "Loderr", "Lutgehr", "Rumnaheim", "Strakeln",
 			"Torunn", "Ungart"
 		};
+
+		//----------------------------------------------------------------------------------------------
+		// ELF
+		//----------------------------------------------------------------------------------------------
 
 		// PlayerDnDBasicRules_v0.2 p14 (Elf Names)
 		const std::vector<std::string> ElfMaleNames = {
@@ -64,6 +72,10 @@ namespace DnD5
 			"Xiloscient(Goldpetal)"
 		};
 
+		//----------------------------------------------------------------------------------------------
+		// HALFLING
+		//----------------------------------------------------------------------------------------------
+
 		// PlayerDnDBasicRules_v0.2 p16 (Halfling Names)
 		const std::vector<std::string> HalflingMaleNames = {
 			"Alton", "Ander", "Cade", "Corrin", "Eldon", "Errich",
@@ -84,6 +96,10 @@ namespace DnD5
 			"High - hill", "Hilltopple", "Leagallow", "Tealeaf", "Thorngage",
 			"Tosscobble", "Underbough"
 		};
+
+		//----------------------------------------------------------------------------------------------
+		// HUMAN
+		//----------------------------------------------------------------------------------------------
 
 		// PlayerDnDBasicRules_v0.2 p18 (Human Names and Ethnicities)
 		const std::vector<std::string> HumanCalishiteMaleNames = {

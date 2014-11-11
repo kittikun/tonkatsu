@@ -22,7 +22,8 @@ include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH} ${TEST_PATH}/include)
 set(CORE_SRC 	${CORE_PATH}/Log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
-set(DND5_SRC    ${DND5_PATH}/Character.cpp
+set(DND5_SRC    ${DND5_PATH}/Abilities.cpp
+                ${DND5_PATH}/Character.cpp
                 ${DND5_PATH}/Dice.cpp
                 ${DND5_PATH}/Lore.cpp)
 add_library(dnd5 SHARED ${DND5_SRC})
