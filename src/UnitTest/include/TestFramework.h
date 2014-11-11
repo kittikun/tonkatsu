@@ -46,7 +46,7 @@ struct BaseFixture {
 	~BaseFixture() {}
 
 	template<typename F>
-	void TestFunc(F& lambda)
+	void TestFunc(F lambda)
 	{
 		std::array<std::chrono::milliseconds::rep, 10> time;
 

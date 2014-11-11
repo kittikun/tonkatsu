@@ -31,7 +31,8 @@ add_library(dnd5 SHARED ${DND5_SRC})
 set(TEST_SRC    ${TEST_PATH}/main.cpp
                 ${TEST_PATH}/Character.cpp
                 ${TEST_PATH}/Dice.cpp
-                ${TEST_PATH}/Lore.cpp)
+                ${TEST_PATH}/Lore.cpp
+                ${TEST_PATH}/include/minicsv.cpp)
 add_executable(unittest ${TEST_SRC})
 target_link_libraries(unittest ${Boost_LIBRARIES} dnd5)
 
