@@ -1,12 +1,12 @@
 // Open Game License v 1.0 Copyright 2000, Wizards of the Coast, Inc.
 //
 
-#include "Lore.h"
+#include "lore.h"
 
 #include <cstdlib>
 #include <vector>
 
-#include "Race.h"
+#include "race.h"
 
 namespace DnD5
 {

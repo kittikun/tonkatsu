@@ -14,12 +14,33 @@
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/test/unit_test.hpp>
+#include <memory>
 
+#include <dnd5/abilities.h>
+#include <dnd5/dice.h>
 
-BOOST_AUTO_TEST_SUITE(DnD5_Character);
+#include "testFramework.h"
 
-//BOOST_AUTO_TEST_CASE(CharacterRoll)
-//{
-//}
+struct AbilityFixture : public BaseFixture < AbilityFixture > {
+	AbilityFixture() :
+		BaseFixture("DnD5_Ability.csv", { "AbilitiesFromRoll" })
+	{
+	}
+};
+
+BOOST_FIXTURE_TEST_SUITE(DnD5_Ability, AbilityFixture)
+
+BOOST_AUTO_TEST_CASE(AbilitiesFromRoll)
+{
+	std::shared_ptr<DnD5::Dice> dice = std::make_shared<DnD5::Dice>();
+
+	TestFunc([&] {
+		auto aRoll = DnD5::Abilities::AbilitiesFromRoll(dice);
+		auto acc = std::accumulate(begin(aRoll), end(aRoll), 0);
+
+		BOOST_CHECK(acc > 0);
+		BOOST_CHECK(acc <= (18 * 6));
+	});
+}
 
 BOOST_AUTO_TEST_SUITE_END()

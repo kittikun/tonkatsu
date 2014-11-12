@@ -7,13 +7,13 @@
 #include <memory>
 #include <string>
 
-#include <Core/Platform.h>
+#include <core/platform.h>
 
 namespace DnD5
 {
 	class IRace;
 
-	namespace Lore 
+	namespace Lore
 	{
 		std::string KATSU_API GenerateFirstName(const std::shared_ptr<IRace>& race, bool isMale);
 		std::string KATSU_API GenerateLastName(const std::shared_ptr<IRace>& race);

@@ -16,10 +16,10 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <DnD5/Lore.h>
-#include <DnD5/Race.h>
+#include <dnd5/lore.h>
+#include <dnd5/race.h>
 
-#include "TestFramework.h"
+#include "testFramework.h"
 
 struct LoreFixture : public BaseFixture<LoreFixture> {
 	LoreFixture() :

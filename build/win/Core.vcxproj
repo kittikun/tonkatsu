@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Core\Log.h" />
-    <ClInclude Include="..\..\src\Core\Platform.h" />
+    <ClCompile Include="..\..\src\core\log.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Core\Log.cpp" />
+    <ClInclude Include="..\..\src\core\log.h" />
+    <ClInclude Include="..\..\src\core\platform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5FEF0892-6D5A-4C2D-A680-726E67C1FB84}</ProjectGuid>

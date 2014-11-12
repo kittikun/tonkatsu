@@ -13,27 +13,27 @@ if (Boost_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK)
 endif(Boost_FOUND)
 
-set(CORE_PATH	${SRC_PATH}/Core)
-set(DND5_PATH   ${SRC_PATH}/DnD5)
-set(TEST_PATH   ${SRC_PATH}/UnitTest)
-set(EXE_PATH ${SRC_PATH}/Server)
+set(CORE_PATH	${SRC_PATH}/core)
+set(DND5_PATH   ${SRC_PATH}/dnd5)
+set(TEST_PATH   ${SRC_PATH}/unittest)
+set(EXE_PATH ${SRC_PATH}/server)
 include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH} ${TEST_PATH}/include)
 
-set(CORE_SRC 	${CORE_PATH}/Log.cpp)
+set(CORE_SRC 	${CORE_PATH}/log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
-set(DND5_SRC    ${DND5_PATH}/Abilities.cpp
-                ${DND5_PATH}/Character.cpp
-                ${DND5_PATH}/Dice.cpp
-                ${DND5_PATH}/Lore.cpp)
+set(DND5_SRC    ${DND5_PATH}/abilities.cpp
+                ${DND5_PATH}/character.cpp
+                ${DND5_PATH}/dice.cpp
+                ${DND5_PATH}/lore.cpp)
 add_library(dnd5 SHARED ${DND5_SRC})
 
 
 set(TEST_SRC    ${TEST_PATH}/main.cpp
-                ${TEST_PATH}/Character.cpp
-                ${TEST_PATH}/Dice.cpp
-                ${TEST_PATH}/Lore.cpp
-                ${TEST_PATH}/include/minicsv.cpp)
+                ${TEST_PATH}/character.cpp
+                ${TEST_PATH}/dice.cpp
+                ${TEST_PATH}/lore.cpp
+                ${TEST_PATH}/lib/minicsv.cpp)
 add_executable(unittest ${TEST_SRC})
 target_link_libraries(unittest ${Boost_LIBRARIES} dnd5)
 

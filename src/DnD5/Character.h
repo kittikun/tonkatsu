@@ -6,12 +6,11 @@
 
 #include <memory>
 
-#include "Definitions.h"
+#include "definitions.h"
 
 namespace DnD5
 {
 	class Abilities;
-	class CharacterImpl;
 	class IRace;
 
 	class Character
@@ -20,6 +19,8 @@ namespace DnD5
 		~Character();
 
 	private:
+		class CharacterImpl;
+
 		std::unique_ptr<CharacterImpl> impl;
 	};
 }

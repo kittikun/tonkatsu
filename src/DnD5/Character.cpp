@@ -1,14 +1,14 @@
 // Open Game License v 1.0 Copyright 2000, Wizards of the Coast, Inc.
 //
 
-#include "Character.h"
+#include "character.h"
 
-#include "Abilities.h"
-#include "Race.h"
+#include "abilities.h"
+#include "race.h"
 
 namespace DnD5
 {
-	class CharacterImpl
+	class Character::CharacterImpl
 	{
 	public:
 		CharacterImpl(const std::shared_ptr<Abilities>& ab, Profession p, const std::shared_ptr<IRace>& r) :

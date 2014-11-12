@@ -16,12 +16,11 @@
 #include <boost/test/unit_test.hpp>
 #include <memory>
 
-#include <DnD5/Dice.h>
+#include <dnd5/dice.h>
 
-#include "TestFramework.h"
+#include "testFramework.h"
 
-
-struct DiceFixture : public BaseFixture<DiceFixture> {
+struct DiceFixture : public BaseFixture < DiceFixture > {
 	DiceFixture() :
 		BaseFixture("DnD5_Dice.csv", { "Roll6", "Roll20", "AbilityRoll" }),
 		dice(new DnD5::Dice())
@@ -46,17 +45,6 @@ BOOST_AUTO_TEST_CASE(Roll20)
 	TestFunc([&] {
 		uint8_t rnd = dice->Roll20();
 		BOOST_CHECK((rnd > 0) && (rnd <= 20));
-	});
-}
-
-BOOST_AUTO_TEST_CASE(AbilityRoll)
-{
-	TestFunc([&] {
-		auto aRoll = dice->AbilityRoll();
-		auto acc = std::accumulate(begin(aRoll), end(aRoll), 0);
-
-		BOOST_CHECK(acc > 0);
-		BOOST_CHECK(acc <= (18 * 6));
 	});
 }
 

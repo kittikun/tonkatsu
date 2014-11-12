@@ -8,26 +8,23 @@
 #include <cstdint>
 #include <memory>
 
-#include <Core/Platform.h>
+#include <core/platform.h>
 
 namespace DnD5
 {
-    class DiceImpl;
+	class KATSU_API Dice
+	{
+	public:
+		Dice();
+		~Dice();
 
-    class KATSU_API Dice
-    {
-    public:
-        Dice();
-        ~Dice();
+		const uint8_t Roll6() const;
+		const uint8_t Roll20() const;
 
-        uint8_t Roll6() const;
-        uint8_t Roll20() const;
-
-        const std::array<uint8_t, 6> AbilityRoll() const;
-
-    private:
-        std::unique_ptr<DiceImpl> impl;
-    };
+	private:
+		class DiceImpl;
+		std::unique_ptr<DiceImpl> impl;
+	};
 } // namespace DnD5
 
 #endif // DICE_H

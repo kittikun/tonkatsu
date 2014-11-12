@@ -24,7 +24,7 @@
 #include <boost/log/sources/record_ostream.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 
-#include "Platform.h"
+#include "platform.h"
 
 #define LOGC BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Core)
 #define LOGD BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_DnD5)

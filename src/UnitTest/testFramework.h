@@ -21,7 +21,7 @@
 #include <numeric>
 #include <array>
 
-#include "minicsv.h"
+#include "lib/minicsv.h"
 
 template <typename Derived>
 struct BaseFixture {

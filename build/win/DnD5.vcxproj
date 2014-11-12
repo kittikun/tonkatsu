@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\DnD5\Abilities.h" />
-    <ClInclude Include="..\..\src\DnD5\Character.h" />
-    <ClInclude Include="..\..\src\DnD5\Definitions.h" />
-    <ClInclude Include="..\..\src\DnD5\Dice.h" />
-    <ClInclude Include="..\..\src\DnD5\Lore.h" />
-    <ClInclude Include="..\..\src\DnD5\Race.h" />
+    <ClCompile Include="..\..\src\dnd5\abilities.cpp" />
+    <ClCompile Include="..\..\src\dnd5\character.cpp" />
+    <ClCompile Include="..\..\src\dnd5\dice.cpp" />
+    <ClCompile Include="..\..\src\dnd5\lore.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\DnD5\Abilities.cpp" />
-    <ClCompile Include="..\..\src\DnD5\Character.cpp" />
-    <ClCompile Include="..\..\src\DnD5\Dice.cpp" />
-    <ClCompile Include="..\..\src\DnD5\Lore.cpp" />
+    <ClInclude Include="..\..\src\dnd5\abilities.h" />
+    <ClInclude Include="..\..\src\dnd5\character.h" />
+    <ClInclude Include="..\..\src\dnd5\definitions.h" />
+    <ClInclude Include="..\..\src\dnd5\dice.h" />
+    <ClInclude Include="..\..\src\dnd5\lore.h" />
+    <ClInclude Include="..\..\src\dnd5\race.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\DnD5\LICENSE" />
+    <None Include="..\..\src\dnd5\LICENSE" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4495B5E4-117B-43C3-B60B-426A1D8A5E17}</ProjectGuid>
