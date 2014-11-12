@@ -3,6 +3,7 @@
 
 #include "abilities.h"
 
+#include <algorithm>
 #include <numeric>
 
 #include "dice.h"

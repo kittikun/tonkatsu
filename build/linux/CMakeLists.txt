@@ -17,7 +17,7 @@ set(CORE_PATH	${SRC_PATH}/core)
 set(DND5_PATH   ${SRC_PATH}/dnd5)
 set(TEST_PATH   ${SRC_PATH}/unittest)
 set(EXE_PATH ${SRC_PATH}/server)
-include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH} ${TEST_PATH}/include)
+include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH} ${TEST_PATH})
 
 set(CORE_SRC 	${CORE_PATH}/log.cpp)
 add_library(core SHARED ${CORE_SRC})
@@ -30,9 +30,9 @@ add_library(dnd5 SHARED ${DND5_SRC})
 
 
 set(TEST_SRC    ${TEST_PATH}/main.cpp
-                ${TEST_PATH}/character.cpp
-                ${TEST_PATH}/dice.cpp
-                ${TEST_PATH}/lore.cpp
+                ${TEST_PATH}/dnd5/character.cpp
+                ${TEST_PATH}/dnd5/dice.cpp
+                ${TEST_PATH}/dnd5/lore.cpp
                 ${TEST_PATH}/lib/minicsv.cpp)
 add_executable(unittest ${TEST_SRC})
 target_link_libraries(unittest ${Boost_LIBRARIES} dnd5)
