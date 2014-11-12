@@ -46,7 +46,7 @@ namespace Tonkatsu
 				static const char* strings[] =
 				{
 					"Core",
-					"DnD5",
+					"Dominion",
 					"WARNING",
 					"ERROR",
 				};

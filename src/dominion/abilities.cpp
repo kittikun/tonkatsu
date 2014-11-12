@@ -1,5 +1,20 @@
-// Open Game License v 1.0 Copyright 2000, Wizards of the Coast, Inc.
+// Copyright(C) 2014 kittikun
 //
+// This program is free software : you can redistribute it and / or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.If not, see <http://www.gnu.org/licenses/>.
+//
+// This work is compatible with the Dominion Rules role-playing system.To learn more about
+// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
 #include "abilities.h"
 
@@ -8,7 +23,7 @@
 
 #include "dice.h"
 
-namespace DnD5
+namespace Dominion
 {
 	class Abilities::AbilitiesImpl
 	{
@@ -76,6 +91,7 @@ namespace DnD5
 
 	std::array<uint8_t, 6> Abilities::AbilitiesFromStandard()
 	{
-		return std::array < uint8_t, 6 > { 15, 14, 13, 12, 10, 8 };
+		std::array<uint8_t, 6> a = { 15, 14, 13, 12, 10, 8 };
+		return a;
 	}
-} // namespace DnD5
+} // namespace Dominion

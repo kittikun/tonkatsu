@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{11d031e0-5d3e-4edd-911f-4e615527bf41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{2bd13783-fa76-45cb-8097-9ad8ca00d08f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\dominion">
+      <UniqueIdentifier>{dab44f82-6550-4238-bcea-80513f7be093}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\unittest\lib\minicsv.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\unittest\main.cpp" />
+    <ClCompile Include="..\..\src\unittest\dominion\abilities.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\unittest\dominion\character.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\unittest\dominion\dice.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\unittest\dominion\lore.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\unittest\lib\minicsv.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\unittest\testFramework.h" />
+  </ItemGroup>
+</Project>

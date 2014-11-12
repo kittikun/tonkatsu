@@ -16,8 +16,8 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <dnd5/lore.h>
-#include <dnd5/race.h>
+#include <dominion/lore.h>
+#include <dominion/race.h>
 
 #include "testFramework.h"
 
@@ -25,20 +25,20 @@ struct LoreFixture : public BaseFixture<LoreFixture> {
 	LoreFixture() :
 		BaseFixture("DnD5_Lore.csv", { "GenerateFirstName", "GenerateLastName" })
 	{
-		for (int i = 0; i < (int)DnD5::ESubRaceDwarf::Count; ++i)
-			races.emplace_back(std::make_shared<DnD5::Dwarf>(static_cast<DnD5::ESubRaceDwarf>(i)));
+		for (int i = 0; i < (int)Dominion::ESubRaceDwarf::Count; ++i)
+			races.emplace_back(std::make_shared<Dominion::Dwarf>(static_cast<Dominion::ESubRaceDwarf>(i)));
 
-		for (int i = 0; i < (int)DnD5::ESubRaceElf::Count; ++i)
-			races.emplace_back(std::make_shared<DnD5::Elf>(static_cast<DnD5::ESubRaceElf>(i)));
+		for (int i = 0; i < (int)Dominion::ESubRaceElf::Count; ++i)
+			races.emplace_back(std::make_shared<Dominion::Elf>(static_cast<Dominion::ESubRaceElf>(i)));
 
-		for (int i = 0; i < (int)DnD5::ESubRaceHalfling::Count; ++i)
-			races.emplace_back(std::make_shared<DnD5::Halfling>(static_cast<DnD5::ESubRaceHalfling>(i)));
+		for (int i = 0; i < (int)Dominion::ESubRaceHalfling::Count; ++i)
+			races.emplace_back(std::make_shared<Dominion::Halfling>(static_cast<Dominion::ESubRaceHalfling>(i)));
 
-		for (int i = 0; i < (int)DnD5::ESubRaceHuman::Count; ++i)
-			races.emplace_back(std::make_shared<DnD5::Human>(static_cast<DnD5::ESubRaceHuman>(i)));
+		for (int i = 0; i < (int)Dominion::ESubRaceHuman::Count; ++i)
+			races.emplace_back(std::make_shared<Dominion::Human>(static_cast<Dominion::ESubRaceHuman>(i)));
 	}
 
-	std::vector<std::shared_ptr<DnD5::IRace>> races;
+	std::vector<std::shared_ptr<Dominion::IRace>> races;
 };
 
 BOOST_FIXTURE_TEST_SUITE(DnD5_Lore, LoreFixture);
@@ -47,8 +47,8 @@ BOOST_AUTO_TEST_CASE(FirstName)
 {
 	TestFunc([&] {
 		for (const auto& iter : races) {
-			BOOST_CHECK(DnD5::Lore::GenerateFirstName(iter, true).size() > 0);
-			BOOST_CHECK(DnD5::Lore::GenerateFirstName(iter, false).size() > 0);
+			BOOST_CHECK(Dominion::Lore::GenerateFirstName(iter, true).size() > 0);
+			BOOST_CHECK(Dominion::Lore::GenerateFirstName(iter, false).size() > 0);
 		}
 	});
 }
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(LastName)
 {
 	TestFunc([&] {
 		for (const auto& iter : races) {
-			BOOST_CHECK(DnD5::Lore::GenerateLastName(iter).size() > 0);
+			BOOST_CHECK(Dominion::Lore::GenerateLastName(iter).size() > 0);
 		}
 	});
 }

@@ -12,40 +12,32 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
+//
+// This work is compatible with the Dominion Rules role-playing system.To learn more about
+// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include <boost/test/unit_test.hpp>
+#ifndef CHARACTER_H
+#define CHARACTER_H
+
 #include <memory>
 
-#include <dnd5/dice.h>
+#include "definitions.h"
 
-#include "testFramework.h"
+namespace Dominion
+{
+	class Abilities;
+	class IRace;
 
-struct DiceFixture : public BaseFixture < DiceFixture > {
-	DiceFixture() :
-		BaseFixture("DnD5_Dice.csv", { "Roll6", "Roll20", "AbilityRoll" }),
-		dice(new DnD5::Dice())
+	class Character
 	{
-	}
+		Character(const std::shared_ptr<Abilities>&, Profession, const std::shared_ptr<IRace>&);
+		~Character();
 
-	std::unique_ptr<DnD5::Dice> dice;
-};
+	private:
+		class CharacterImpl;
 
-BOOST_FIXTURE_TEST_SUITE(DnD5_Dice, DiceFixture)
-
-BOOST_AUTO_TEST_CASE(Roll6)
-{
-	TestFunc([&] {
-		uint8_t rnd = dice->Roll6();
-		BOOST_CHECK((rnd > 0) && (rnd <= 6));
-	});
+		std::unique_ptr<CharacterImpl> impl;
+	};
 }
 
-BOOST_AUTO_TEST_CASE(Roll20)
-{
-	TestFunc([&] {
-		uint8_t rnd = dice->Roll20();
-		BOOST_CHECK((rnd > 0) && (rnd <= 20));
-	});
-}
-
-BOOST_AUTO_TEST_SUITE_END()
+#endif

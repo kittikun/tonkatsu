@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(server)
-set(ROOT_PATH   ${PROJECT_SOURCE_DIR}/../../)
-set(SRC_PATH	${ROOT_PATH}/src)
-set(OUT_PATH    ${PROJECT_SOURCE_DIR}/out)
+set(ROOT_PATH		${PROJECT_SOURCE_DIR}/../../)
+set(SRC_PATH		${ROOT_PATH}/src)
+set(OUT_PATH		${PROJECT_SOURCE_DIR}/out)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11") 
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUT_PATH})
@@ -13,34 +13,34 @@ if (Boost_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK)
 endif(Boost_FOUND)
 
-set(CORE_PATH	${SRC_PATH}/core)
-set(DND5_PATH   ${SRC_PATH}/dnd5)
-set(TEST_PATH   ${SRC_PATH}/unittest)
-set(EXE_PATH ${SRC_PATH}/server)
+set(CORE_PATH		${SRC_PATH}/core)
+set(DOMINION_PATH   ${SRC_PATH}/dominion)
+set(TEST_PATH		${SRC_PATH}/unittest)
+set(EXE_PATH		${SRC_PATH}/server)
 include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH} ${TEST_PATH})
 
 set(CORE_SRC 	${CORE_PATH}/log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
-set(DND5_SRC    ${DND5_PATH}/abilities.cpp
-                ${DND5_PATH}/character.cpp
-                ${DND5_PATH}/dice.cpp
-                ${DND5_PATH}/lore.cpp)
-add_library(dnd5 SHARED ${DND5_SRC})
-
+set(DOMINION_SRC    ${DOMINION_PATH}/abilities.cpp
+                ${DOMINION_PATH}/character.cpp
+                ${DOMINION_PATH}/dice.cpp
+                ${DOMINION_PATH}/lore.cpp)
+add_library(dominion SHARED ${DOMINION_SRC})
 
 set(TEST_SRC    ${TEST_PATH}/main.cpp
-                ${TEST_PATH}/dnd5/character.cpp
-                ${TEST_PATH}/dnd5/dice.cpp
-                ${TEST_PATH}/dnd5/lore.cpp
+                ${TEST_PATH}/dominion/abilities.cpp
+                ${TEST_PATH}/dominion/character.cpp
+                ${TEST_PATH}/dominion/dice.cpp
+                ${TEST_PATH}/dominion/lore.cpp
                 ${TEST_PATH}/lib/minicsv.cpp)
 add_executable(unittest ${TEST_SRC})
-target_link_libraries(unittest ${Boost_LIBRARIES} dnd5)
+target_link_libraries(unittest ${Boost_LIBRARIES} dominion)
 
 
 set(EXE_SRC ${EXE_PATH}/main.cpp)
 add_executable(server ${EXE_SRC})
-target_link_libraries(server ${Boost_LIBRARIES} core dnd5)
+target_link_libraries(server ${Boost_LIBRARIES} core dominion)
 
 
 

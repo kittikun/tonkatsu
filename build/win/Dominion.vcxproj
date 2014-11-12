@@ -19,26 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\dnd5\abilities.cpp" />
-    <ClCompile Include="..\..\src\dnd5\character.cpp" />
-    <ClCompile Include="..\..\src\dnd5\dice.cpp" />
-    <ClCompile Include="..\..\src\dnd5\lore.cpp" />
+    <None Include="..\..\src\dominion\LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\dnd5\abilities.h" />
-    <ClInclude Include="..\..\src\dnd5\character.h" />
-    <ClInclude Include="..\..\src\dnd5\definitions.h" />
-    <ClInclude Include="..\..\src\dnd5\dice.h" />
-    <ClInclude Include="..\..\src\dnd5\lore.h" />
-    <ClInclude Include="..\..\src\dnd5\race.h" />
+    <ClCompile Include="..\..\src\dominion\abilities.cpp" />
+    <ClCompile Include="..\..\src\dominion\character.cpp" />
+    <ClCompile Include="..\..\src\dominion\dice.cpp" />
+    <ClCompile Include="..\..\src\dominion\lore.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\dnd5\LICENSE" />
+    <ClInclude Include="..\..\src\dominion\abilities.h" />
+    <ClInclude Include="..\..\src\dominion\character.h" />
+    <ClInclude Include="..\..\src\dominion\definitions.h" />
+    <ClInclude Include="..\..\src\dominion\dice.h" />
+    <ClInclude Include="..\..\src\dominion\lore.h" />
+    <ClInclude Include="..\..\src\dominion\race.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4495B5E4-117B-43C3-B60B-426A1D8A5E17}</ProjectGuid>
     <RootNamespace>Bible</RootNamespace>
-    <ProjectName>DnD5</ProjectName>
+    <ProjectName>Dominion</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

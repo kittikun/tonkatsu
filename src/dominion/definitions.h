@@ -12,13 +12,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
+//
+// This work is compatible with the Dominion Rules role-playing system.To learn more about
+// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include <boost/test/unit_test.hpp>
+#ifndef DEFINITION_H
+#define DEFINITION_H
 
-BOOST_AUTO_TEST_SUITE(DnD5_Character);
+#include <cstdint>
 
-//BOOST_AUTO_TEST_CASE(CharacterRoll)
-//{
-//}
+namespace Dominion
+{
+	enum class Profession : uint8_t {
+		Cleric,
+		Fighther,
+		Rogue,
+		Wizard
+	};
+} // namespace Dominion
 
-BOOST_AUTO_TEST_SUITE_END()
+#endif // DEFINITION_H

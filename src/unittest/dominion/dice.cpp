@@ -13,25 +13,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <array>
-#include <iostream>
-#include <numeric>
-#include <boost/format.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <boost/test/unit_test.hpp>
+#include <memory>
 
-#include <core/log.h>
 #include <dominion/dice.h>
-#include <dominion/race.h>
 
-int main(int, char**)
+#include "testFramework.h"
+
+struct DiceFixture : public BaseFixture < DiceFixture > {
+	DiceFixture() :
+		BaseFixture("Dominion_Dice.csv", { "Roll6", "Roll20" }),
+		dice(new Dominion::Dice())
+	{
+	}
+
+	std::unique_ptr<Dominion::Dice> dice;
+};
+
+BOOST_FIXTURE_TEST_SUITE(DnD5_Dice, DiceFixture)
+
+BOOST_AUTO_TEST_CASE(Roll6)
 {
-	Tonkatsu::Core::Log::Initialize();
-
-	LOGC << "Hello World!";
-
-#if defined(_WIN32)
-	std::cin.get();
-#endif
-
-	return 0;
+	TestFunc([&] {
+		uint8_t rnd = dice->Roll6();
+		BOOST_CHECK((rnd > 0) && (rnd <= 6));
+	});
 }
+
+BOOST_AUTO_TEST_CASE(Roll20)
+{
+	TestFunc([&] {
+		uint8_t rnd = dice->Roll20();
+		BOOST_CHECK((rnd > 0) && (rnd <= 20));
+	});
+}
+
+BOOST_AUTO_TEST_SUITE_END()

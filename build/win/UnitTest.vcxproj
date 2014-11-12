@@ -18,6 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\unittest\dominion\abilities.cpp" />
+    <ClCompile Include="..\..\src\unittest\dominion\character.cpp" />
+    <ClCompile Include="..\..\src\unittest\dominion\dice.cpp" />
+    <ClCompile Include="..\..\src\unittest\dominion\lore.cpp" />
+    <ClCompile Include="..\..\src\unittest\lib\minicsv.cpp" />
+    <ClCompile Include="..\..\src\unittest\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\unittest\lib\minicsv.h" />
+    <ClInclude Include="..\..\src\unittest\testFramework.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BF0459F6-70F1-4C5B-B2A4-D94CDFB69E7E}</ProjectGuid>
     <RootNamespace>UnitTest</RootNamespace>
@@ -91,7 +103,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Core.lib;DnD5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core.lib;Dominion.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib64-msvc-12.0;$(SolutionDir)out\$(Configuration)\$(platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -105,7 +117,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Core.lib;DnD5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core.lib;Dominion.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib32-msvc-12.0;$(SolutionDir)out\$(Configuration)\$(platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -123,7 +135,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Core.lib;DnD5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core.lib;Dominion.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib64-msvc-12.0;$(SolutionDir)out\$(Configuration)\$(platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -141,22 +153,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Core.lib;DnD5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core.lib;Dominion.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib32-msvc-12.0;$(SolutionDir)out\$(Configuration)\$(platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\unittest\dnd5\abilities.cpp" />
-    <ClCompile Include="..\..\src\unittest\dnd5\character.cpp" />
-    <ClCompile Include="..\..\src\unittest\dnd5\dice.cpp" />
-    <ClCompile Include="..\..\src\unittest\dnd5\lore.cpp" />
-    <ClCompile Include="..\..\src\unittest\lib\minicsv.cpp" />
-    <ClCompile Include="..\..\src\unittest\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\unittest\lib\minicsv.h" />
-    <ClInclude Include="..\..\src\unittest\testFramework.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

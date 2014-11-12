@@ -13,25 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <array>
-#include <iostream>
-#include <numeric>
-#include <boost/format.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <boost/test/unit_test.hpp>
 
-#include <core/log.h>
-#include <dominion/dice.h>
-#include <dominion/race.h>
+BOOST_AUTO_TEST_SUITE(Dominion_Character);
 
-int main(int, char**)
-{
-	Tonkatsu::Core::Log::Initialize();
+//BOOST_AUTO_TEST_CASE(CharacterRoll)
+//{
+//}
 
-	LOGC << "Hello World!";
-
-#if defined(_WIN32)
-	std::cin.get();
-#endif
-
-	return 0;
-}
+BOOST_AUTO_TEST_SUITE_END()

@@ -12,26 +12,27 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
+//
+// This work is compatible with the Dominion Rules role-playing system.To learn more about
+// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include <array>
-#include <iostream>
-#include <numeric>
-#include <boost/format.hpp>
-#include <boost/scoped_ptr.hpp>
+#ifndef LORE_H
+#define LORE_H
 
-#include <core/log.h>
-#include <dominion/dice.h>
-#include <dominion/race.h>
+#include <memory>
+#include <string>
 
-int main(int, char**)
+#include <core/platform.h>
+
+namespace Dominion
 {
-	Tonkatsu::Core::Log::Initialize();
+	class IRace;
 
-	LOGC << "Hello World!";
+	namespace Lore
+	{
+		std::string KATSU_API GenerateFirstName(const std::shared_ptr<IRace>& race, bool isMale);
+		std::string KATSU_API GenerateLastName(const std::shared_ptr<IRace>& race);
+	} // namespace Lore
+} // namespace Dominion
 
-#if defined(_WIN32)
-	std::cin.get();
-#endif
-
-	return 0;
-}
+#endif // LORE_H

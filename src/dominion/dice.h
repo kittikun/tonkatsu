@@ -12,35 +12,34 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
+//
+// This work is compatible with the Dominion Rules role-playing system.To learn more about
+// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include <boost/test/unit_test.hpp>
+#ifndef DICE_H
+#define DICE_H
+
+#include <array>
+#include <cstdint>
 #include <memory>
 
-#include <dnd5/abilities.h>
-#include <dnd5/dice.h>
+#include <core/platform.h>
 
-#include "testFramework.h"
-
-struct AbilityFixture : public BaseFixture < AbilityFixture > {
-	AbilityFixture() :
-		BaseFixture("DnD5_Ability.csv", { "AbilitiesFromRoll" })
-	{
-	}
-};
-
-BOOST_FIXTURE_TEST_SUITE(DnD5_Ability, AbilityFixture)
-
-BOOST_AUTO_TEST_CASE(AbilitiesFromRoll)
+namespace Dominion
 {
-	std::shared_ptr<DnD5::Dice> dice = std::make_shared<DnD5::Dice>();
+	class KATSU_API Dice
+	{
+	public:
+		Dice();
+		~Dice();
 
-	TestFunc([&] {
-		auto aRoll = DnD5::Abilities::AbilitiesFromRoll(dice);
-		auto acc = std::accumulate(begin(aRoll), end(aRoll), 0);
+		const uint8_t Roll6() const;
+		const uint8_t Roll20() const;
 
-		BOOST_CHECK(acc > 0);
-		BOOST_CHECK(acc <= (18 * 6));
-	});
-}
+	private:
+		class DiceImpl;
+		std::unique_ptr<DiceImpl> impl;
+	};
+} // namespace Dominion
 
-BOOST_AUTO_TEST_SUITE_END()
+#endif // DICE_H
