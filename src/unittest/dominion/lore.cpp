@@ -21,9 +21,9 @@
 
 #include "testFramework.h"
 
-struct LoreFixture : public BaseFixture<LoreFixture> {
+struct LoreFixture : public BaseFixture < LoreFixture > {
 	LoreFixture() :
-		BaseFixture("DnD5_Lore.csv", { "GenerateFirstName", "GenerateLastName" })
+		BaseFixture("Dominion_Lore.csv", { "GenerateFirstName", "GenerateLastName" })
 	{
 		for (int i = 0; i < (int)Dominion::ESubRaceDwarf::Count; ++i)
 			races.emplace_back(std::make_shared<Dominion::Dwarf>(static_cast<Dominion::ESubRaceDwarf>(i)));
@@ -61,6 +61,5 @@ BOOST_AUTO_TEST_CASE(LastName)
 		}
 	});
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()
