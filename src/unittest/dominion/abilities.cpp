@@ -23,7 +23,7 @@
 
 struct AbilityFixture : public BaseFixture < AbilityFixture > {
 	AbilityFixture() :
-		BaseFixture("Dominion_Ability.csv", { "AbilitiesFromRoll" })
+		BaseFixture("Dominion_Abilities.csv", { "AbilitiesFromRoll" })
 	{
 	}
 };
