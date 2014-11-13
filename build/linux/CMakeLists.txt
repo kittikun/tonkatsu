@@ -22,13 +22,13 @@ include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH} ${TEST_PATH})
 set(CORE_SRC 	${CORE_PATH}/log.cpp)
 add_library(core SHARED ${CORE_SRC})
 
-set(DOMINION_SRC    ${DOMINION_PATH}/abilities.cpp
+set(DOMINION_SRC    ${DOMINION_PATH}/attributes.cpp
                 ${DOMINION_PATH}/character.cpp
                 ${DOMINION_PATH}/dice.cpp)
 add_library(dominion SHARED ${DOMINION_SRC})
 
 set(TEST_SRC    ${TEST_PATH}/main.cpp
-                ${TEST_PATH}/dominion/abilities.cpp
+                ${TEST_PATH}/dominion/attributes.cpp
                 ${TEST_PATH}/dominion/character.cpp
                 ${TEST_PATH}/dominion/dice.cpp
                 ${TEST_PATH}/lib/minicsv.cpp)
