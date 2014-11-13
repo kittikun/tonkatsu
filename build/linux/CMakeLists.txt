@@ -24,7 +24,7 @@ add_library(core SHARED ${CORE_SRC})
 
 set(DOMINION_SRC    ${DOMINION_PATH}/abilities.cpp
                 ${DOMINION_PATH}/character.cpp
-                ${DOMINION_PATH}/dice.cpp
+                ${DOMINION_PATH}/dice.cpp)
 add_library(dominion SHARED ${DOMINION_SRC})
 
 set(TEST_SRC    ${TEST_PATH}/main.cpp
