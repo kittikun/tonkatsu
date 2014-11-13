@@ -22,17 +22,15 @@
     <None Include="..\..\src\dominion\LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\dominion\abilities.cpp" />
+    <ClCompile Include="..\..\src\dominion\attributes.cpp" />
     <ClCompile Include="..\..\src\dominion\character.cpp" />
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
-    <ClCompile Include="..\..\src\dominion\lore.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\dominion\abilities.h" />
+    <ClInclude Include="..\..\src\dominion\attributes.h" />
     <ClInclude Include="..\..\src\dominion\character.h" />
     <ClInclude Include="..\..\src\dominion\definitions.h" />
     <ClInclude Include="..\..\src\dominion\dice.h" />
-    <ClInclude Include="..\..\src\dominion\lore.h" />
     <ClInclude Include="..\..\src\dominion\race.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -4,7 +4,7 @@ project(server)
 set(ROOT_PATH		${PROJECT_SOURCE_DIR}/../../)
 set(SRC_PATH		${ROOT_PATH}/src)
 set(OUT_PATH		${PROJECT_SOURCE_DIR}/out)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11") 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++14") 
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUT_PATH})
 

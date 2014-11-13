@@ -16,47 +16,64 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "dice.h"
+#include "attributes.h"
 
-#include <algorithm>
-#include <ctime>
 #include <iterator>
+#include <algorithm>
 #include <numeric>
-#include <random>
+
+#include "dice.h"
 
 namespace Dominion
 {
-	class Dice::DiceImpl {
+	class Attributes::AttributesImpl
+	{
 	public:
-		DiceImpl()
+		AttributesImpl(AttributeArray a) :
+			attributes_(a)
 		{
-			std::random_device rd;
-			rng = std::mt19937{ rd() };
 		}
 
-		const uint8_t Roll()
-		{
-			return static_cast<uint8_t>(std::uniform_int_distribution < > { 1, 12 }(rng));
-		}
+		const uint8_t Agility() const { return attributes_[EAttribute::Agility]; }
+		const uint8_t Intuition() const { return attributes_[EAttribute::Intuition]; }
+		const uint8_t Intellect() const { return attributes_[EAttribute::Intellect]; }
+		const uint8_t Luck() const { return attributes_[EAttribute::Luck]; }
+		const uint8_t Stamina() const { return attributes_[EAttribute::Stamina]; }
+		const uint8_t Vigour() const { return attributes_[EAttribute::Vigour]; }
 
 	private:
-		std::mt19937 rng;
+		AttributeArray attributes_;
 	};
 
 	//----------------------------------------------------------------------------------------------
-	// DICE
+	// ABILITIES
 	//----------------------------------------------------------------------------------------------
-	Dice::Dice()
-		: impl(new DiceImpl())
+	Attributes::Attributes(AttributeArray a) :
+		impl_(new AttributesImpl(a))
 	{
 	}
 
-	Dice::~Dice()
+	Attributes::~Attributes()
 	{
 	}
 
-	const uint8_t Dice::Roll() const
+	AttributeArray Attributes::GetBaseAttributes()
 	{
-		return impl->Roll();
+		AttributeArray attributes;
+
+		attributes.fill(1);
+
+		return attributes;
+	}
+
+	AttributePointsRemainder Attributes::GetAttributeRoll(const std::shared_ptr<Dice>& dice)
+	{
+		std::array < uint8_t, 3 >  res;
+
+		res.fill(dice.get()->Roll());
+
+		const uint8_t sum = std::accumulate(std::cbegin(res), std::cend(res), uint8_t(0));
+
+		return std::make_tuple(sum / 3, sum % 3);
 	}
 } // namespace Dominion

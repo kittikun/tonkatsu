@@ -21,6 +21,7 @@
 
 #include <memory>
 
+#include "attributes.h"
 #include "definitions.h"
 
 namespace Dominion
@@ -30,7 +31,7 @@ namespace Dominion
 
 	class Character
 	{
-		Character(const std::shared_ptr<Abilities>&, Profession, const std::shared_ptr<IRace>&);
+		Character(const AttributeArray&, Style, const std::shared_ptr<IRace>&);
 		~Character();
 
 	private:

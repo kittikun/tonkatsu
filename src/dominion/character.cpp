@@ -18,7 +18,7 @@
 
 #include "character.h"
 
-#include "abilities.h"
+#include "attributes.h"
 #include "race.h"
 
 namespace Dominion
@@ -26,24 +26,24 @@ namespace Dominion
 	class Character::CharacterImpl
 	{
 	public:
-		CharacterImpl(const std::shared_ptr<Abilities>& ab, Profession p, const std::shared_ptr<IRace>& r) :
+		CharacterImpl(const AttributeArray& ab, Style p, const std::shared_ptr<IRace>& r) :
 			abilities(ab),
-			profession(p),
+			Style(p),
 			race(r)
 		{
 		}
 
 	private:
-		std::shared_ptr<Abilities> abilities;
-		Profession profession;
+		AttributeArray abilities;
+		Style Style;
 		std::shared_ptr<IRace> race;
 	};
 
 	//----------------------------------------------------------------------------------------------
 	// CHARACTER
 	//----------------------------------------------------------------------------------------------
-	Character::Character(const std::shared_ptr<Abilities>& ab, Profession p, const std::shared_ptr<IRace>& r)
-		: impl(new CharacterImpl(ab, p, r))
+	Character::Character(const AttributeArray& ab, Style p, const std::shared_ptr<IRace>& r)
+		: impl{ new CharacterImpl(ab, p, r) }
 	{
 	}
 

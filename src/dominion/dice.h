@@ -35,7 +35,7 @@ namespace Dominion
 
 		// (DR3.1.1 p7, 4-2 WHAT YOU NEED TO PLAY)
 		// To play DR, you need [..] A one twelve-sided die.
-		const uint16_t Roll() const;
+		const uint8_t Roll() const;
 
 	private:
 		class DiceImpl;

@@ -6,23 +6,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\dominion\abilities.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\dominion\character.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\dominion\dice.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dominion\lore.cpp">
+    <ClCompile Include="..\..\src\dominion\attributes.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\dominion\abilities.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\dominion\character.h">
       <Filter>source</Filter>
     </ClInclude>
@@ -32,11 +26,14 @@
     <ClInclude Include="..\..\src\dominion\dice.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dominion\lore.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\dominion\race.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\dominion\attributes.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\dominion\LICENSE" />
   </ItemGroup>
 </Project>

@@ -16,30 +16,38 @@
 #include <boost/test/unit_test.hpp>
 #include <memory>
 
-#include <dominion/abilities.h>
+#include <dominion/attributes.h>
 #include <dominion/dice.h>
 
 #include "testFramework.h"
 
-struct AbilityFixture : public BaseFixture < AbilityFixture > {
-	AbilityFixture() :
-		BaseFixture("Dominion_Abilities.csv", { "AbilitiesFromRoll" })
+struct AttributeFixture : public BaseFixture < AttributeFixture > {
+	AttributeFixture() :
+		BaseFixture("Dominion_Attributes.csv", { "GetBaseAttributes", "GetAttributeRoll" })
 	{
 	}
 };
 
-BOOST_FIXTURE_TEST_SUITE(DnD5_Ability, AbilityFixture)
+BOOST_FIXTURE_TEST_SUITE(Dominion_Ability, AttributeFixture)
 
-BOOST_AUTO_TEST_CASE(AbilitiesFromRoll)
+BOOST_AUTO_TEST_CASE(GetBaseAttributes)
+{
+	TestFunc([&] {
+		auto attribs = Dominion::Attributes::GetBaseAttributes();
+
+		BOOST_CHECK(std::accumulate(std::cbegin(attribs), std::cend(attribs), 0) == Dominion::EAttribute::Count);
+	});
+}
+
+BOOST_AUTO_TEST_CASE(GetAttributeRoll)
 {
 	std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
 
 	TestFunc([&] {
-		auto aRoll = Dominion::Abilities::AbilitiesFromRoll(dice);
-		auto acc = std::accumulate(begin(aRoll), end(aRoll), 0);
+		auto aRoll = Dominion::Attributes::GetAttributeRoll(dice);
 
-		BOOST_CHECK(acc > 0);
-		BOOST_CHECK(acc <= (18 * 6));
+		BOOST_CHECK(std::get<0>(aRoll) > 0);
+		BOOST_CHECK(std::get<1>(aRoll) >= 0);
 	});
 }
 
