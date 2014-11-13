@@ -38,7 +38,7 @@ struct BaseFixture {
 				os << str;
 			}
 
-			os <<  NEWLINE;
+			os << NEWLINE;
 			initalized = true;
 		}
 	}
@@ -48,7 +48,7 @@ struct BaseFixture {
 	template<typename F>
 	void TestFunc(F lambda)
 	{
-		std::array<std::chrono::milliseconds::rep, 10> time;
+		std::array<std::chrono::milliseconds::rep, 20> time;
 
 		for (int i = 0; i < 10; ++i) {
 			auto t1 = std::chrono::high_resolution_clock::now();

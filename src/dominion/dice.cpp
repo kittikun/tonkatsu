@@ -28,19 +28,15 @@ namespace Dominion
 {
 	class Dice::DiceImpl {
 	public:
-		DiceImpl() : rng((uint32_t)std::time(nullptr))
+		DiceImpl()
 		{
+			std::random_device rd;
+			rng = std::mt19937{ rd() };
 		}
 
-		inline const uint8_t Roll6() { return Roll(6); }
-		inline const uint8_t Roll20() { return Roll(20); }
-
-	private:
-		const uint8_t Roll(uint8_t max) {
-			std::uniform_int_distribution<> dist(1, max);
-			uint8_t res = (uint8_t)dist(rng);
-
-			return res;
+		const uint16_t Roll(uint16_t max)
+		{
+			return std::uniform_int_distribution < uint16_t > { 1, max }(rng);
 		}
 
 	private:
@@ -59,13 +55,8 @@ namespace Dominion
 	{
 	}
 
-	const uint8_t Dice::Roll6() const
+	const uint16_t Dice::Roll() const
 	{
-		return impl->Roll6();
-	}
-
-	const uint8_t Dice::Roll20() const
-	{
-		return impl->Roll20();
+		return impl->Roll(12);
 	}
 } // namespace Dominion

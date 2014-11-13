@@ -23,11 +23,17 @@
 
 namespace Dominion
 {
-	enum class Profession : uint8_t {
-		Cleric,
-		Fighther,
+	// (DR3.1.1 p26, 4-2 CHARACTER STYLES)
+	enum class Style : uint8_t {
+		Crusader,
+		Fool,
+		MerchantAdventurer,
+		Monk,
+		Priest,
+		Ranger,
 		Rogue,
-		Wizard
+		Soldier,
+		Witch
 	};
 } // namespace Dominion
 

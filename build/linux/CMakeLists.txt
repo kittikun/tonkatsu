@@ -25,14 +25,12 @@ add_library(core SHARED ${CORE_SRC})
 set(DOMINION_SRC    ${DOMINION_PATH}/abilities.cpp
                 ${DOMINION_PATH}/character.cpp
                 ${DOMINION_PATH}/dice.cpp
-                ${DOMINION_PATH}/lore.cpp)
 add_library(dominion SHARED ${DOMINION_SRC})
 
 set(TEST_SRC    ${TEST_PATH}/main.cpp
                 ${TEST_PATH}/dominion/abilities.cpp
                 ${TEST_PATH}/dominion/character.cpp
                 ${TEST_PATH}/dominion/dice.cpp
-                ${TEST_PATH}/dominion/lore.cpp
                 ${TEST_PATH}/lib/minicsv.cpp)
 add_executable(unittest ${TEST_SRC})
 target_link_libraries(unittest ${Boost_LIBRARIES} dominion)

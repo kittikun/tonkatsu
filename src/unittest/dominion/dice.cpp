@@ -22,7 +22,7 @@
 
 struct DiceFixture : public BaseFixture < DiceFixture > {
 	DiceFixture() :
-		BaseFixture("Dominion_Dice.csv", { "Roll6", "Roll20" }),
+		BaseFixture("Dominion_Dice.csv", { "Roll" }),
 		dice(new Dominion::Dice())
 	{
 	}
@@ -30,21 +30,13 @@ struct DiceFixture : public BaseFixture < DiceFixture > {
 	std::unique_ptr<Dominion::Dice> dice;
 };
 
-BOOST_FIXTURE_TEST_SUITE(DnD5_Dice, DiceFixture)
+BOOST_FIXTURE_TEST_SUITE(Dominion_Dice, DiceFixture)
 
-BOOST_AUTO_TEST_CASE(Roll6)
+BOOST_AUTO_TEST_CASE(Roll)
 {
 	TestFunc([&] {
-		uint8_t rnd = dice->Roll6();
+		const uint16_t rnd = dice->Roll();
 		BOOST_CHECK((rnd > 0) && (rnd <= 6));
-	});
-}
-
-BOOST_AUTO_TEST_CASE(Roll20)
-{
-	TestFunc([&] {
-		uint8_t rnd = dice->Roll20();
-		BOOST_CHECK((rnd > 0) && (rnd <= 20));
 	});
 }
 
