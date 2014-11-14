@@ -72,7 +72,7 @@ namespace Dominion
 
 		res.fill(dice.get()->Roll());
 
-		const uint8_t sum = std::accumulate(std::cbegin(res), std::cend(res), uint8_t(0));
+		const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
 
 		return std::make_tuple(sum / 3, sum % 3);
 	}
