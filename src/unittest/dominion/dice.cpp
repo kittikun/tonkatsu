@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(Roll)
 {
 	TestFunc([&] {
 		const uint16_t rnd = dice->Roll();
-		BOOST_CHECK((rnd > 0) && (rnd <= 6));
+		BOOST_CHECK((rnd > 0) && (rnd <= 12));
 	});
 }
 
