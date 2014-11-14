@@ -19,6 +19,7 @@
 #include "character.h"
 
 #include "attributes.h"
+#include "definitions.h"
 #include "race.h"
 
 namespace Dominion
