@@ -20,8 +20,6 @@
 #include <boost/scoped_ptr.hpp>
 
 #include <core/log.h>
-#include <dominion/dice.h>
-#include <dominion/race.h>
 
 int main(int, char**)
 {

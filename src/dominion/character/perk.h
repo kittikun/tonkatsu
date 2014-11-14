@@ -12,13 +12,28 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
+//
+// This work is compatible with the Dominion Rules role-playing system.To learn more about
+// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include <boost/test/unit_test.hpp>
+#ifndef PERK_H
+#define PERK_H
 
-BOOST_AUTO_TEST_SUITE(Dominion_Character);
+#include <cstdint>
 
-//BOOST_AUTO_TEST_CASE(CharacterRoll)
-//{
-//}
+namespace Dominion
+{
+	enum class EPerkType : uint8_t {
+		Attribute,
+		Passive,
+		Skill,
+	};
 
-BOOST_AUTO_TEST_SUITE_END()
+	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
+	class IPerk
+	{
+		Type
+	};
+}
+
+#endif // PERK_H

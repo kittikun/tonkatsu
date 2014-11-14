@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <numeric>
 
-#include "dice.h"
+#include "../dice.h"
 
 namespace Dominion
 {

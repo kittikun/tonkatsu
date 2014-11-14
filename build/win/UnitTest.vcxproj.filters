@@ -16,9 +16,6 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\unittest\main.cpp" />
-    <ClCompile Include="..\..\src\unittest\dominion\character.cpp">
-      <Filter>source\dominion</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\unittest\dominion\dice.cpp">
       <Filter>source\dominion</Filter>
     </ClCompile>

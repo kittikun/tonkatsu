@@ -18,7 +18,7 @@
 
 #include <dominion/dice.h>
 
-#include "testFramework.h"
+#include "../testFramework.h"
 
 struct DiceFixture : public BaseFixture < DiceFixture > {
 	DiceFixture() :

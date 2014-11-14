@@ -22,16 +22,15 @@
     <None Include="..\..\src\dominion\LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\dominion\attributes.cpp" />
-    <ClCompile Include="..\..\src\dominion\character.cpp" />
+    <ClCompile Include="..\..\src\dominion\character\attributes.cpp" />
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\dominion\attributes.h" />
-    <ClInclude Include="..\..\src\dominion\character.h" />
+    <ClInclude Include="..\..\src\dominion\character\attributes.h" />
+    <ClInclude Include="..\..\src\dominion\character\perk.h" />
+    <ClInclude Include="..\..\src\dominion\character\race.h" />
     <ClInclude Include="..\..\src\dominion\definitions.h" />
     <ClInclude Include="..\..\src\dominion\dice.h" />
-    <ClInclude Include="..\..\src\dominion\race.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4495B5E4-117B-43C3-B60B-426A1D8A5E17}</ProjectGuid>
@@ -82,20 +81,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

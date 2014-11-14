@@ -4,33 +4,33 @@
     <Filter Include="source">
       <UniqueIdentifier>{262595ce-e775-4857-a8e2-edeb3f0c70a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\character">
+      <UniqueIdentifier>{a5244b07-2b43-4919-97c9-94f4a5778b24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\dominion\character.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\dominion\dice.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dominion\attributes.cpp">
-      <Filter>source</Filter>
+    <ClCompile Include="..\..\src\dominion\character\attributes.cpp">
+      <Filter>source\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\dominion\character.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\dominion\definitions.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\dice.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dominion\race.h">
-      <Filter>source</Filter>
+    <ClInclude Include="..\..\src\dominion\character\attributes.h">
+      <Filter>source\character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dominion\attributes.h">
-      <Filter>source</Filter>
+    <ClInclude Include="..\..\src\dominion\character\race.h">
+      <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\character\perk.h">
+      <Filter>source\character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

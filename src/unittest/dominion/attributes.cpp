@@ -16,10 +16,10 @@
 #include <boost/test/unit_test.hpp>
 #include <memory>
 
-#include <dominion/attributes.h>
+#include <dominion/character/attributes.h>
 #include <dominion/dice.h>
 
-#include "testFramework.h"
+#include "../testFramework.h"
 
 struct AttributeFixture : public BaseFixture < AttributeFixture > {
 	AttributeFixture() :

@@ -73,22 +73,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)out\$(Configuration)\$(platform)\</OutDir>
-    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\intermediate\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+    <IntDir>$(SolutionDir)out\$(Configuration)\$(platform)\$(ProjectName)\</IntDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
   </PropertyGroup>
@@ -128,7 +128,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib64-msvc-12.0 $(SolutionDir)out\$(Configuration)\$(platform)</Command>
+      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib64-msvc-12.0 $(SolutionDir)..\..\</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy Boost DLLs</Message>
@@ -178,7 +178,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib64-msvc-12.0 $(SolutionDir)out\$(Configuration)\$(platform)</Command>
+      <Command>$(SolutionDir)postbuild.bat $(BOOST_ROOT)\lib64-msvc-12.0 $(SolutionDir)..\..\</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy Boost DLLs</Message>
