@@ -22,12 +22,13 @@
 #include <array>
 #include <cstdint>
 #include <memory>
+#include <boost/core/noncopyable.hpp>
 
 #include <core/platform.h>
 
 namespace Dominion
 {
-	class KATSU_API Dice
+	class KATSU_API Dice : private boost::noncopyable
 	{
 	public:
 		Dice();

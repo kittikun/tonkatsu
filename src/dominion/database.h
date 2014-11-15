@@ -16,26 +16,34 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_H
-#define PERK_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
-#include <cstdint>
+#include <memory>
+#include <boost/core/noncopyable.hpp>
+
+#include <core/platform.h>
+
+#include "data.h"
 
 namespace Dominion
 {
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
-	};
-
-	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class IPerk
+	class KATSU_API DataBase : private boost::noncopyable
 	{
 	public:
-		EPerkType getType();
+		DataBase::DataBase();
+		DataBase::~DataBase();
 
+		DataBase& DataBase::getInstance() {
+			static DataBase instance;
+
+			return instance;
+		}
+
+	private:
+		class DatabaseImpl;
+		std::unique_ptr<DatabaseImpl> impl_;
 	};
 }
 
-#endif // PERK_H
+#endif // DATABASE_H

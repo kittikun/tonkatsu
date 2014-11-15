@@ -16,26 +16,25 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_H
-#define PERK_H
+#ifndef DATA_H
+#define DATA_H
 
-#include <cstdint>
+#include <boost/uuid/uuid.hpp>
+#include <boost/core/noncopyable.hpp>
 
 namespace Dominion
 {
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
-	};
-
-	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class IPerk
+	class Data : private boost::noncopyable
 	{
 	public:
-		EPerkType getType();
+		Data();
+		Data(boost::uuids::uuid id);
 
+		inline boost::uuids::uuid getGuid() { return guid; }
+
+	private:
+		boost::uuids::uuid guid;
 	};
 }
 
-#endif // PERK_H
+#endif // DATA_H

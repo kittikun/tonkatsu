@@ -16,26 +16,22 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_H
-#define PERK_H
+#include "data.h"
 
-#include <cstdint>
+#include <boost/uuid/uuid_generators.hpp>
 
 namespace Dominion
 {
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
-	};
-
-	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class IPerk
+	Data::Data() :
+		guid(boost::uuids::random_generator()())
 	{
-	public:
-		EPerkType getType();
 
-	};
+	}
+
+	Data::Data(boost::uuids::uuid id) :
+		guid(id)
+	{
+
+	}
+
 }
-
-#endif // PERK_H

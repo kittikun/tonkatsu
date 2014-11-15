@@ -16,26 +16,20 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_H
-#define PERK_H
+#include "api.h"
 
-#include <cstdint>
+#include <boost/filesystem.hpp>
 
 namespace Dominion
 {
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
-	};
-
-	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class IPerk
+	void Initialise(const std::string& dataPath)
 	{
-	public:
-		EPerkType getType();
+		boost::filesystem::path path(dataPath);
+		boost::filesystem::path file("test.txt");
+		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
 
-	};
-}
-
-#endif // PERK_H
+		if (boost::filesystem::exists(canonical)) {
+			int i = 0;
+		}
+	}
+} // namespace Dominion

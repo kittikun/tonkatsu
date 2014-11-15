@@ -15,6 +15,15 @@
     <ClCompile Include="..\..\src\dominion\character\attributes.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dominion\api.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\data.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\database.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\definitions.h">
@@ -31,6 +40,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\character\perk.h">
       <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\api.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\character\skill.h">
+      <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\database.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\data.h">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,30 +12,36 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
-//
-// This work is compatible with the Dominion Rules role-playing system.To learn more about
-// Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_H
-#define PERK_H
+#include <boost/test/unit_test.hpp>
 
-#include <cstdint>
+#include <memory>
 
-namespace Dominion
-{
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
-	};
+#if defined(_WIN32)
+#include <windows.h>
+#endif
 
-	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class IPerk
+#include <dominion/api.h>
+
+#include "../testFramework.h"
+
+class ApiSetup  {
+public:
+	ApiSetup() 
 	{
-	public:
-		EPerkType getType();
+#if defined(_WIN32)
+		if (IsDebuggerPresent())
+		Dominion::Initialise("../../data/dominion");
+#else
+		Dominion::Initialise("../data/dominion");
+#endif
+	}
 
-	};
-}
+	~ApiSetup()
+	{
 
-#endif // PERK_H
+	}
+
+};
+
+BOOST_GLOBAL_FIXTURE(ApiSetup);

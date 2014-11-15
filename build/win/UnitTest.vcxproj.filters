@@ -22,6 +22,9 @@
     <ClCompile Include="..\..\src\unittest\dominion\attributes.cpp">
       <Filter>source\dominion</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\unittest\dominion\api.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\unittest\lib\minicsv.h">
