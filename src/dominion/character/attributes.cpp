@@ -34,6 +34,9 @@ namespace Dominion
 		{
 		}
 
+		AttributesImpl(const AttributesImpl&) = delete;
+		AttributesImpl& operator=(const AttributesImpl&) = delete;
+
 		const uint8_t Agility() const { return attributes_[EAttribute::Agility]; }
 		const uint8_t Intuition() const { return attributes_[EAttribute::Intuition]; }
 		const uint8_t Intellect() const { return attributes_[EAttribute::Intellect]; }

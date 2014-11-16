@@ -24,11 +24,15 @@
 
 #include <core/platform.h>
 
+#include "../data.h"
+
 namespace Dominion
 {
-	class ISKill
+	class ISKill : public Data
 	{
-
+	public:
+		ISKill(const ISKill&) = delete;
+		ISKill& operator=(const ISKill&) = delete;
 	};
 }
 

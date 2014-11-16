@@ -20,17 +20,25 @@
 #define DATA_H
 
 #include <boost/uuid/uuid.hpp>
-#include <boost/core/noncopyable.hpp>
 
 namespace Dominion
 {
-	class Data : private boost::noncopyable
+	class Data
 	{
 	public:
 		Data();
 		Data(boost::uuids::uuid id);
 
+		Data(const Data&) = delete;
+		Data& operator=(const Data&) = delete;
+
 		inline boost::uuids::uuid getGuid() { return guid; }
+
+		template <class Archive>
+		void serialize(Archive & ar)
+		{
+			ar(guid);
+		}
 
 	private:
 		boost::uuids::uuid guid;

@@ -28,6 +28,9 @@ namespace Dominion
 {
 	class Dice::DiceImpl {
 	public:
+		DiceImpl(const DiceImpl&) = delete;
+		DiceImpl& operator=(const DiceImpl&) = delete;
+
 		DiceImpl()
 		{
 			std::random_device rd;

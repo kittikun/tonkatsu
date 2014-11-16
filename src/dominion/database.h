@@ -20,19 +20,19 @@
 #define DATABASE_H
 
 #include <memory>
-#include <boost/core/noncopyable.hpp>
 
 #include <core/platform.h>
 
-#include "data.h"
-
 namespace Dominion
 {
-	class KATSU_API DataBase : private boost::noncopyable
+	class KATSU_API DataBase 
 	{
 	public:
 		DataBase::DataBase();
 		DataBase::~DataBase();
+
+		DataBase(const DataBase&) = delete;
+		DataBase& operator=(const DataBase&) = delete;
 
 		DataBase& DataBase::getInstance() {
 			static DataBase instance;

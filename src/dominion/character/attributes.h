@@ -52,6 +52,9 @@ namespace Dominion
 		Attributes(AttributeArray);
 		~Attributes();
 
+		Attributes(const Attributes&) = delete;
+		Attributes& operator=(const Attributes&) = delete;
+
 		// (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
 		// 1. Assign a minimum score of 1 to each of your character’s six Attributes.
 		static AttributeArray GetBaseAttributes();

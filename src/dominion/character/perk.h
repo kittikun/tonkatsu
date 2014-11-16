@@ -21,6 +21,8 @@
 
 #include <cstdint>
 
+#include "../data.h"
+
 namespace Dominion
 {
 	enum class EPerkType : uint8_t {
@@ -30,9 +32,12 @@ namespace Dominion
 	};
 
 	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class IPerk
+	class IPerk : public Data
 	{
 	public:
+		IPerk(const IPerk&) = delete;
+		IPerk& operator=(const IPerk&) = delete;
+
 		EPerkType getType();
 
 	};
