@@ -22,7 +22,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/functional/hash.hpp>
 
-#include "Data.h"
+#include "data.h"
 
 namespace Dominion
 {
