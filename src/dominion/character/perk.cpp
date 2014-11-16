@@ -21,67 +21,55 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "attributes.h"
+#include "perk.h"
 
-#include <iterator>
-#include <algorithm>
-#include <numeric>
+#include <cereal/types/base_class.hpp>
 
-#include "../dice.h"
+#include "../data.h"
 
 namespace Dominion
 {
-	class Attributes::AttributesImpl
+	class Perk::PerkImpl : public Data
 	{
 	public:
-		AttributesImpl(AttributeArray a) :
-			attributes_(a)
+		PerkImpl(const PerkImpl&) = delete;
+		PerkImpl& operator=(const PerkImpl&) = delete;
+
+		PerkImpl()
 		{
+
 		}
 
-		AttributesImpl(const AttributesImpl&) = delete;
-		AttributesImpl& operator=(const AttributesImpl&) = delete;
+		template <class Archive>
+		void Serialize(Archive & ar)
+		{
+			ar(cereal::base_class<Data>(this), type);
+		}
 
-		const uint8_t Agility() const { return attributes_[EAttribute::Agility]; }
-		const uint8_t Intuition() const { return attributes_[EAttribute::Intuition]; }
-		const uint8_t Intellect() const { return attributes_[EAttribute::Intellect]; }
-		const uint8_t Luck() const { return attributes_[EAttribute::Luck]; }
-		const uint8_t Stamina() const { return attributes_[EAttribute::Stamina]; }
-		const uint8_t Vigour() const { return attributes_[EAttribute::Vigour]; }
+		template <class Archive>
+		void Deserialize(Archive & ar)
+		{
+			// We pass this cast to the base type for each base type we
+			// need to serialize.  Do this instead of calling serialize functions
+			// directly
+			ar(cereal::base_class<Data>(this), type);
+		}
+
 
 	private:
-		AttributeArray attributes_;
+		EPerkType type_;
 	};
 
 	//----------------------------------------------------------------------------------------------
 	// ABILITIES
 	//----------------------------------------------------------------------------------------------
-	Attributes::Attributes(AttributeArray a) :
-		impl_(new AttributesImpl(a))
+	Perk::Perk() :
+		impl_(new PerkImpl())
 	{
 	}
 
-	Attributes::~Attributes()
+	Perk::~Perk()
 	{
 	}
 
-	AttributeArray Attributes::GetBaseAttributes()
-	{
-		AttributeArray attributes;
-
-		attributes.fill(1);
-
-		return attributes;
-	}
-
-	AttributePointsRemainder Attributes::GetAttributeRoll(const std::shared_ptr<Dice>& dice)
-	{
-		std::array < uint8_t, 3 >  res;
-
-		res.fill(dice.get()->Roll());
-
-		const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
-
-		return std::make_tuple(sum / 3, sum % 3);
-	}
 } // namespace Dominion
