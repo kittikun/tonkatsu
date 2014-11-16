@@ -24,16 +24,14 @@
 #include <boost/log/sources/record_ostream.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 
-#include "platform.h"
-
-#define LOGC BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Core)
-#define LOGD BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_DnD5)
-#define LOGW BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Warning)
-#define LOGE BOOST_LOG_SEV(Tonkatsu::Core::Log::boost_log::get(), Tonkatsu::Core::Log::Log_Error)
+#define LOGC BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Core)
+#define LOGD BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_DnD5)
+#define LOGW BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Warning)
+#define LOGE BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Error)
 
 namespace Tonkatsu
 {
-	namespace Core
+	namespace Utility
 	{
 		namespace Log
 		{
@@ -47,9 +45,9 @@ namespace Tonkatsu
 
 			BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(boost_log, boost::log::sources::severity_logger_mt<ELogLevel>);
 
-			KATSU_API void Initialize();
-		}
-	}
+			void Initialize();
+		} // namespace Log
+	} // namespace Utility
 } // namespace Tonkatsu
 
 #endif // LOG_H

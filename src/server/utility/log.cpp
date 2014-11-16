@@ -35,7 +35,7 @@ namespace sinks = boost::log::sinks;
 
 namespace Tonkatsu
 {
-	namespace Core
+	namespace Utility
 	{
 		namespace Log
 		{
@@ -82,5 +82,5 @@ namespace Tonkatsu
 #endif
 			}
 		} // namespace Log
-	} // namespace Core
+	} // namespace Utility
 } // namespace Tonkatsu

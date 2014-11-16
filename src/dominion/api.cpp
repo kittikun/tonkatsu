@@ -29,7 +29,6 @@ namespace Dominion
 		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
 
 		if (boost::filesystem::exists(canonical)) {
-			int i = 0;
 		}
 	}
 } // namespace Dominion

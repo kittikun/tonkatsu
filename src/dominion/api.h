@@ -21,7 +21,7 @@
 
 #include <string>
 
-#include <core/platform.h> 
+#include "platform.h"
 
 namespace Dominion
 {

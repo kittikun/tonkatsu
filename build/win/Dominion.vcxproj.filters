@@ -53,6 +53,9 @@
     <ClInclude Include="..\..\src\dominion\data.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\dominion\platform.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\dominion\LICENSE" />

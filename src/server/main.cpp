@@ -19,11 +19,11 @@
 #include <boost/format.hpp>
 #include <boost/scoped_ptr.hpp>
 
-#include <core/log.h>
+#include "utility/log.h"
 
 int main(int, char**)
 {
-	Tonkatsu::Core::Log::Initialize();
+	Tonkatsu::Utility::Log::Initialize();
 
 	LOGC << "Hello World!";
 

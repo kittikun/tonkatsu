@@ -23,7 +23,7 @@
 #include <memory>
 #include <tuple>
 
-#include <core/platform.h>
+#include "../platform.h"
 
 namespace Dominion
 {

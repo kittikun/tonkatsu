@@ -14,14 +14,10 @@ if (Boost_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK)
 endif(Boost_FOUND)
 
-set(CORE_PATH           ${SRC_PATH}/core)
 set(DOMINION_PATH       ${SRC_PATH}/dominion)
 set(TEST_PATH           ${SRC_PATH}/unittest)
 set(EXE_PATH            ${SRC_PATH}/server)
 include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH})
-
-set(CORE_SRC ${CORE_PATH}/log.cpp)
-add_library(core SHARED ${CORE_SRC})
 
 set(DOMINION_SRC    ${DOMINION_PATH}/api.cpp
                     ${DOMINION_PATH}/data.cpp
@@ -41,4 +37,4 @@ target_link_libraries(unittest ${Boost_LIBRARIES} dominion)
 
 set(EXE_SRC ${EXE_PATH}/main.cpp)
 add_executable(server ${EXE_SRC})
-target_link_libraries(server ${Boost_LIBRARIES} core dominion)
+target_link_libraries(server ${Boost_LIBRARIES} dominion)
