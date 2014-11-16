@@ -35,6 +35,7 @@ add_executable(unittest ${TEST_SRC})
 target_link_libraries(unittest ${Boost_LIBRARIES} dominion)
 
 
-set(EXE_SRC ${EXE_PATH}/main.cpp)
+set(EXE_SRC ${EXE_PATH}/main.cpp
+            ${EXE_PATH}/utility/log.cpp)
 add_executable(server ${EXE_SRC})
 target_link_libraries(server ${Boost_LIBRARIES} dominion)
