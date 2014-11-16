@@ -34,7 +34,7 @@ namespace Dominion
 		DataBase(const DataBase&) = delete;
 		DataBase& operator=(const DataBase&) = delete;
 
-		DataBase& DataBase::getInstance() {
+		DataBase& getInstance() {
 			static DataBase instance;
 
 			return instance;
