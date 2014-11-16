@@ -28,8 +28,8 @@ namespace Dominion
 	class KATSU_API DataBase 
 	{
 	public:
-		DataBase::DataBase();
-		DataBase::~DataBase();
+		DataBase();
+		~DataBase();
 
 		DataBase(const DataBase&) = delete;
 		DataBase& operator=(const DataBase&) = delete;
