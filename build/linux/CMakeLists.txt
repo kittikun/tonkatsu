@@ -9,33 +9,34 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ROOT_PATH}/bin)
 
-find_package(Boost COMPONENTS log system thread unit_test_framework REQUIRED)
+find_package(Boost COMPONENTS system filesystem log thread unit_test_framework REQUIRED)
+
 if (Boost_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK)
+
+  set(DOMINION_PATH       ${SRC_PATH}/dominion)
+  set(TEST_PATH           ${SRC_PATH}/unittest)
+  set(EXE_PATH            ${SRC_PATH}/server)
+  include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH})
+
+  set(DOMINION_SRC    ${DOMINION_PATH}/api.cpp
+                      ${DOMINION_PATH}/data.cpp
+                      ${DOMINION_PATH}/database.cpp
+                      ${DOMINION_PATH}/dice.cpp
+                      ${DOMINION_PATH}/character/attributes.cpp)
+  add_library(dominion SHARED ${DOMINION_SRC})
+
+  set(TEST_SRC    ${TEST_PATH}/main.cpp
+                  ${TEST_PATH}/dominion/api.cpp
+                  ${TEST_PATH}/dominion/attributes.cpp
+                  ${TEST_PATH}/dominion/dice.cpp
+                  ${TEST_PATH}/lib/minicsv.cpp)
+  add_executable(unittest ${TEST_SRC})
+  target_link_libraries(unittest dominion ${Boost_LIBRARIES})
+
+  set(EXE_SRC ${EXE_PATH}/main.cpp
+              ${EXE_PATH}/utility/log.cpp)
+  add_executable(server ${EXE_SRC})
+  target_link_libraries(server boost_system ${Boost_LIBRARIES} dominion)
+
 endif(Boost_FOUND)
-
-set(DOMINION_PATH       ${SRC_PATH}/dominion)
-set(TEST_PATH           ${SRC_PATH}/unittest)
-set(EXE_PATH            ${SRC_PATH}/server)
-include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH})
-
-set(DOMINION_SRC    ${DOMINION_PATH}/api.cpp
-                    ${DOMINION_PATH}/data.cpp
-                    ${DOMINION_PATH}/database.cpp
-                    ${DOMINION_PATH}/dice.cpp
-                    ${DOMINION_PATH}/character/attributes.cpp)
-add_library(dominion SHARED ${DOMINION_SRC})
-
-set(TEST_SRC    ${TEST_PATH}/main.cpp
-                ${TEST_PATH}/dominion/api.cpp
-                ${TEST_PATH}/dominion/attributes.cpp
-                ${TEST_PATH}/dominion/dice.cpp
-                ${TEST_PATH}/lib/minicsv.cpp)
-add_executable(unittest ${TEST_SRC})
-target_link_libraries(unittest ${Boost_LIBRARIES} dominion)
-
-
-set(EXE_SRC ${EXE_PATH}/main.cpp
-            ${EXE_PATH}/utility/log.cpp)
-add_executable(server ${EXE_SRC})
-target_link_libraries(server ${Boost_LIBRARIES} dominion)
