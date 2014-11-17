@@ -16,7 +16,7 @@
 #ifndef TEST_FRAMEWORK_H
 #define TEST_FRAMEWORK_H
 
-#include <chrono>
+#include <boost/chrono.hpp>
 #include <iterator>
 #include <numeric>
 #include <array>
@@ -48,21 +48,21 @@ struct BaseFixture {
 	template<typename F>
 	void TestFunc(F lambda)
 	{
-		std::array<std::chrono::milliseconds::rep, 20> time;
+		std::array<boost::chrono::milliseconds::rep, 10> time;
 
 		for (int i = 0; i < 10; ++i) {
-			auto t1 = std::chrono::high_resolution_clock::now();
+			auto t1 = boost::chrono::system_clock::now();
 
 			for (int j = 0; j < 1000; ++j) {
 				lambda();
 			}
 
-			auto t2 = std::chrono::high_resolution_clock::now();
+			auto t2 = boost::chrono::system_clock::now();
 
-			time[i] = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+			time[i] = boost::chrono::duration_cast<boost::chrono::milliseconds>(t2 - t1).count();
 		}
 
-		size_t avg = std::accumulate(begin(time), end(time), (std::chrono::milliseconds::rep)0) / time.size();
+		size_t avg = std::accumulate(begin(time), end(time), (boost::chrono::milliseconds::rep)0) / time.size();
 
 		if (os.is_open())
 		{
