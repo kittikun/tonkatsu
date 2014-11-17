@@ -38,7 +38,6 @@ namespace Dominion
 
 		if (boost::filesystem::exists(canonical)) {
 		}
-
 	}
 
 	void Initialise(const std::string& dataPath)

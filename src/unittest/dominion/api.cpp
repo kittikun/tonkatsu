@@ -33,7 +33,7 @@ public:
 		if (IsDebuggerPresent())
 		Dominion::Initialise("../../data/dominion");
 #else
-		Dominion::Initialise("../data/dominion");
+		Dominion::Initialise("./data/dominion");
 #endif
 	}
 
