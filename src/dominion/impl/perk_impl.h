@@ -21,35 +21,37 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef DATA_H
-#define DATA_H
+#ifndef PERKIMPL_H
+#define PERKIMPL_H
 
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/uuid_serialize.hpp>
+#include <cereal/types/base_class.hpp>
+
+#include "../data.h"
+#include "../definitions.h"
+
+#include <cereal/cereal.hpp>
 
 namespace Dominion
 {
-	class Data
+	class PerkImpl : public Data
 	{
 	public:
-		Data();
-		Data(boost::uuids::uuid id);
+		PerkImpl(const PerkImpl&) = delete;
+		PerkImpl& operator=(const PerkImpl&) = delete;
 
-		Data(const Data&) = delete;
-		Data& operator=(const Data&) = delete;
-
-		inline boost::uuids::uuid getGuid() { return guid; }
-
-		template <class Archive>
-		void serialize(Archive & ar)
+		PerkImpl()
 		{
-			//ar(guid);
 		}
 
-	private:
-		boost::uuids::uuid guid;
+		template <class Archive>
+		void serialize(Archive& ar)
+		{
+			ar(cereal::base_class<Data>(this), CEREAL_NVP(type_));
+		}
+
+	public:
+		EPerkType type_;
 	};
 }
 
-#endif // DATA_H
+#endif // PERKIMPL_H

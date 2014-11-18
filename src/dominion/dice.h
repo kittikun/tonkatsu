@@ -32,7 +32,7 @@
 
 namespace Dominion
 {
-	class KATSU_API Dice
+	class DOMINION_API Dice
 	{
 	public:
 		Dice();

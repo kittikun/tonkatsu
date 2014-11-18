@@ -27,16 +27,16 @@
 #include <cstdint>
 #include <memory>
 
+#include "../platform.h"
+#include "../definitions.h"
+
 namespace Dominion
 {
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
-	};
-
 	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-	class Perk 
+	class PerkImpl;
+	template class DOMINION_API std::unique_ptr < PerkImpl > ;
+
+	class DOMINION_API Perk
 	{
 	public:
 		Perk();
@@ -45,10 +45,13 @@ namespace Dominion
 		Perk(const Perk&) = delete;
 		Perk& operator=(const Perk&) = delete;
 
-		EPerkType type();
+		EPerkType type() const;
+		void set_type(EPerkType type);
+
+		template <class Archive>
+		void serialize(Archive&);
 
 	private:
-		class PerkImpl;
 		std::unique_ptr<PerkImpl> impl_;
 	};
 }

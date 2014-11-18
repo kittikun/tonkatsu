@@ -9,3 +9,4 @@ build/linux/
 *.exp
 bin/
 lib/
+build/

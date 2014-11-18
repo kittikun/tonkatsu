@@ -30,7 +30,7 @@
 
 namespace Dominion
 {
-	void KATSU_API Initialise(const std::string&);
+	void DOMINION_API Initialise(const std::string&);
 } // namespace Dominion
 
 #endif // API_H

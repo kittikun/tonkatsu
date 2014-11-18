@@ -30,7 +30,7 @@
 
 namespace Dominion
 {
-	class KATSU_API DataBase 
+	class DOMINION_API DataBase 
 	{
 	public:
 		DataBase();

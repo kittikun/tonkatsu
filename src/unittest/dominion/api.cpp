@@ -23,8 +23,6 @@
 
 #include <dominion/api.h>
 
-#include "../testFramework.h"
-
 class ApiSetup  {
 public:
 	ApiSetup() 
@@ -41,7 +39,6 @@ public:
 	{
 
 	}
-
 };
 
 BOOST_GLOBAL_FIXTURE(ApiSetup);

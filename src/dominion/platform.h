@@ -26,15 +26,15 @@
 
 #if defined(_WIN32)
 
-#if defined EXPORT_KATSU_API
-#define KATSU_API __declspec(dllexport)
+#if defined EXPORT_DOMINION_API
+#define DOMINION_API __declspec(dllexport)
 #else
-#define KATSU_API __declspec(dllimport)
+#define DOMINION_API __declspec(dllimport)
 #endif
 
 #else
 
-#define KATSU_API
+#define DOMINION_API
 
 #endif
 

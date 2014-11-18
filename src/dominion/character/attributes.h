@@ -51,7 +51,7 @@ namespace Dominion
 
 	class Dice;
 
-	class KATSU_API Attributes
+	class DOMINION_API Attributes
 	{
 	public:
 		Attributes(AttributeArray);

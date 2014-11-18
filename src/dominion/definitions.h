@@ -40,6 +40,12 @@ namespace Dominion
 		Soldier,
 		Witch
 	};
+
+	enum class EPerkType : uint8_t {
+		Attribute,
+		Passive,
+		Skill,
+	};
 } // namespace Dominion
 
 #endif // DEFINITION_H

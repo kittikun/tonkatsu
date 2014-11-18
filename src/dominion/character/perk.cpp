@@ -23,46 +23,14 @@
 
 #include "perk.h"
 
-#include <cereal/types/base_class.hpp>
-
 #include "../data.h"
+#include "../impl/perk_impl.h"
+
+#include <cereal/archives/json.hpp>
+#include <cereal/types/memory.hpp>
 
 namespace Dominion
 {
-	class Perk::PerkImpl : public Data
-	{
-	public:
-		PerkImpl(const PerkImpl&) = delete;
-		PerkImpl& operator=(const PerkImpl&) = delete;
-
-		PerkImpl()
-		{
-
-		}
-
-		template <class Archive>
-		void Serialize(Archive & ar)
-		{
-			ar(cereal::base_class<Data>(this), type);
-		}
-
-		template <class Archive>
-		void Deserialize(Archive & ar)
-		{
-			// We pass this cast to the base type for each base type we
-			// need to serialize.  Do this instead of calling serialize functions
-			// directly
-			ar(cereal::base_class<Data>(this), type);
-		}
-
-
-	private:
-		EPerkType type_;
-	};
-
-	//----------------------------------------------------------------------------------------------
-	// ABILITIES
-	//----------------------------------------------------------------------------------------------
 	Perk::Perk() :
 		impl_(new PerkImpl())
 	{
@@ -72,4 +40,22 @@ namespace Dominion
 	{
 	}
 
+	EPerkType Perk::type() const
+	{
+		return impl_->type_;
+	}
+
+	void Perk::set_type(EPerkType type)
+	{
+		impl_->type_ = type;
+	}
+
+	template <class Archive>
+	void Perk::serialize(Archive& ar)
+	{
+		ar(CEREAL_NVP(impl_));
+	}
+
+	template void DOMINION_API Perk::serialize(cereal::JSONOutputArchive&);
+	template void DOMINION_API Perk::serialize(cereal::JSONInputArchive&);
 } // namespace Dominion

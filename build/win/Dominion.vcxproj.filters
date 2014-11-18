@@ -7,6 +7,9 @@
     <Filter Include="source\character">
       <UniqueIdentifier>{a5244b07-2b43-4919-97c9-94f4a5778b24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\impl">
+      <UniqueIdentifier>{0f409ebe-9edb-48c3-a6b1-ab730a8ac4e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\dominion\dice.cpp">
@@ -58,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\platform.h">
       <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\perk_impl.h">
+      <Filter>source\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
