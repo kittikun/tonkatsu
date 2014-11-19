@@ -32,10 +32,13 @@
 
 namespace Dominion
 {
-	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
 	class PerkImpl;
-	template class DOMINION_API std::unique_ptr < PerkImpl > ;
 
+#ifdef _WIN32
+	template class DOMINION_API std::unique_ptr < PerkImpl > ;
+#endif
+
+	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
 	class DOMINION_API Perk
 	{
 	public:
