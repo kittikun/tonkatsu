@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_SUITE(Dominion_Ability, AttributeFixture)
 
 BOOST_AUTO_TEST_CASE(GetBaseAttributes)
 {
-	TestFunc([&] {
+	TestFunc(1000, [&] {
 		auto attribs = Dominion::Attributes::GetBaseAttributes();
 
 		BOOST_CHECK(std::accumulate(std::begin(attribs), std::end(attribs), 0) == Dominion::EAttribute::Count);
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(GetAttributeRoll)
 {
 	std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
 
-	TestFunc([&] {
+	TestFunc(1000, [&] {
 		auto aRoll = Dominion::Attributes::GetAttributeRoll(dice);
 
 		BOOST_CHECK(std::get<0>(aRoll) > 0);

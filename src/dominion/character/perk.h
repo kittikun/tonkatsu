@@ -24,7 +24,6 @@
 #ifndef PERK_H
 #define PERK_H
 
-#include <cstdint>
 #include <memory>
 #include <boost/uuid/uuid.hpp>
 
@@ -42,14 +41,14 @@ namespace Dominion
 	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
 	class DOMINION_API Perk
 	{
+		Perk(const Perk&) = delete;
+		Perk& operator=(const Perk&) = delete;
+
 	public:
 		Perk();
 		~Perk();
 
-		Perk(const Perk&) = delete;
-		Perk& operator=(const Perk&) = delete;
-
-		boost::uuids::uuid guid() const;
+		const boost::uuids::uuid& guid() const;
 
 		EPerkType type() const;
 		void set_type(EPerkType type);

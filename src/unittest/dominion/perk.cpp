@@ -35,7 +35,7 @@ BOOST_FIXTURE_TEST_SUITE(Dominion_Perk, PerkFixture)
 
 BOOST_AUTO_TEST_CASE(PerkSerialize)
 {
-	TestFunc([&] {
+	TestFunc(100, [&] {
 		Dominion::Perk perk1;
 		Dominion::Perk perk2;
 		Dominion::Perk perk3;
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(PerkSerialize)
 
 BOOST_AUTO_TEST_CASE(PerkDeserialize)
 {
-	TestFunc([&] {
+	TestFunc(100, [&] {
 		Dominion::Perk perk1;
 		Dominion::Perk perk2;
 		Dominion::Perk perk3;

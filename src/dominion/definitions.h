@@ -28,6 +28,24 @@
 
 namespace Dominion
 {
+	// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
+	enum EAttribute
+	{
+		Agility,
+		Intuition,
+		Intellect,
+		Luck,
+		Stamina,
+		Vigour,
+		Count
+	};
+
+	enum class EPerkType : uint8_t {
+		Attribute,
+		Passive,
+		Skill,
+	};
+
 	// (DR3.1.1 p26, 4-2 CHARACTER STYLES)
 	enum class Style : uint8_t {
 		Crusader,
@@ -39,12 +57,6 @@ namespace Dominion
 		Rogue,
 		Soldier,
 		Witch
-	};
-
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Passive,
-		Skill,
 	};
 } // namespace Dominion
 

@@ -40,7 +40,7 @@ namespace Dominion
 	{
 	}
 
-	boost::uuids::uuid Perk::guid() const
+	const boost::uuids::uuid& Perk::guid() const
 	{
 		return impl_->guid();
 	}

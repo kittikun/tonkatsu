@@ -39,7 +39,7 @@ namespace Dominion
 		Data(const Data&) = delete;
 		Data& operator=(const Data&) = delete;
 
-		inline boost::uuids::uuid guid() { return guid_; }
+		inline const boost::uuids::uuid& guid() const { return guid_; }
 
 		template <class Archive>
 		void serialize(Archive & ar)

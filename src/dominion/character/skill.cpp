@@ -21,33 +21,35 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_IMPL_H
-#define PERK_IMPL_H
+#include "skill.h"
 
-#include <cereal/types/base_class.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/types/memory.hpp>
 
-#include "../data.h"
-#include "../definitions.h"
+#include "../impl/skill_impl.h"
 
 namespace Dominion
 {
-	class PerkImpl : public Data
+	Skill::Skill() :
+		impl_(new SkillImpl())
 	{
-	public:
-		PerkImpl() {}
+	}
 
-		PerkImpl(const PerkImpl&) = delete;
-		PerkImpl& operator=(const PerkImpl&) = delete;
+	Skill::~Skill()
+	{
+	}
 
-		template <class Archive>
-		void serialize(Archive& ar)
-		{
-			ar(cereal::base_class<Data>(this), CEREAL_NVP(type_));
-		}
+	const boost::uuids::uuid& Skill::guid() const
+	{
+		return impl_->guid();
+	}
 
-	public:
-		EPerkType type_;
-	};
-}
+	template <class Archive>
+	void Skill::serialize(Archive& ar)
+	{
+		ar(CEREAL_NVP(impl_));
+	}
 
-#endif // PERK_IMPL_H
+	template void DOMINION_API Skill::serialize(cereal::JSONOutputArchive&);
+	template void DOMINION_API Skill::serialize(cereal::JSONInputArchive&);
+} // namespace Dominion

@@ -46,14 +46,14 @@ struct BaseFixture {
 	~BaseFixture() {}
 
 	template<typename F>
-	void TestFunc(F lambda)
+	void TestFunc(uint32_t times, F lambda)
 	{
 		std::array<TimePrecision::rep, 10> time;
 
 		for (int i = 0; i < 10; ++i) {
 			auto t1 = std::chrono::system_clock::now();
 
-			for (int j = 0; j < 1000; ++j) {
+			for (int j = 0; j < times; ++j) {
 				lambda();
 			}
 

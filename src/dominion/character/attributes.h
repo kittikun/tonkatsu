@@ -28,22 +28,11 @@
 #include <memory>
 #include <tuple>
 
+#include "../definitions.h"
 #include "../platform.h"
 
 namespace Dominion
 {
-	enum EAttribute
-	{
-		// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
-		Agility,
-		Intuition,
-		Intellect,
-		Luck,
-		Stamina,
-		Vigour,
-		Count
-	};
-
 	typedef std::array<uint8_t, EAttribute::Count> AttributeArray;
 
 	// Number of points / Remainder

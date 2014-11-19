@@ -21,26 +21,40 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef SKILL_H
-#define SKILL_H
+#ifndef Skill_H
+#define Skill_H
 
-#include <array>
 #include <memory>
+#include <boost/uuid/uuid.hpp>
 
-#include "../data.h"
+#include "../platform.h"
 
 namespace Dominion
 {
-	class SKill : public Data
+	class SkillImpl;
+
+#ifdef _WIN32
+	template class DOMINION_API std::unique_ptr < SkillImpl > ;
+#endif
+
+	// (DR3.1.1 p13, 4-4 SkillS)
+	class Skill
 	{
+		Skill(const Skill&) = delete;
+		Skill& operator=(const Skill&) = delete;
+
 	public:
-		SKill(const SKill&) = delete;
-		SKill& operator=(const SKill&) = delete;
+		Skill();
+		~Skill();
+
+		const boost::uuids::uuid& guid() const;
+
+		template <class Archive>
+		void serialize(Archive&);
 
 	private:
-		class SkillImpl;
 		std::unique_ptr<SkillImpl> impl_;
 	};
-}
+} // namespace Dominion
 
-#endif // SKILL_H
+#endif // Skill_H

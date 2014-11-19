@@ -21,8 +21,8 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef PERK_IMPL_H
-#define PERK_IMPL_H
+#ifndef SKILL_IMPL_H
+#define SKILL_IMPL_H
 
 #include <cereal/types/base_class.hpp>
 
@@ -31,23 +31,23 @@
 
 namespace Dominion
 {
-	class PerkImpl : public Data
+	class SkillImpl : public Data
 	{
 	public:
-		PerkImpl() {}
+		SkillImpl(const SkillImpl&) = delete;
+		SkillImpl& operator=(const SkillImpl&) = delete;
 
-		PerkImpl(const PerkImpl&) = delete;
-		PerkImpl& operator=(const PerkImpl&) = delete;
+		SkillImpl() {}
 
 		template <class Archive>
 		void serialize(Archive& ar)
 		{
-			ar(cereal::base_class<Data>(this), CEREAL_NVP(type_));
+			ar(cereal::base_class<Data>(this), CEREAL_NVP(attribute_));
 		}
 
 	public:
-		EPerkType type_;
+		EAttribute attribute_;
 	};
 }
 
-#endif // PERK_IMPL_H
+#endif // SKILL_IMPL_H
