@@ -17,20 +17,23 @@ if (Boost_FOUND)
   set(DOMINION_PATH       ${SRC_PATH}/dominion)
   set(TEST_PATH           ${SRC_PATH}/unittest)
   set(EXE_PATH            ${SRC_PATH}/server)
-  include_directories(${Boost_INCLUDE_DIRS} ${SRC_PATH})
+  include_directories(${Boost_INCLUDE_DIRS}
+                      ${SRC_PATH}
+                      ${SRC_PATH}/dominion/lib)
 
   set(DOMINION_SRC    ${DOMINION_PATH}/api.cpp
                       ${DOMINION_PATH}/data.cpp
                       ${DOMINION_PATH}/database.cpp
                       ${DOMINION_PATH}/dice.cpp
-                      ${DOMINION_PATH}/character/attributes.cpp)
+                      ${DOMINION_PATH}/character/attributes.cpp
+                      ${DOMINION_PATH}/character/perk.cpp)
   add_library(dominion SHARED ${DOMINION_SRC})
 
   set(TEST_SRC    ${TEST_PATH}/main.cpp
                   ${TEST_PATH}/dominion/api.cpp
                   ${TEST_PATH}/dominion/attributes.cpp
                   ${TEST_PATH}/dominion/dice.cpp
-				  ${TEST_PATH}/dominion/perk.cpp
+		  ${TEST_PATH}/dominion/perk.cpp
                   ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
   target_link_libraries(unittest dominion ${Boost_LIBRARIES})

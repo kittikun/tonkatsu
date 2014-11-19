@@ -51,4 +51,4 @@ namespace cereal
 	}
 } // namespace cereal
 
-#endif CEREAL_TYPES_BOOST_UUID_
+#endif // CEREAL_TYPES_BOOST_UUID_
