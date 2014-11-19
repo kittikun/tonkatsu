@@ -28,6 +28,9 @@
     <ClCompile Include="..\..\src\unittest\dominion\perk.cpp">
       <Filter>source\dominion</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\unittest\dominion\skill.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\unittest\testFramework.h" />

@@ -46,7 +46,7 @@ struct BaseFixture {
 	~BaseFixture() {}
 
 	template<typename F>
-	void TestFunc(uint32_t times, F lambda)
+	void TestFunc(int times, F lambda)
 	{
 		std::array<typename TimePrecision::rep, 10> time;
 

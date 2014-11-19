@@ -44,6 +44,26 @@ namespace Dominion
 		return impl_->guid();
 	}
 
+	const EAttribute Skill::attribute() const
+	{
+		return impl_->attribute_;
+	}
+
+	void Skill::set_attribute(EAttribute attribute)
+	{
+		impl_->attribute_ = attribute;
+	}
+
+	const std::string& Skill::name() const
+	{
+		return impl_->name_;
+	}
+
+	void Skill::set_name(std::string name)
+	{
+		impl_->name_ = name;
+	}
+
 	template <class Archive>
 	void Skill::serialize(Archive& ar)
 	{

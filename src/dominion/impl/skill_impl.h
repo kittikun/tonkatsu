@@ -42,11 +42,13 @@ namespace Dominion
 		template <class Archive>
 		void serialize(Archive& ar)
 		{
-			ar(cereal::base_class<Data>(this), CEREAL_NVP(attribute_));
+			ar(cereal::base_class<Data>(this), CEREAL_NVP(attribute_), CEREAL_NVP(name_));
 		}
 
 	public:
+		// Main attribute governing the skill
 		EAttribute attribute_;
+		std::string name_;
 	};
 }
 

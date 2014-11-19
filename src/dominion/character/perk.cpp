@@ -45,7 +45,7 @@ namespace Dominion
 		return impl_->guid();
 	}
 
-	EPerkType Perk::type() const
+	const EPerkType Perk::type() const
 	{
 		return impl_->type_;
 	}

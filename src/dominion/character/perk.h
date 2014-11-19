@@ -50,8 +50,8 @@ namespace Dominion
 
 		const boost::uuids::uuid& guid() const;
 
-		EPerkType type() const;
-		void set_type(EPerkType type);
+		const EPerkType type() const;
+		void set_type(EPerkType);
 
 		template <class Archive>
 		void serialize(Archive&);
