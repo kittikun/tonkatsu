@@ -30,6 +30,7 @@ if (Boost_FOUND)
                   ${TEST_PATH}/dominion/api.cpp
                   ${TEST_PATH}/dominion/attributes.cpp
                   ${TEST_PATH}/dominion/dice.cpp
+				  ${TEST_PATH}/dominion/perk.cpp
                   ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
   target_link_libraries(unittest dominion ${Boost_LIBRARIES})
