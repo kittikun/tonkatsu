@@ -17,13 +17,14 @@
 #include <memory>
 #include <iostream>
 #include <fstream>
+#include <boost/uuid/uuid.hpp>
 #include <cereal/archives/json.hpp>
 
 #include <dominion/character/perk.h>
 
 #include "../testFramework.h"
 
-struct PerkFixture : public BaseFixture < PerkFixture > {
+struct PerkFixture : public BaseFixture < PerkFixture, std::chrono::milliseconds > {
 	PerkFixture() :
 		BaseFixture("Dominion_Perk.csv", { "PerkSerialize, PerkDeserialize" })
 	{
@@ -65,6 +66,9 @@ BOOST_AUTO_TEST_CASE(PerkDeserialize)
 		BOOST_CHECK(perk1.type() == Dominion::EPerkType::Attribute);
 		BOOST_CHECK(perk2.type() == Dominion::EPerkType::Passive);
 		BOOST_CHECK(perk3.type() == Dominion::EPerkType::Skill);
+		BOOST_CHECK(!perk1.guid().is_nil());
+		BOOST_CHECK(!perk2.guid().is_nil());
+		BOOST_CHECK(!perk3.guid().is_nil());
 	});
 }
 

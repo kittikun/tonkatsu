@@ -21,7 +21,7 @@
 
 #include "../testFramework.h"
 
-struct AttributeFixture : public BaseFixture < AttributeFixture > {
+struct AttributeFixture : public BaseFixture < AttributeFixture, std::chrono::microseconds > {
 	AttributeFixture() :
 		BaseFixture("Dominion_Attributes.csv", { "GetBaseAttributes", "GetAttributeRoll" })
 	{

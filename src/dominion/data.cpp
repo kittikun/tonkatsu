@@ -28,7 +28,7 @@
 namespace Dominion
 {
 	Data::Data() :
-		guid(boost::uuids::random_generator()())
+		guid_(boost::uuids::random_generator()())
 	{
 	}
 }

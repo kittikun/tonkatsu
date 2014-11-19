@@ -20,7 +20,7 @@
 
 #include "../testFramework.h"
 
-struct DiceFixture : public BaseFixture < DiceFixture > {
+struct DiceFixture : public BaseFixture < DiceFixture, std::chrono::microseconds > {
 	DiceFixture() :
 		BaseFixture("Dominion_Dice.csv", { "Roll" }),
 		dice(new Dominion::Dice())

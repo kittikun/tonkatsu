@@ -26,6 +26,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <boost/uuid/uuid.hpp>
 
 #include "../platform.h"
 #include "../definitions.h"
@@ -47,6 +48,8 @@ namespace Dominion
 
 		Perk(const Perk&) = delete;
 		Perk& operator=(const Perk&) = delete;
+
+		boost::uuids::uuid guid() const;
 
 		EPerkType type() const;
 		void set_type(EPerkType type);

@@ -16,14 +16,14 @@
 #ifndef TEST_FRAMEWORK_H
 #define TEST_FRAMEWORK_H
 
-#include <boost/chrono.hpp>
+#include <chrono>
 #include <iterator>
 #include <numeric>
 #include <array>
 
 #include "lib/minicsv.h"
 
-template <typename Derived>
+template <typename Derived, typename TimePrecision>
 struct BaseFixture {
 	explicit BaseFixture(std::string filename, std::vector<std::string> testNames) :
 		os(filename.c_str(), std::ios_base::app)
@@ -48,21 +48,21 @@ struct BaseFixture {
 	template<typename F>
 	void TestFunc(F lambda)
 	{
-		std::array<boost::chrono::microseconds::rep, 10> time;
+		std::array<TimePrecision::rep, 10> time;
 
 		for (int i = 0; i < 10; ++i) {
-			auto t1 = boost::chrono::system_clock::now();
+			auto t1 = std::chrono::system_clock::now();
 
 			for (int j = 0; j < 1000; ++j) {
 				lambda();
 			}
 
-			auto t2 = boost::chrono::system_clock::now();
+			auto t2 = std::chrono::system_clock::now();
 
-			time[i] = boost::chrono::duration_cast<boost::chrono::microseconds>(t2 - t1).count();
+			time[i] = std::chrono::duration_cast<TimePrecision>(t2 - t1).count();
 		}
 
-		size_t avg = std::accumulate(begin(time), end(time), (boost::chrono::microseconds::rep)0) / time.size();
+		size_t avg = std::accumulate(begin(time), end(time), (TimePrecision::rep)0) / time.size();
 
 		if (os.is_open())
 		{

@@ -39,16 +39,16 @@ namespace Dominion
 		Data(const Data&) = delete;
 		Data& operator=(const Data&) = delete;
 
-		inline boost::uuids::uuid getGuid() { return guid; }
+		inline boost::uuids::uuid guid() { return guid_; }
 
 		template <class Archive>
 		void serialize(Archive & ar)
 		{
-			ar(CEREAL_NVP(guid));
+			ar(CEREAL_NVP(guid_));
 		}
 
 	private:
-		boost::uuids::uuid guid;
+		boost::uuids::uuid guid_;
 	};
 }
 
