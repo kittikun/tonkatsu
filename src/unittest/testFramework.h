@@ -48,7 +48,7 @@ struct BaseFixture {
 	template<typename F>
 	void TestFunc(F lambda)
 	{
-		std::array<TimePrecision::rep, 10> time;
+		std::array<typename TimePrecision::rep, 10> time;
 
 		for (int i = 0; i < 10; ++i) {
 			auto t1 = std::chrono::system_clock::now();
@@ -62,7 +62,7 @@ struct BaseFixture {
 			time[i] = std::chrono::duration_cast<TimePrecision>(t2 - t1).count();
 		}
 
-		size_t avg = std::accumulate(begin(time), end(time), (TimePrecision::rep)0) / time.size();
+		size_t avg = std::accumulate(begin(time), end(time), (typename TimePrecision::rep)0) / time.size();
 
 		if (os.is_open())
 		{
