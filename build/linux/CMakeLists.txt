@@ -26,14 +26,16 @@ if (Boost_FOUND)
                       ${DOMINION_PATH}/database.cpp
                       ${DOMINION_PATH}/dice.cpp
                       ${DOMINION_PATH}/character/attributes.cpp
-                      ${DOMINION_PATH}/character/perk.cpp)
+                      ${DOMINION_PATH}/character/perk.cpp
+					  ${DOMINION_PATH}/character/skill.cpp)
   add_library(dominion SHARED ${DOMINION_SRC})
 
   set(TEST_SRC    ${TEST_PATH}/main.cpp
                   ${TEST_PATH}/dominion/api.cpp
                   ${TEST_PATH}/dominion/attributes.cpp
                   ${TEST_PATH}/dominion/dice.cpp
-		  ${TEST_PATH}/dominion/perk.cpp
+		          ${TEST_PATH}/dominion/perk.cpp
+				  ${TEST_PATH}/dominion/skill.cpp
                   ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
   target_link_libraries(unittest dominion ${Boost_LIBRARIES})
