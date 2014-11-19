@@ -30,13 +30,5 @@ namespace Dominion
 	Data::Data() :
 		guid(boost::uuids::random_generator()())
 	{
-
 	}
-
-	Data::Data(boost::uuids::uuid id) :
-		guid(id)
-	{
-
-	}
-
 }

@@ -29,8 +29,6 @@
 #include "../data.h"
 #include "../definitions.h"
 
-#include <cereal/cereal.hpp>
-
 namespace Dominion
 {
 	class PerkImpl : public Data

@@ -48,7 +48,7 @@ struct BaseFixture {
 	template<typename F>
 	void TestFunc(F lambda)
 	{
-		std::array<boost::chrono::milliseconds::rep, 10> time;
+		std::array<boost::chrono::microseconds::rep, 10> time;
 
 		for (int i = 0; i < 10; ++i) {
 			auto t1 = boost::chrono::system_clock::now();
@@ -59,10 +59,10 @@ struct BaseFixture {
 
 			auto t2 = boost::chrono::system_clock::now();
 
-			time[i] = boost::chrono::duration_cast<boost::chrono::milliseconds>(t2 - t1).count();
+			time[i] = boost::chrono::duration_cast<boost::chrono::microseconds>(t2 - t1).count();
 		}
 
-		size_t avg = std::accumulate(begin(time), end(time), (boost::chrono::milliseconds::rep)0) / time.size();
+		size_t avg = std::accumulate(begin(time), end(time), (boost::chrono::microseconds::rep)0) / time.size();
 
 		if (os.is_open())
 		{

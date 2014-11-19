@@ -10,6 +10,9 @@
     <Filter Include="source\impl">
       <UniqueIdentifier>{0f409ebe-9edb-48c3-a6b1-ab730a8ac4e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\extra">
+      <UniqueIdentifier>{a849064a-5179-4bd2-8479-1e18276b7192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\dominion\dice.cpp">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h">
       <Filter>source\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\extra\cereal_boost_uuid.h">
+      <Filter>source\extra</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,14 +15,13 @@
 
 #include <boost/test/unit_test.hpp>
 #include <memory>
+#include <iostream>
+#include <fstream>
+#include <cereal/archives/json.hpp>
 
 #include <dominion/character/perk.h>
 
 #include "../testFramework.h"
-
-#include <iostream>
-#include <fstream>
-#include <cereal/archives/json.hpp>
 
 struct PerkFixture : public BaseFixture < PerkFixture > {
 	PerkFixture() :
@@ -65,7 +64,7 @@ BOOST_AUTO_TEST_CASE(PerkDeserialize)
 
 		BOOST_CHECK(perk1.type() == Dominion::EPerkType::Attribute);
 		BOOST_CHECK(perk2.type() == Dominion::EPerkType::Passive);
-		BOOST_CHECK(perk2.type() == Dominion::EPerkType::Skill);
+		BOOST_CHECK(perk3.type() == Dominion::EPerkType::Skill);
 	});
 }
 

@@ -39,6 +39,7 @@
     <ClInclude Include="..\..\src\dominion\database.h" />
     <ClInclude Include="..\..\src\dominion\definitions.h" />
     <ClInclude Include="..\..\src\dominion\dice.h" />
+    <ClInclude Include="..\..\src\dominion\extra\cereal_boost_uuid.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />
   </ItemGroup>

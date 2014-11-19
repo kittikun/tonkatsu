@@ -25,8 +25,9 @@
 #define DATA_H
 
 #include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/uuid_serialize.hpp>
+#include <cereal/cereal.hpp>
+
+#include "extra\cereal_boost_uuid.h"
 
 namespace Dominion
 {
@@ -34,7 +35,6 @@ namespace Dominion
 	{
 	public:
 		Data();
-		Data(boost::uuids::uuid id);
 
 		Data(const Data&) = delete;
 		Data& operator=(const Data&) = delete;
@@ -44,7 +44,7 @@ namespace Dominion
 		template <class Archive>
 		void serialize(Archive & ar)
 		{
-			//ar(guid);
+			ar(CEREAL_NVP(guid));
 		}
 
 	private:
