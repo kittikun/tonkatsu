@@ -12,7 +12,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ROOT_PATH}/bin)
 find_package(Boost COMPONENTS chrono system filesystem log thread unit_test_framework REQUIRED)
 
 if (Boost_FOUND)
-  add_definitions(-DBOOST_ALL_DYN_LINK)
+  add_definitions(-DBOOST_ALL_DYN_LINK -DDOMINION_DATAGEN)
 
   set(DOMINION_PATH       ${SRC_PATH}/dominion)
   set(TEST_PATH           ${SRC_PATH}/unittest)
