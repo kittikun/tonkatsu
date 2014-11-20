@@ -50,6 +50,6 @@ namespace Dominion
 		EAttribute attribute_;
 		std::string name_;
 	};
-}
+} // namespace Dominion
 
 #endif // SKILL_IMPL_H

@@ -30,6 +30,10 @@
 #include "../platform.h"
 #include "../definitions.h"
 
+#ifdef DOMINION_DATAGEN
+#include <string>
+#endif
+
 namespace Dominion
 {
 	class PerkImpl;
@@ -51,10 +55,21 @@ namespace Dominion
 		const boost::uuids::uuid& guid() const;
 
 		const EPerkType type() const;
-		void set_type(EPerkType);
+
+		// Roll required to get this perk
+		const uint8_t roll() const;
+
+		// Some perks are shared across multiple races
+		bool isRaceUsable(ERace) const;
 
 		template <class Archive>
 		void serialize(Archive&);
+
+#ifdef DOMINION_DATAGEN
+		void set_type(EPerkType type);
+		void set_roll(uint8_t roll);
+		void set_usable_races(std::string bits);
+#endif
 
 	private:
 		std::unique_ptr<PerkImpl> impl_;

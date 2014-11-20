@@ -24,7 +24,9 @@
 #ifndef PERK_IMPL_H
 #define PERK_IMPL_H
 
+#include <bitset>
 #include <cereal/types/base_class.hpp>
+#include <cereal/types/bitset.hpp>
 
 #include "../data.h"
 #include "../definitions.h"
@@ -42,12 +44,22 @@ namespace Dominion
 		template <class Archive>
 		void serialize(Archive& ar)
 		{
-			ar(cereal::base_class<Data>(this), CEREAL_NVP(type_));
+			ar(cereal::base_class<Data>(this),
+				CEREAL_NVP(type_),
+				CEREAL_NVP(roll_),
+				CEREAL_NVP(usableRace_));
+		}
+
+		bool isRaceUsable(ERace race) const
+		{
+			return usableRace_[race];
 		}
 
 	public:
 		EPerkType type_;
+		uint8_t roll_;
+		std::bitset<ERace::RaceCount> usableRace_;
 	};
-}
+} // namespace Dominion
 
 #endif // PERK_IMPL_H

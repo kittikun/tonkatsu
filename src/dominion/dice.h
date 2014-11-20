@@ -24,7 +24,6 @@
 #ifndef DICE_H
 #define DICE_H
 
-#include <array>
 #include <cstdint>
 #include <memory>
 
@@ -32,6 +31,12 @@
 
 namespace Dominion
 {
+	class DiceImpl;
+
+#ifdef _WIN32
+	template class DOMINION_API std::unique_ptr < DiceImpl > ;
+#endif
+
 	class DOMINION_API Dice
 	{
 	public:
@@ -46,8 +51,7 @@ namespace Dominion
 		const uint8_t Roll() const;
 
 	private:
-		class DiceImpl;
-		std::unique_ptr<DiceImpl> impl;
+		std::unique_ptr<DiceImpl> impl_;
 	};
 } // namespace Dominion
 

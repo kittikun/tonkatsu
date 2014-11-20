@@ -38,16 +38,19 @@ BOOST_AUTO_TEST_CASE(PerkSerialize)
 	TestFunc(50, [&] {
 		Dominion::Perk perk1;
 		Dominion::Perk perk2;
-		Dominion::Perk perk3;
 
-		perk1.set_type(Dominion::EPerkType::Attribute);
+		perk1.set_type(Dominion::EPerkType::StartBonus);
+		perk1.set_roll(1);
+		perk1.set_usable_races("011110");
+
 		perk2.set_type(Dominion::EPerkType::Passive);
-		perk3.set_type(Dominion::EPerkType::Skill);
+		perk2.set_roll(12);
+		perk2.set_usable_races("100000");
 
 		std::ofstream ofs("perk.txt");
 		cereal::JSONOutputArchive oarchive(ofs);
 
-		oarchive(CEREAL_NVP(perk1), CEREAL_NVP(perk2), CEREAL_NVP(perk3));
+		oarchive(CEREAL_NVP(perk1), CEREAL_NVP(perk2));
 	});
 }
 
@@ -56,19 +59,31 @@ BOOST_AUTO_TEST_CASE(PerkDeserialize)
 	TestFunc(50, [&] {
 		Dominion::Perk perk1;
 		Dominion::Perk perk2;
-		Dominion::Perk perk3;
 
 		std::ifstream ifs("perk.txt");
 		cereal::JSONInputArchive iarchive(ifs);
 
-		iarchive(CEREAL_NVP(perk1), CEREAL_NVP(perk2), CEREAL_NVP(perk3));
+		iarchive(CEREAL_NVP(perk1), CEREAL_NVP(perk2));
 
-		BOOST_CHECK(perk1.type() == Dominion::EPerkType::Attribute);
-		BOOST_CHECK(perk2.type() == Dominion::EPerkType::Passive);
-		BOOST_CHECK(perk3.type() == Dominion::EPerkType::Skill);
 		BOOST_CHECK(!perk1.guid().is_nil());
+		BOOST_CHECK(perk1.type() == Dominion::EPerkType::StartBonus);
+		BOOST_CHECK(perk1.roll() == 1);
+		BOOST_CHECK(!perk1.isRaceUsable(Dominion::ERace::Beast));
+		BOOST_CHECK(perk1.isRaceUsable(Dominion::ERace::Dwarf));
+		BOOST_CHECK(perk1.isRaceUsable(Dominion::ERace::Elf));
+		BOOST_CHECK(perk1.isRaceUsable(Dominion::ERace::Halfling));
+		BOOST_CHECK(perk1.isRaceUsable(Dominion::ERace::Human));
+		BOOST_CHECK(!perk1.isRaceUsable(Dominion::ERace::Humanoid));
+
 		BOOST_CHECK(!perk2.guid().is_nil());
-		BOOST_CHECK(!perk3.guid().is_nil());
+		BOOST_CHECK(perk2.type() == Dominion::EPerkType::Passive);
+		BOOST_CHECK(perk2.roll() == 12);
+		BOOST_CHECK(!perk2.isRaceUsable(Dominion::ERace::Beast));
+		BOOST_CHECK(!perk2.isRaceUsable(Dominion::ERace::Dwarf));
+		BOOST_CHECK(!perk2.isRaceUsable(Dominion::ERace::Elf));
+		BOOST_CHECK(!perk2.isRaceUsable(Dominion::ERace::Halfling));
+		BOOST_CHECK(!perk2.isRaceUsable(Dominion::ERace::Human));
+		BOOST_CHECK(perk2.isRaceUsable(Dominion::ERace::Humanoid));
 	});
 }
 

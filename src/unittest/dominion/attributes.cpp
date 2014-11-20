@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(GetBaseAttributes)
 	TestFunc(1000, [&] {
 		auto attribs = Dominion::Attributes::GetBaseAttributes();
 
-		BOOST_CHECK(std::accumulate(std::begin(attribs), std::end(attribs), 0) == Dominion::EAttribute::Count);
+		BOOST_CHECK(std::accumulate(std::begin(attribs), std::end(attribs), 0) == Dominion::EAttribute::AttributeCount);
 	});
 }
 

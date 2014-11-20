@@ -28,6 +28,7 @@
 #include <numeric>
 
 #include "../dice.h"
+#include "../impl/dice_impl.h"
 
 namespace Dominion
 {
@@ -78,7 +79,7 @@ namespace Dominion
 	{
 		std::array < uint8_t, 3 >  res;
 
-		res.fill(dice.get()->Roll());
+		res.fill(dice->Roll());
 
 		const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
 

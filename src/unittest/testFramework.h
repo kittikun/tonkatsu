@@ -62,7 +62,7 @@ struct BaseFixture {
 			time[i] = std::chrono::duration_cast<TimePrecision>(t2 - t1).count();
 		}
 
-		size_t avg = std::accumulate(begin(time), end(time), (typename TimePrecision::rep)0) / time.size();
+		typename TimePrecision::rep avg = std::accumulate(begin(time), end(time), (typename TimePrecision::rep)0) / (typename TimePrecision::rep)time.size();
 
 		if (os.is_open())
 		{

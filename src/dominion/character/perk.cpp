@@ -45,15 +45,39 @@ namespace Dominion
 		return impl_->guid();
 	}
 
+	bool Perk::isRaceUsable(ERace race) const
+	{
+		return impl_->isRaceUsable(race);
+	}
+
+	// Roll required to get this perk
+	const uint8_t Perk::roll() const
+	{
+		return impl_->roll_;
+	}
+
 	const EPerkType Perk::type() const
 	{
 		return impl_->type_;
 	}
 
+#ifdef DOMINION_DATAGEN
 	void Perk::set_type(EPerkType type)
 	{
 		impl_->type_ = type;
 	}
+
+	void Perk::set_roll(uint8_t roll)
+	{
+		impl_->roll_ = roll;
+	}
+
+	void Perk::set_usable_races(std::string bits)
+	{
+		impl_->usableRace_ = std::bitset<ERace::RaceCount>(bits);
+	}
+
+#endif
 
 	template <class Archive>
 	void Perk::serialize(Archive& ar)

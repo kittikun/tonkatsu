@@ -23,39 +23,15 @@
 
 #include "dice.h"
 
-#include <algorithm>
-#include <ctime>
-#include <iterator>
-#include <numeric>
-#include <random>
+#include "impl/dice_impl.h"
 
 namespace Dominion
 {
-	class Dice::DiceImpl {
-	public:
-		DiceImpl(const DiceImpl&) = delete;
-		DiceImpl& operator=(const DiceImpl&) = delete;
-
-		DiceImpl()
-		{
-			std::random_device rd;
-			rng = std::mt19937{ rd() };
-		}
-
-		const uint8_t Roll()
-		{
-			return static_cast<uint8_t>(std::uniform_int_distribution < > { 1, 12 }(rng));
-		}
-
-	private:
-		std::mt19937 rng;
-	};
-
 	//----------------------------------------------------------------------------------------------
 	// DICE
 	//----------------------------------------------------------------------------------------------
 	Dice::Dice()
-		: impl(new DiceImpl())
+		: impl_(new DiceImpl())
 	{
 	}
 
@@ -65,6 +41,6 @@ namespace Dominion
 
 	const uint8_t Dice::Roll() const
 	{
-		return impl->Roll();
+		return impl_->Roll();
 	}
 } // namespace Dominion

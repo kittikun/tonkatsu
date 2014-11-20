@@ -33,7 +33,7 @@
 
 namespace Dominion
 {
-	typedef std::array<uint8_t, EAttribute::Count> AttributeArray;
+	typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
 
 	// Number of points / Remainder
 	typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;

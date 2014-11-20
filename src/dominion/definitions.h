@@ -37,13 +37,23 @@ namespace Dominion
 		Luck,
 		Stamina,
 		Vigour,
-		Count
+		AttributeCount
 	};
 
 	enum class EPerkType : uint8_t {
-		Attribute,
+		StartBonus,
 		Passive,
-		Skill,
+	};
+
+	// (DR3.1.1 p29, 4-5 Character generation table)
+	enum ERace {
+		Beast,
+		Dwarf,
+		Elf,
+		Halfling,
+		Human,
+		Humanoid,
+		RaceCount
 	};
 
 	// (DR3.1.1 p26, 4-2 CHARACTER STYLES)
