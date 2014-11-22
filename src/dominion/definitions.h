@@ -40,9 +40,17 @@ namespace Dominion
 		AttributeCount
 	};
 
+	enum class ESkillType : uint8_t {
+		Attribute,
+		Combat_Offensive,
+		Combat_Defensive
+	};
+
 	enum class EPerkType : uint8_t {
-		StartBonus,
+		Attribute,
+		Advancement_Points,
 		Passive,
+		Skill,
 	};
 
 	// (DR3.1.1 p29, 4-5 Character generation table)
