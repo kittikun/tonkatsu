@@ -29,6 +29,8 @@
     <ClCompile Include="..\..\src\dominion\data.cpp" />
     <ClCompile Include="..\..\src\dominion\database.cpp" />
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
+    <ClCompile Include="..\..\src\dominion\lib\sqlite\shell.c" />
+    <ClCompile Include="..\..\src\dominion\lib\sqlite\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\api.h" />
@@ -41,9 +43,13 @@
     <ClInclude Include="..\..\src\dominion\definitions.h" />
     <ClInclude Include="..\..\src\dominion\dice.h" />
     <ClInclude Include="..\..\src\dominion\extra\cereal_boost_uuid.h" />
+    <ClInclude Include="..\..\src\dominion\impl\api_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\database_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\skill_impl.h" />
+    <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3.h" />
+    <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3ext.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

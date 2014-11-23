@@ -30,17 +30,22 @@
 
 namespace Dominion
 {
+	class DatabaseImpl;
+
+#ifdef _WIN32
+	template class DOMINION_API std::unique_ptr < DatabaseImpl >;
+#endif
+
 	class DOMINION_API DataBase 
 	{
+		DataBase(const DataBase&) = delete;
+		DataBase& operator=(const DataBase&) = delete;
+
 	public:
 		DataBase();
 		~DataBase();
 
-		DataBase(const DataBase&) = delete;
-		DataBase& operator=(const DataBase&) = delete;
-
 	private:
-		class DatabaseImpl;
 		std::unique_ptr<DatabaseImpl> impl_;
 	};
 }

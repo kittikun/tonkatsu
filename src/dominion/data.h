@@ -33,11 +33,11 @@ namespace Dominion
 {
 	class Data
 	{
-	public:
-		Data();
-
 		Data(const Data&) = delete;
 		Data& operator=(const Data&) = delete;
+
+	public:
+		Data();
 
 		inline const boost::uuids::uuid& guid() const { return guid_; }
 

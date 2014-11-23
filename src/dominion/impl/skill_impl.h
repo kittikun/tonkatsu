@@ -33,10 +33,10 @@ namespace Dominion
 {
 	class SkillImpl : public Data
 	{
-	public:
 		SkillImpl(const SkillImpl&) = delete;
 		SkillImpl& operator=(const SkillImpl&) = delete;
 
+	public:
 		SkillImpl() {}
 
 		template <class Archive>

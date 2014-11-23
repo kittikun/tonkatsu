@@ -39,12 +39,12 @@ namespace Dominion
 
 	class DOMINION_API Dice
 	{
+		Dice(const Dice&) = delete;
+		Dice& operator=(const Dice&) = delete;
+
 	public:
 		Dice();
 		~Dice();
-
-		Dice(const Dice&) = delete;
-		Dice& operator=(const Dice&) = delete;
 
 		// (DR3.1.1 p7, 4-2 WHAT YOU NEED TO PLAY)
 		// To play DR, you need [..] A one twelve-sided die.

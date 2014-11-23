@@ -8,5 +8,4 @@ build/linux/
 *.csv
 *.exp
 bin/
-lib/
 build/

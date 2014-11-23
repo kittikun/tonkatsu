@@ -23,28 +23,10 @@
 
 #include "database.h"
 
-#include <unordered_map>
-#include <boost/shared_ptr.hpp>
-#include <boost/functional/hash.hpp>
-
-#include "data.h"
+#include "impl/database_impl.h"
 
 namespace Dominion
 {
-	class DataBase::DatabaseImpl
-	{
-	public:
-		DatabaseImpl(const DatabaseImpl&) = delete;
-		DatabaseImpl& operator=(const DatabaseImpl&) = delete;
-
-		DatabaseImpl()
-		{
-
-		}
-
-	private:
-		std::unordered_map<boost::uuids::uuid, boost::shared_ptr<Data>, boost::hash<boost::uuids::uuid>> database_;
-	};
 
 	//----------------------------------------------------------------------------------------------
 	// ABILITIES

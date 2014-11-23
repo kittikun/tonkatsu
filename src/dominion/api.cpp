@@ -26,14 +26,14 @@
 #include <memory>
 #include <boost/filesystem.hpp>
 
-#include "database.h"
+#include "impl/api_impl.h"
 
 namespace Dominion
 {
-	void LoadResources(const std::string& dataPath)
+	void LoadDatabase(const std::string& dataPath)
 	{
 		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("test.txt");
+		boost::filesystem::path file("dominion.db");
 		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
 
 		if (boost::filesystem::exists(canonical)) {
@@ -42,9 +42,7 @@ namespace Dominion
 
 	void Initialise(const std::string& dataPath)
 	{
-		std::shared_ptr<DataBase> db = std::make_shared<DataBase>();
-
-		LoadResources(dataPath);
+		LoadDatabase(dataPath);
 	}
 
 } // namespace Dominion

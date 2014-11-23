@@ -35,11 +35,11 @@ namespace Dominion
 {
 	class PerkImpl : public Data
 	{
-	public:
-		PerkImpl() {}
-
 		PerkImpl(const PerkImpl&) = delete;
 		PerkImpl& operator=(const PerkImpl&) = delete;
+
+	public:
+		PerkImpl() {}
 
 		template <class Archive>
 		void serialize(Archive& ar)

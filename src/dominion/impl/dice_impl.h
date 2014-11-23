@@ -34,9 +34,10 @@ namespace Dominion
 {
 	class DiceImpl
 	{
-	public:
 		DiceImpl(const DiceImpl&) = delete;
 		DiceImpl& operator=(const DiceImpl&) = delete;
+
+	public:
 
 		DiceImpl()
 		{

@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(PerkSerialize)
 		Dominion::Perk perk1;
 		Dominion::Perk perk2;
 
-		perk1.set_type(Dominion::EPerkType::StartBonus);
+		perk1.set_type(Dominion::EPerkType::Skill);
 		perk1.set_roll(1);
 		perk1.set_usable_races("011110");
 
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(PerkDeserialize)
 		iarchive(CEREAL_NVP(perk1), CEREAL_NVP(perk2));
 
 		BOOST_CHECK(!perk1.guid().is_nil());
-		BOOST_CHECK(perk1.type() == Dominion::EPerkType::StartBonus);
+		BOOST_CHECK(perk1.type() == Dominion::EPerkType::Skill);
 		BOOST_CHECK(perk1.roll() == 1);
 		BOOST_CHECK(!perk1.isRaceUsable(Dominion::ERace::Beast));
 		BOOST_CHECK(perk1.isRaceUsable(Dominion::ERace::Dwarf));
