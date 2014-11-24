@@ -30,6 +30,7 @@
     <ClCompile Include="..\..\src\dominion\database.cpp" />
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\api_impl.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\character_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\database_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\lib\sqlite\shell.c" />
     <ClCompile Include="..\..\src\dominion\lib\sqlite\sqlite3.c" />
@@ -46,6 +47,8 @@
     <ClInclude Include="..\..\src\dominion\dice.h" />
     <ClInclude Include="..\..\src\dominion\extra\cereal_boost_uuid.h" />
     <ClInclude Include="..\..\src\dominion\impl\api_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\attribute_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\character_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\database_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />

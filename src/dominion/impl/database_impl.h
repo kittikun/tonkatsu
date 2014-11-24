@@ -45,13 +45,12 @@ namespace Dominion
 		DatabaseImpl();
 		~DatabaseImpl();
 
-		void LoadDatabase(boost::filesystem::path path);
+		void ConnectDatabase(boost::filesystem::path path);
 
 	private:
 		std::unordered_map<boost::uuids::uuid, std::shared_ptr<Data>, boost::hash<boost::uuids::uuid>> database_;
 		sqlite3* dbConnection;
 	};
-
 } // namespace Dominion
 
 #endif // DATABASE_IMPL

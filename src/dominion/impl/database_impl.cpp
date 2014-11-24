@@ -31,7 +31,6 @@ namespace Dominion
 	DatabaseImpl::DatabaseImpl() :
 		dbConnection(nullptr)
 	{
-
 	}
 
 	DatabaseImpl::~DatabaseImpl()
@@ -42,15 +41,14 @@ namespace Dominion
 		}
 	}
 
-	void DatabaseImpl::LoadDatabase(boost::filesystem::path path)
+	void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
 	{
 		int rc;
-
-		rc = sqlite3_open(path.string().c_str(), &dbConnection);
+		std::string toto = path.string();
+		const char * t = toto.c_str();
+		rc = sqlite3_open(toto.c_str(), &dbConnection);
 
 		if (rc) {
-			
-		} else {			
 			boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
 			throw std::runtime_error(boost::str(err));
 		}

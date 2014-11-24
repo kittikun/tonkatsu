@@ -21,40 +21,34 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "api_impl.h"
+#ifndef ATTRIBUTE_IMPL_H
+#define ATTRIBUTE_IMPL_H
 
-#include <stdexcept>
-#include <boost/filesystem.hpp>
-
-#include "database_impl.h"
+#include "../character/attributes.h"
 
 namespace Dominion
 {
-	ApiImpl::ApiImpl() :
-		db(std::make_shared<DatabaseImpl>())
+	class AttributesImpl
 	{
-	}
-
-	ApiImpl& ApiImpl::instance()
-	{
-		static ApiImpl instance;
-
-		return instance;
-	}
-
-	void ApiImpl::LoadDatabase(const std::string& dataPath)
-	{
-		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("dominion.db");
-		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
-
-		canonical = canonical.make_preferred();
-
-		if (boost::filesystem::exists(canonical)) {
-			db->ConnectDatabase(canonical);
+	public:
+		AttributesImpl(AttributeArray a) :
+			attributes_(a)
+		{
 		}
-		else {
-			throw std::invalid_argument("Invalid path to database");
-		}
-	}
+
+		AttributesImpl(const AttributesImpl&) = delete;
+		AttributesImpl& operator=(const AttributesImpl&) = delete;
+
+		const uint8_t Agility() const { return attributes_[EAttribute::Agility]; }
+		const uint8_t Intuition() const { return attributes_[EAttribute::Intuition]; }
+		const uint8_t Intellect() const { return attributes_[EAttribute::Intellect]; }
+		const uint8_t Luck() const { return attributes_[EAttribute::Luck]; }
+		const uint8_t Stamina() const { return attributes_[EAttribute::Stamina]; }
+		const uint8_t Vigour() const { return attributes_[EAttribute::Vigour]; }
+
+	private:
+		AttributeArray attributes_;
+	};
 } // namespace Dominion
+
+#endif // ATTRIBUTE_IMPL_H

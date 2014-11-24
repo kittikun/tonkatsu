@@ -28,35 +28,11 @@
 #include <numeric>
 
 #include "../dice.h"
+#include "../impl/attribute_impl.h"
 #include "../impl/dice_impl.h"
 
 namespace Dominion
 {
-	class Attributes::AttributesImpl
-	{
-	public:
-		AttributesImpl(AttributeArray a) :
-			attributes_(a)
-		{
-		}
-
-		AttributesImpl(const AttributesImpl&) = delete;
-		AttributesImpl& operator=(const AttributesImpl&) = delete;
-
-		const uint8_t Agility() const { return attributes_[EAttribute::Agility]; }
-		const uint8_t Intuition() const { return attributes_[EAttribute::Intuition]; }
-		const uint8_t Intellect() const { return attributes_[EAttribute::Intellect]; }
-		const uint8_t Luck() const { return attributes_[EAttribute::Luck]; }
-		const uint8_t Stamina() const { return attributes_[EAttribute::Stamina]; }
-		const uint8_t Vigour() const { return attributes_[EAttribute::Vigour]; }
-
-	private:
-		AttributeArray attributes_;
-	};
-
-	//----------------------------------------------------------------------------------------------
-	// ABILITIES
-	//----------------------------------------------------------------------------------------------
 	Attributes::Attributes(AttributeArray a) :
 		impl_(new AttributesImpl(a))
 	{

@@ -21,40 +21,8 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "api_impl.h"
-
-#include <stdexcept>
-#include <boost/filesystem.hpp>
-
-#include "database_impl.h"
+#include "character_impl.h"
 
 namespace Dominion
 {
-	ApiImpl::ApiImpl() :
-		db(std::make_shared<DatabaseImpl>())
-	{
-	}
-
-	ApiImpl& ApiImpl::instance()
-	{
-		static ApiImpl instance;
-
-		return instance;
-	}
-
-	void ApiImpl::LoadDatabase(const std::string& dataPath)
-	{
-		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("dominion.db");
-		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
-
-		canonical = canonical.make_preferred();
-
-		if (boost::filesystem::exists(canonical)) {
-			db->ConnectDatabase(canonical);
-		}
-		else {
-			throw std::invalid_argument("Invalid path to database");
-		}
-	}
 } // namespace Dominion

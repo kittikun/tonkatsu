@@ -25,7 +25,7 @@
 
 class ApiSetup  {
 public:
-	ApiSetup() 
+	ApiSetup()
 	{
 #if defined(_WIN32)
 		if (IsDebuggerPresent())
@@ -37,7 +37,6 @@ public:
 
 	~ApiSetup()
 	{
-
 	}
 };
 
