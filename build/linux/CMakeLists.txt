@@ -42,11 +42,11 @@ if (Boost_FOUND)
 				  ${TEST_PATH}/dominion/skill.cpp
                   ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
-  target_link_libraries(unittest dominion ${Boost_LIBRARIES})
+  target_link_libraries(unittest dominion ${Boost_LIBRARIES} dl)
 
   set(EXE_SRC ${EXE_PATH}/main.cpp
               ${EXE_PATH}/utility/log.cpp)
   add_executable(server ${EXE_SRC})
-  target_link_libraries(server boost_system ${Boost_LIBRARIES} dominion)
+  target_link_libraries(server ${Boost_LIBRARIES} dominion)
 
 endif(Boost_FOUND)
