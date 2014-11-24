@@ -21,15 +21,38 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "api.h"
+#include "database_impl.h"
 
-#include "impl/api_impl.h"
+#include <boost/format.hpp>
+#include <sqlite/sqlite3.h>
 
 namespace Dominion
 {
-	void Initialise(const std::string& dataPath)
+	DatabaseImpl::DatabaseImpl() :
+		dbConnection(nullptr)
 	{
-		ApiImpl::instance().LoadDatabase(dataPath);
+
 	}
 
+	DatabaseImpl::~DatabaseImpl()
+	{
+		if (dbConnection != nullptr) {
+			sqlite3_close(dbConnection);
+			dbConnection = nullptr;
+		}
+	}
+
+	void DatabaseImpl::LoadDatabase(boost::filesystem::path path)
+	{
+		int rc;
+
+		rc = sqlite3_open(path.string().c_str(), &dbConnection);
+
+		if (rc) {
+			
+		} else {			
+			boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
+			throw std::runtime_error(boost::str(err));
+		}
+	}
 } // namespace Dominion

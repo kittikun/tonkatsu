@@ -29,6 +29,8 @@
     <ClCompile Include="..\..\src\dominion\data.cpp" />
     <ClCompile Include="..\..\src\dominion\database.cpp" />
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\api_impl.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\database_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\lib\sqlite\shell.c" />
     <ClCompile Include="..\..\src\dominion\lib\sqlite\sqlite3.c" />
   </ItemGroup>
@@ -122,7 +124,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -135,7 +137,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -150,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -167,7 +169,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

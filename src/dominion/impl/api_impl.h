@@ -21,25 +21,32 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
+#ifndef API_IMPL_H
+#define API_IMPL_H
+
+#include <memory>
+#include <string>
+
 namespace Dominion
 {
+	class DatabaseImpl;
+
 	class ApiImpl
 	{
 		ApiImpl(const ApiImpl&) = delete;
 		ApiImpl& operator=(const ApiImpl&) = delete;
 
 	public:
-		ApiImpl() {}
+		ApiImpl();
 
-		static ApiImpl& instance()
-		{
-			static ApiImpl instance;
+		void LoadDatabase(const std::string& dataPath);
 
-			return instance;
-		}
+		static ApiImpl& instance();
 
 	private:
-
+		std::shared_ptr<DatabaseImpl> db;
 	};
 
 } // namespace Dominion
+
+#endif // API_IMPL_H

@@ -21,33 +21,37 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
+#ifndef DATABASE_IMPL
+#define DATABASE_IMPL
+
+#include <memory>
 #include <unordered_map>
-#include <boost/shared_ptr.hpp>
 #include <boost/functional/hash.hpp>
+#include <boost/filesystem.hpp>
+
+#include <sqlite/sqlite3.h>
 
 #include "../data.h"
-#include "sqlite/sqlite3.h"
 
 namespace Dominion
 {
 	class DatabaseImpl
 	{
+		friend class ApiImpl;
 		DatabaseImpl(const DatabaseImpl&) = delete;
 		DatabaseImpl& operator=(const DatabaseImpl&) = delete;
 
 	public:
-		DatabaseImpl()
-		{
+		DatabaseImpl();
+		~DatabaseImpl();
 
-		}
-
-		~DatabaseImpl()
-		{
-
-		}
+		void LoadDatabase(boost::filesystem::path path);
 
 	private:
-		std::unordered_map<boost::uuids::uuid, boost::shared_ptr<Data>, boost::hash<boost::uuids::uuid>> database_;
+		std::unordered_map<boost::uuids::uuid, std::shared_ptr<Data>, boost::hash<boost::uuids::uuid>> database_;
+		sqlite3* dbConnection;
 	};
 
 } // namespace Dominion
+
+#endif // DATABASE_IMPL

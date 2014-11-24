@@ -31,8 +31,8 @@ namespace Dominion
 	//----------------------------------------------------------------------------------------------
 	// ABILITIES
 	//----------------------------------------------------------------------------------------------
-	DataBase::DataBase() :
-		impl_(new DatabaseImpl())
+	DataBase::DataBase(const std::shared_ptr<DatabaseImpl>& impl) :
+		impl_(impl)
 	{
 	}
 

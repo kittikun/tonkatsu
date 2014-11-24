@@ -33,7 +33,7 @@ namespace Dominion
 	class DatabaseImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::unique_ptr < DatabaseImpl >;
+	template class DOMINION_API std::shared_ptr < DatabaseImpl >;
 #endif
 
 	class DOMINION_API DataBase 
@@ -42,11 +42,11 @@ namespace Dominion
 		DataBase& operator=(const DataBase&) = delete;
 
 	public:
-		DataBase();
+		DataBase(const std::shared_ptr<DatabaseImpl>& impl);
 		~DataBase();
 
 	private:
-		std::unique_ptr<DatabaseImpl> impl_;
+		std::shared_ptr<DatabaseImpl> impl_;
 	};
 }
 

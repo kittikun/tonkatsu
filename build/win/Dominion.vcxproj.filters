@@ -48,6 +48,12 @@
     <ClCompile Include="..\..\src\dominion\lib\sqlite\sqlite3.c">
       <Filter>source\lib\sqlite</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dominion\impl\database_impl.cpp">
+      <Filter>source\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\impl\api_impl.cpp">
+      <Filter>source\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\definitions.h">
