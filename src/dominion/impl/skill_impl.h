@@ -37,7 +37,7 @@ namespace Dominion
 		SkillImpl& operator=(const SkillImpl&) = delete;
 
 	public:
-		SkillImpl() {}
+		SkillImpl(uint32_t id) : Data(id) {}
 
 		template <class Archive>
 		void serialize(Archive& ar)

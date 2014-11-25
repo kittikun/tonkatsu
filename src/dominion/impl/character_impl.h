@@ -24,6 +24,8 @@
 #ifndef CHARACTER_IMPL_H
 #define CHARACTER_IMPL_H
 
+#include <array>
+
 #include "../definitions.h"
 
 namespace Dominion
@@ -33,8 +35,8 @@ namespace Dominion
 	public:
 
 	private:
-
-		ERace race;
+		std::array<uint8_t, EAttribute::AttributeCount> attributes_;
+		ERace race_;
 	};
 } // namespace Dominion
 

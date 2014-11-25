@@ -39,7 +39,7 @@ namespace Dominion
 	class PerkImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::unique_ptr < PerkImpl > ;
+	template class DOMINION_API std::shared_ptr < PerkImpl > ;
 #endif
 
 	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
@@ -49,7 +49,7 @@ namespace Dominion
 		Perk& operator=(const Perk&) = delete;
 
 	public:
-		Perk();
+		Perk(const std::shared_ptr<PerkImpl>& impl);
 		~Perk();
 
 		const boost::uuids::uuid& guid() const;
@@ -62,17 +62,8 @@ namespace Dominion
 		// Some perks are shared across multiple races
 		bool isRaceUsable(ERace) const;
 
-		template <class Archive>
-		void serialize(Archive&);
-
-#ifdef DOMINION_DATAGEN
-		void set_type(EPerkType type);
-		void set_roll(uint8_t roll);
-		void set_usable_races(std::string bits);
-#endif
-
 	private:
-		std::unique_ptr<PerkImpl> impl_;
+		std::shared_ptr<PerkImpl> impl_;
 	};
 }
 

@@ -24,7 +24,6 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include <boost/uuid/uuid.hpp>
 #include <cereal/cereal.hpp>
 
 #include "extra/cereal_boost_uuid.h"
@@ -37,9 +36,9 @@ namespace Dominion
 		Data& operator=(const Data&) = delete;
 
 	public:
-		Data();
+		Data(uint32_t id) : guid_(id) {}
 
-		inline const boost::uuids::uuid& guid() const { return guid_; }
+		inline const uint32_t guid() const { return guid_; }
 
 		template <class Archive>
 		void serialize(Archive & ar)
@@ -48,7 +47,7 @@ namespace Dominion
 		}
 
 	private:
-		boost::uuids::uuid guid_;
+		uint32_t guid_;
 	};
 }
 

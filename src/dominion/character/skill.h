@@ -26,7 +26,6 @@
 
 #include <memory>
 #include <string>
-#include <boost/uuid/uuid.hpp>
 
 #include "../definitions.h"
 #include "../platform.h"
@@ -36,7 +35,7 @@ namespace Dominion
 	class SkillImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::unique_ptr < SkillImpl > ;
+	template class DOMINION_API std::shared_ptr < SkillImpl > ;
 #endif
 
 	// (DR3.1.1 p13, 4-4 SkillS)
@@ -46,22 +45,11 @@ namespace Dominion
 		Skill& operator=(const Skill&) = delete;
 
 	public:
-		Skill();
+		Skill(const std::shared_ptr<SkillImpl>& impl);
 		~Skill();
 
-		const boost::uuids::uuid& guid() const;
-
-		const EAttribute attribute() const;
-		void set_attribute(EAttribute);
-
-		const std::string& name() const;
-		void set_name(std::string);
-
-		template <class Archive>
-		void serialize(Archive&);
-
 	private:
-		std::unique_ptr<SkillImpl> impl_;
+		std::shared_ptr<SkillImpl> impl_;
 	};
 } // namespace Dominion
 

@@ -24,6 +24,7 @@
 #ifndef PERK_IMPL_H
 #define PERK_IMPL_H
 
+#include <memory>
 #include <bitset>
 #include <cereal/types/base_class.hpp>
 #include <cereal/types/bitset.hpp>
@@ -33,13 +34,17 @@
 
 namespace Dominion
 {
+	class DatabaseImpl;
+
 	class PerkImpl : public Data
 	{
 		PerkImpl(const PerkImpl&) = delete;
 		PerkImpl& operator=(const PerkImpl&) = delete;
 
 	public:
-		PerkImpl() {}
+		PerkImpl(uint32_t id) : Data(id) {}
+
+		static int LoadFromDB(void*, int, char**, char**);
 
 		template <class Archive>
 		void serialize(Archive& ar)
@@ -50,11 +55,7 @@ namespace Dominion
 				CEREAL_NVP(usableRace_));
 		}
 
-		bool isRaceUsable(ERace race) const
-		{
-			return usableRace_[race];
-		}
-
+		bool isRaceUsable(ERace race) const;
 	public:
 		EPerkType type_;
 		uint8_t roll_;

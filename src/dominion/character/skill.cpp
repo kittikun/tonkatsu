@@ -30,46 +30,12 @@
 
 namespace Dominion
 {
-	Skill::Skill() :
-		impl_(new SkillImpl())
+	Skill::Skill(const std::shared_ptr<SkillImpl>& impl) :
+		impl_(impl)
 	{
 	}
 
 	Skill::~Skill()
 	{
 	}
-
-	const boost::uuids::uuid& Skill::guid() const
-	{
-		return impl_->guid();
-	}
-
-	const EAttribute Skill::attribute() const
-	{
-		return impl_->attribute_;
-	}
-
-	void Skill::set_attribute(EAttribute attribute)
-	{
-		impl_->attribute_ = attribute;
-	}
-
-	const std::string& Skill::name() const
-	{
-		return impl_->name_;
-	}
-
-	void Skill::set_name(std::string name)
-	{
-		impl_->name_ = name;
-	}
-
-	template <class Archive>
-	void Skill::serialize(Archive& ar)
-	{
-		ar(CEREAL_NVP(impl_));
-	}
-
-	template void DOMINION_API Skill::serialize(cereal::JSONOutputArchive&);
-	template void DOMINION_API Skill::serialize(cereal::JSONInputArchive&);
 } // namespace Dominion

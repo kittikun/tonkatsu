@@ -21,38 +21,36 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef DATABASE_IMPL
-#define DATABASE_IMPL
+#include "perk_impl.h"
 
-#include <memory>
-#include <unordered_map>
-#include <boost/functional/hash.hpp>
-#include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
 
-#include "../data.h"
-
-struct sqlite3;
+#include "classid.h"
+#include "database_impl.h"
 
 namespace Dominion
 {
-	class DatabaseImpl
+	int PerkImpl::LoadFromDB(void* data, int argc, char** argv, char** col)
 	{
-		friend class ApiImpl;
-		DatabaseImpl(const DatabaseImpl&) = delete;
-		DatabaseImpl& operator=(const DatabaseImpl&) = delete;
+		DatabaseImpl* db = static_cast<DatabaseImpl*>(data);
+		std::shared_ptr<PerkImpl> perk;
 
-	public:
-		DatabaseImpl();
-		~DatabaseImpl();
+		for (int i = 0; i < argc; ++i) {
+			if (strcmp(col[i], "Id") == 0) {
+				uint32_t id = ClassID::Perk + boost::lexical_cast<uint32_t>(argv[i]);
+				perk = std::make_shared<PerkImpl>(id);
+			}
 
-		void ConnectDatabase(boost::filesystem::path path);
+			if (strcmp(col[i], "type") == 0) {
+				perk->type_ = boost::lexical_cast<EPerkType>(argv[i]);
+			}
+		}
 
-	private:
-		void LoadPerks();
+		return 0;
+	}
 
-		std::unordered_map<boost::uuids::uuid, std::shared_ptr<Data>, boost::hash<boost::uuids::uuid>> database_;
-		sqlite3* dbConnection;
-	};
-} // namespace Dominion
-
-#endif // DATABASE_IMPL
+	bool PerkImpl::isRaceUsable(ERace race) const
+	{
+		return usableRace_[race];
+	}
+}

@@ -26,23 +26,15 @@
 #include "../data.h"
 #include "../impl/perk_impl.h"
 
-#include <cereal/archives/json.hpp>
-#include <cereal/types/memory.hpp>
-
 namespace Dominion
 {
-	Perk::Perk() :
-		impl_(new PerkImpl())
+	Perk::Perk(const std::shared_ptr<PerkImpl>& impl) :
+		impl_(impl)
 	{
 	}
 
 	Perk::~Perk()
 	{
-	}
-
-	const boost::uuids::uuid& Perk::guid() const
-	{
-		return impl_->guid();
 	}
 
 	bool Perk::isRaceUsable(ERace race) const
@@ -60,31 +52,4 @@ namespace Dominion
 	{
 		return impl_->type_;
 	}
-
-#ifdef DOMINION_DATAGEN
-	void Perk::set_type(EPerkType type)
-	{
-		impl_->type_ = type;
-	}
-
-	void Perk::set_roll(uint8_t roll)
-	{
-		impl_->roll_ = roll;
-	}
-
-	void Perk::set_usable_races(std::string bits)
-	{
-		impl_->usableRace_ = std::bitset<ERace::RaceCount>(bits);
-	}
-
-#endif
-
-	template <class Archive>
-	void Perk::serialize(Archive& ar)
-	{
-		ar(CEREAL_NVP(impl_));
-	}
-
-	template void DOMINION_API Perk::serialize(cereal::JSONOutputArchive&);
-	template void DOMINION_API Perk::serialize(cereal::JSONInputArchive&);
 } // namespace Dominion

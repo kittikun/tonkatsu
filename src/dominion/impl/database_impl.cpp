@@ -26,6 +26,8 @@
 #include <boost/format.hpp>
 #include <sqlite/sqlite3.h>
 
+#include "perk_impl.h"
+
 namespace Dominion
 {
 	DatabaseImpl::DatabaseImpl() :
@@ -44,13 +46,20 @@ namespace Dominion
 	void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
 	{
 		int rc;
-		std::string toto = path.string();
-		const char * t = toto.c_str();
-		rc = sqlite3_open(toto.c_str(), &dbConnection);
+		rc = sqlite3_open(path.string().c_str(), &dbConnection);
 
 		if (rc) {
 			boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
 			throw std::runtime_error(boost::str(err));
 		}
+	}
+
+	void DatabaseImpl::LoadPerks()
+	{
+		int rc;
+		const char* sql = "select * from perk";
+		char *err = nullptr;
+
+		rc = sqlite3_exec(dbConnection, sql, PerkImpl::LoadFromDB, this, &err);
 	}
 } // namespace Dominion

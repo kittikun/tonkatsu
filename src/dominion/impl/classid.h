@@ -21,14 +21,16 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "data.h"
-
-#include <boost/uuid/uuid_generators.hpp>
+#ifndef CLASS_ID_H
+#define CLASS_ID_H
 
 namespace Dominion
 {
-	Data::Data() :
-		guid_(boost::uuids::random_generator()())
+	enum ClassID
 	{
-	}
-}
+		Perk = 1000,
+		Skill = 2000,
+	};
+} // namespace Dominion
+
+#endif // CLASS_ID_H

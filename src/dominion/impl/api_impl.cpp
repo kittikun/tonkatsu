@@ -52,6 +52,7 @@ namespace Dominion
 
 		if (boost::filesystem::exists(canonical)) {
 			db->ConnectDatabase(canonical);
+			db->LoadPerks();
 		}
 		else {
 			throw std::invalid_argument("Invalid path to database");
