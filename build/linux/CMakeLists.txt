@@ -22,7 +22,6 @@ if (Boost_FOUND)
                       ${SRC_PATH}/dominion/lib)
 
   set(DOMINION_SRC    ${DOMINION_PATH}/api.cpp
-                      ${DOMINION_PATH}/data.cpp
                       ${DOMINION_PATH}/database.cpp
                       ${DOMINION_PATH}/dice.cpp
                       ${DOMINION_PATH}/character/attributes.cpp

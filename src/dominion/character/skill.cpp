@@ -23,19 +23,14 @@
 
 #include "skill.h"
 
-#include <cereal/archives/json.hpp>
-#include <cereal/types/memory.hpp>
-
 #include "../impl/skill_impl.h"
 
 namespace Dominion
 {
-	Skill::Skill(const std::shared_ptr<SkillImpl>& impl) :
-		impl_(impl)
-	{
-	}
+    Skill::Skill(const std::shared_ptr<SkillImpl>& impl) :
+        impl_(impl)
+    {}
 
-	Skill::~Skill()
-	{
-	}
+    Skill::~Skill()
+    {}
 } // namespace Dominion

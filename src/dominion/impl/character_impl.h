@@ -24,20 +24,29 @@
 #ifndef CHARACTER_IMPL_H
 #define CHARACTER_IMPL_H
 
+#include <memory>
 #include <array>
 
 #include "../definitions.h"
 
 namespace Dominion
 {
-	class CharacterImpl
-	{
-	public:
+    class PerkImpl;
 
-	private:
-		std::array<uint8_t, EAttribute::AttributeCount> attributes_;
-		ERace race_;
-	};
+    class CharacterImpl
+    {
+        CharacterImpl(const CharacterImpl&) = delete;
+        CharacterImpl& operator=(const CharacterImpl&) = delete;
+
+    public:
+        CharacterImpl();
+
+    private:
+        AttributeArray attributes_;
+        std::shared_ptr<PerkImpl> perk_;
+        ERace race_;
+        uint16_t ap_;
+    };
 } // namespace Dominion
 
-#endif // CHARACTER_IMPL_H 
+#endif // CHARACTER_IMPL_H

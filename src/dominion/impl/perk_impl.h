@@ -26,41 +26,33 @@
 
 #include <memory>
 #include <bitset>
-#include <cereal/types/base_class.hpp>
-#include <cereal/types/bitset.hpp>
 
 #include "../data.h"
 #include "../definitions.h"
 
 namespace Dominion
 {
-	class DatabaseImpl;
+    class DatabaseImpl;
 
-	class PerkImpl : public Data
-	{
-		PerkImpl(const PerkImpl&) = delete;
-		PerkImpl& operator=(const PerkImpl&) = delete;
+    class PerkImpl : public Data
+    {
+        PerkImpl(const PerkImpl&) = delete;
+        PerkImpl& operator=(const PerkImpl&) = delete;
 
-	public:
-		PerkImpl(uint32_t id) : Data(id) {}
+    public:
+        PerkImpl(size_t id);
 
-		static int LoadFromDB(void*, int, char**, char**);
+        static int LoadFromDB(void*, int, char**, char**);
 
-		template <class Archive>
-		void serialize(Archive& ar)
-		{
-			ar(cereal::base_class<Data>(this),
-				CEREAL_NVP(type_),
-				CEREAL_NVP(roll_),
-				CEREAL_NVP(usableRace_));
-		}
-
-		bool isRaceUsable(ERace race) const;
-	public:
-		EPerkType type_;
-		uint8_t roll_;
-		std::bitset<ERace::RaceCount> usableRace_;
-	};
+        bool isRaceUsable(ERace race) const;
+    public:
+        EPerkType type_;
+        uint8_t roll_;
+        uint8_t bonus_;
+        int32_t target_;
+        std::bitset<ERace::RaceCount> usableRace_;
+        std::string name_;
+    };
 } // namespace Dominion
 
 #endif // PERK_IMPL_H

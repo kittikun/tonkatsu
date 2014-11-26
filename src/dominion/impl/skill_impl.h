@@ -24,32 +24,30 @@
 #ifndef SKILL_IMPL_H
 #define SKILL_IMPL_H
 
-#include <cereal/types/base_class.hpp>
-
 #include "../data.h"
 #include "../definitions.h"
 
 namespace Dominion
 {
-	class SkillImpl : public Data
-	{
-		SkillImpl(const SkillImpl&) = delete;
-		SkillImpl& operator=(const SkillImpl&) = delete;
+    class SkillImpl : public Data
+    {
+        SkillImpl(const SkillImpl&) = delete;
+        SkillImpl& operator=(const SkillImpl&) = delete;
 
-	public:
-		SkillImpl(uint32_t id) : Data(id) {}
+    public:
+        SkillImpl(size_t id);
 
-		template <class Archive>
-		void serialize(Archive& ar)
-		{
-			ar(cereal::base_class<Data>(this), CEREAL_NVP(attribute_), CEREAL_NVP(name_));
-		}
+        static int LoadFromDB(void*, int, char**, char**);
 
-	public:
-		// Main attribute governing the skill
-		EAttribute attribute_;
-		std::string name_;
-	};
+        uint32_t CostToRaise(uint8_t toLevel);
+
+    public:
+        // Main attribute governing the skill
+        ESkillType type_;
+        int32_t target_;
+        std::string name_;
+        uint8_t level_;
+    };
 } // namespace Dominion
 
 #endif // SKILL_IMPL_H

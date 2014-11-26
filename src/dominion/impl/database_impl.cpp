@@ -30,36 +30,42 @@
 
 namespace Dominion
 {
-	DatabaseImpl::DatabaseImpl() :
-		dbConnection(nullptr)
-	{
-	}
+    DatabaseImpl::DatabaseImpl() :
+        dbConnection(nullptr)
+    {}
 
-	DatabaseImpl::~DatabaseImpl()
-	{
-		if (dbConnection != nullptr) {
-			sqlite3_close(dbConnection);
-			dbConnection = nullptr;
-		}
-	}
+    DatabaseImpl::~DatabaseImpl()
+    {
+        if (dbConnection != nullptr) {
+            sqlite3_close(dbConnection);
+            dbConnection = nullptr;
+        }
+    }
 
-	void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
-	{
-		int rc;
-		rc = sqlite3_open(path.string().c_str(), &dbConnection);
+    void DatabaseImpl::AddData(std::shared_ptr<Data> data)
+    {
+        database_.insert(std::make_pair(data->guid(), data));
+    }
 
-		if (rc) {
-			boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
-			throw std::runtime_error(boost::str(err));
-		}
-	}
+    void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
+    {
+        int rc;
+        rc = sqlite3_open(path.string().c_str(), &dbConnection);
 
-	void DatabaseImpl::LoadPerks()
-	{
-		int rc;
-		const char* sql = "select * from perk";
-		char *err = nullptr;
+        if (rc) {
+            boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
+            throw std::runtime_error(boost::str(err));
+        }
+    }
 
-		rc = sqlite3_exec(dbConnection, sql, PerkImpl::LoadFromDB, this, &err);
-	}
+    void DatabaseImpl::LoadPerks()
+    {
+        int rc;
+        const char* sql = "select * from perk";
+        char *err = nullptr;
+
+        // very bad to pass this like this but there is also no point in passing
+        // a pointer to a smart ptr :/
+        rc = sqlite3_exec(dbConnection, sql, PerkImpl::LoadFromDB, this, &err);
+    }
 } // namespace Dominion

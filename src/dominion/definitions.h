@@ -24,58 +24,71 @@
 #ifndef DEFINITION_H
 #define DEFINITION_H
 
+#include <array>
 #include <cstdint>
+#include <tuple>
 
 namespace Dominion
 {
-	// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
-	enum EAttribute
-	{
-		Agility,
-		Intuition,
-		Intellect,
-		Luck,
-		Stamina,
-		Vigour,
-		AttributeCount
-	};
+    // (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
+    enum EAttribute
+    {
+        Agility,
+        Intuition,
+        Intellect,
+        Luck,
+        Stamina,
+        Vigour,
+        AttributeCount,
+        Composite_Combat,
+        Composite_Priestcraft,
+        Composite_Witchcraft
+    };
 
-	enum class ESkillType : uint8_t {
-		Attribute,
-		Combat_Offensive,
-		Combat_Defensive
-	};
+    enum class ESkillType : uint8_t {
+        Beast,
+        Combat,
+        Defensive,
+        Global,
+        Non_Combat,
+        Priestcraft,
+        Witchcraft
+    };
 
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Advancement_Points,
-		Passive,
-		Skill,
-	};
+    enum class EPerkType : uint8_t {
+        Attribute,
+        Advancement_Points,
+        Passive,
+        Skill,
+    };
 
-	// (DR3.1.1 p29, 4-5 Character generation table)
-	enum ERace {
-		Beast,
-		Dwarf,
-		Elf,
-		Halfling,
-		Human,
-		Humanoid,
-		RaceCount
-	};
+    // (DR3.1.1 p29, 4-5 Character generation table)
+    enum ERace {
+        Beast,
+        Dwarf,
+        Elf,
+        Halfling,
+        Human,
+        Humanoid,
+        RaceCount
+    };
 
-	// (DR3.1.1 p26, 4-2 CHARACTER STYLES)
-	enum class Style : uint8_t {
-		Crusader,
-		Fool,
-		MerchantAdventurer,
-		Monk,
-		Priest,
-		Ranger,
-		Rogue,
-		Soldier,
-		Witch
-	};
+    // (DR3.1.1 p26, 4-2 CHARACTER STYLES)
+    enum class Style : uint8_t {
+        Crusader,
+        Fool,
+        MerchantAdventurer,
+        Monk,
+        Priest,
+        Ranger,
+        Rogue,
+        Soldier,
+        Witch
+    };
+
+    // Number of points / Remainder
+    typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
+    typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
 } // namespace Dominion
 
 #endif // DEFINITION_H

@@ -35,24 +35,26 @@ struct sqlite3;
 
 namespace Dominion
 {
-	class DatabaseImpl
-	{
-		friend class ApiImpl;
-		DatabaseImpl(const DatabaseImpl&) = delete;
-		DatabaseImpl& operator=(const DatabaseImpl&) = delete;
+    class DatabaseImpl
+    {
+        friend class ApiImpl;
+        DatabaseImpl(const DatabaseImpl&) = delete;
+        DatabaseImpl& operator=(const DatabaseImpl&) = delete;
 
-	public:
-		DatabaseImpl();
-		~DatabaseImpl();
+    public:
+        DatabaseImpl();
+        ~DatabaseImpl();
 
-		void ConnectDatabase(boost::filesystem::path path);
+        void ConnectDatabase(boost::filesystem::path path);
 
-	private:
-		void LoadPerks();
+        void AddData(std::shared_ptr<Data>);
 
-		std::unordered_map<boost::uuids::uuid, std::shared_ptr<Data>, boost::hash<boost::uuids::uuid>> database_;
-		sqlite3* dbConnection;
-	};
+    private:
+        void LoadPerks();
+
+        std::unordered_map<size_t, std::shared_ptr<Data>> database_;
+        sqlite3* dbConnection;
+    };
 } // namespace Dominion
 
 #endif // DATABASE_IMPL

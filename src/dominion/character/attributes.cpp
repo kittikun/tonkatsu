@@ -33,32 +33,30 @@
 
 namespace Dominion
 {
-	Attributes::Attributes(AttributeArray a) :
-		impl_(new AttributesImpl(a))
-	{
-	}
+    Attributes::Attributes(AttributeArray a) :
+        impl_(new AttributesImpl(a))
+    {}
 
-	Attributes::~Attributes()
-	{
-	}
+    Attributes::~Attributes()
+    {}
 
-	AttributeArray Attributes::GetBaseAttributes()
-	{
-		AttributeArray attributes;
+    AttributeArray Attributes::GetBaseAttributes()
+    {
+        AttributeArray attributes;
 
-		attributes.fill(1);
+        attributes.fill(1);
 
-		return attributes;
-	}
+        return attributes;
+    }
 
-	AttributePointsRemainder Attributes::GetAttributeRoll(const std::shared_ptr<Dice>& dice)
-	{
-		std::array < uint8_t, 3 >  res;
+    AttributePointsRemainder Attributes::GetAttributeRoll(const std::shared_ptr<Dice>& dice)
+    {
+        std::array < uint8_t, 3 >  res;
 
-		res.fill(dice->Roll());
+        res.fill(dice->Roll());
 
-		const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
+        const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
 
-		return std::make_tuple(sum / 3, sum % 3);
-	}
+        return std::make_tuple(sum / 3, sum % 3);
+    }
 } // namespace Dominion
