@@ -28,7 +28,10 @@ if (Boost_FOUND)
                       ${DOMINION_PATH}/character/perk.cpp
 					  ${DOMINION_PATH}/character/skill.cpp
 					  ${DOMINION_PATH}/impl/api_impl.cpp
+					  ${DOMINION_PATH}/impl/character_impl.cpp
 					  ${DOMINION_PATH}/impl/database_impl.cpp
+					  ${DOMINION_PATH}/impl/perk_impl.cpp
+					  ${DOMINION_PATH}/impl/skill_impl.cpp
 					  ${DOMINION_PATH}/lib/sqlite/shell.c
 					  ${DOMINION_PATH}/lib/sqlite/sqlite3.c)
   add_library(dominion SHARED ${DOMINION_SRC})
