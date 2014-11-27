@@ -30,73 +30,66 @@
 
 namespace Dominion
 {
-    // (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
-    enum EAttribute
-    {
-        Agility,
-        Intuition,
-        Intellect,
-        Luck,
-        Stamina,
-        Vigour,
-        AttributeCount
-    };
-    8
-    enum class ESkillType : uint8_t {
-        Beast_Combat,
-        Beast_Defensive,
-        Bease_Normal,
-        Usable_Combat,
-        Usable_Defensive,
-        Usable_Normal,
-        Passive,
-        Priestcraft,
-        Weapon_Profiency,
-        Witchcraft
-    };
+	// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
+	enum EAttribute
+	{
+		Agility,
+		Intuition,
+		Intellect,
+		Luck,
+		Stamina,
+		Vigour,
+		AttributeCount
+	};
 
-    enum class ESkillDependency : uint8_t {
-        Attribute,
-        None,
-        Weapon,
-        Arm2or,
-        Style
-    };
+	enum class ESkillType : uint8_t {
+		Beast_Combat,
+		Beast_Defensive,
+		Bease_Normal,
+		Usable_Combat,
+		Usable_Defensive,
+		Usable_Normal,
+		Passive,
+		Priestcraft,
+		Weapon_Profiency,
+		Witchcraft
+	};
 
-    enum class EPerkType : uint8_t {
-        Attribute,
-        Advancement_Points,
-        Passive,
-        Skill,
-    };
+	enum class ESkillDependency : uint8_t {
+		Attribute,
+		None,
+		Weapon,
+		Armor,
+		Archetype
+	};
 
-    // (DR3.1.1 p29, 4-5 Character generation table)
-    enum ERace {
-        Beast,
-        Dwarf,
-        Elf,
-        Halfling,
-        Human,
-        Humanoid,
-        RaceCount
-    };
+	enum class EPerkType : uint8_t {
+		Attribute,
+		Advancement_Points,
+		Passive,
+		Skill,
+	};
 
-    // (DR3.1.1 p26, 4-2 CHARACTER STYLES)
-    enum class Style : uint8_t {
-        Crusader,
-        Fool,
-        MerchantAdventurer,
-        Monk,
-        Priest,
-        Ranger,
-        Rogue,
-        Soldier,
-        Witch
-    };
+	// (DR3.1.1 p29, 4-5 Character generation table)
+	enum ERace {
+		Beast,
+		Dwarf,
+		Elf,
+		Halfling,
+		Human,
+		Humanoid,
+		RaceCount
+	};
 
-    // Number of points / Remainder
-    typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
-    typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
+	enum class Archetype : uint8_t	{
+		Beast,
+		Priest,
+		Witch
+	};
+
+	// Number of points / Remainder
+	typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
+	typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
 } // namespace Dominion
 
 #endif // DEFINITION_H
