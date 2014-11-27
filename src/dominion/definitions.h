@@ -39,20 +39,28 @@ namespace Dominion
         Luck,
         Stamina,
         Vigour,
-        AttributeCount,
-        Composite_Combat,
-        Composite_Priestcraft,
-        Composite_Witchcraft
+        AttributeCount
+    };
+    8
+    enum class ESkillType : uint8_t {
+        Beast_Combat,
+        Beast_Defensive,
+        Bease_Normal,
+        Usable_Combat,
+        Usable_Defensive,
+        Usable_Normal,
+        Passive,
+        Priestcraft,
+        Weapon_Profiency,
+        Witchcraft
     };
 
-    enum class ESkillType : uint8_t {
-        Beast,
-        Combat,
-        Defensive,
-        Global,
-        Non_Combat,
-        Priestcraft,
-        Witchcraft
+    enum class ESkillDependency : uint8_t {
+        Attribute,
+        None,
+        Weapon,
+        Arm2or,
+        Style
     };
 
     enum class EPerkType : uint8_t {

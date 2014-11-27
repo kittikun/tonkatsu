@@ -40,7 +40,7 @@ namespace Dominion
         PerkImpl& operator=(const PerkImpl&) = delete;
 
     public:
-        PerkImpl(size_t id);
+        PerkImpl(uint32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

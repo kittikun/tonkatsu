@@ -31,7 +31,7 @@
 
 namespace Dominion
 {
-    SkillImpl::SkillImpl(size_t id) :
+    SkillImpl::SkillImpl(uint32_t id) :
         Data(id),
         target_(-1),
         level_(1)
@@ -47,7 +47,7 @@ namespace Dominion
                 continue;
 
             if (strcmp(col[i], "Id") == 0) {
-                size_t id = ClassID::Skill + boost::lexical_cast<size_t>(argv[i]);
+                uint32_t id = ClassID::Skill + boost::lexical_cast<uint32_t>(argv[i]);
                 skill = std::make_shared<SkillImpl>(id);
             } else if (strcmp(col[i], "type") == 0) {
                 skill->type_ = static_cast<ESkillType>(boost::lexical_cast<uint8_t>(argv[i]));

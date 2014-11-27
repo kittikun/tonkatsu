@@ -30,7 +30,7 @@
 
 namespace Dominion
 {
-    PerkImpl::PerkImpl(size_t id) :
+    PerkImpl::PerkImpl(uint32_t id) :
         Data(id),
         bonus_(0),
         target_(-1)
@@ -46,7 +46,7 @@ namespace Dominion
                 continue;
 
             if (strcmp(col[i], "Id") == 0) {
-                size_t id = ClassID::Perk + boost::lexical_cast<size_t>(argv[i]);
+                uint32_t id = ClassID::Perk + boost::lexical_cast<uint32_t>(argv[i]);
                 perk = std::make_shared<PerkImpl>(id);
             } else if (strcmp(col[i], "type") == 0) {
                 perk->type_ = static_cast<EPerkType>(boost::lexical_cast<uint8_t>(argv[i]));

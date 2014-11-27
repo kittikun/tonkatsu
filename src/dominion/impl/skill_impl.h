@@ -35,7 +35,7 @@ namespace Dominion
         SkillImpl& operator=(const SkillImpl&) = delete;
 
     public:
-        SkillImpl(size_t id);
+        SkillImpl(uint32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

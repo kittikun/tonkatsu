@@ -67,5 +67,9 @@ namespace Dominion
         // very bad to pass this like this but there is also no point in passing
         // a pointer to a smart ptr :/
         rc = sqlite3_exec(dbConnection, sql, PerkImpl::LoadFromDB, this, &err);
+
+        if (rc) {
+            throw std::runtime_error("Couldn't load perks from DB");
+        }
     }
 } // namespace Dominion

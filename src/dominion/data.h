@@ -24,6 +24,8 @@
 #ifndef DATA_H
 #define DATA_H
 
+#include <cstdint>
+
 namespace Dominion
 {
     class Data
@@ -32,12 +34,12 @@ namespace Dominion
         Data& operator=(const Data&) = delete;
 
     public:
-        Data(size_t id) : guid_(id) {}
+        Data(uint32_t id) : guid_(id) {}
 
-        inline const size_t guid() const { return guid_; }
+        inline const uint32_t guid() const { return guid_; }
 
     private:
-        size_t guid_;
+        uint32_t guid_;
     };
 }
 
