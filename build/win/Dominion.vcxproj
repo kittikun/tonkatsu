@@ -24,8 +24,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\dominion\api.cpp" />
     <ClCompile Include="..\..\src\dominion\character\attributes.cpp" />
+    <ClCompile Include="..\..\src\dominion\character\character.cpp" />
     <ClCompile Include="..\..\src\dominion\character\perk.cpp" />
     <ClCompile Include="..\..\src\dominion\character\skill.cpp" />
+    <ClCompile Include="..\..\src\dominion\character\style.cpp" />
     <ClCompile Include="..\..\src\dominion\database.cpp" />
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\api_impl.cpp" />
@@ -33,14 +35,17 @@
     <ClCompile Include="..\..\src\dominion\impl\database_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\perk_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\skill_impl.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\style_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\lib\sqlite\shell.c" />
     <ClCompile Include="..\..\src\dominion\lib\sqlite\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\api.h" />
     <ClInclude Include="..\..\src\dominion\character\attributes.h" />
+    <ClInclude Include="..\..\src\dominion\character\character.h" />
     <ClInclude Include="..\..\src\dominion\character\perk.h" />
     <ClInclude Include="..\..\src\dominion\character\skill.h" />
+    <ClInclude Include="..\..\src\dominion\character\style.h" />
     <ClInclude Include="..\..\src\dominion\data.h" />
     <ClInclude Include="..\..\src\dominion\database.h" />
     <ClInclude Include="..\..\src\dominion\definitions.h" />
@@ -54,13 +59,14 @@
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\skill_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\style_impl.h" />
     <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3.h" />
     <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3ext.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4495B5E4-117B-43C3-B60B-426A1D8A5E17}</ProjectGuid>
-    <RootNamespace>Bible</RootNamespace>
+    <RootNamespace>Dominion</RootNamespace>
     <ProjectName>Dominion</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -128,7 +134,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -156,7 +162,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\server\dominion.cpp" />
     <ClCompile Include="..\..\src\server\main.cpp" />
     <ClCompile Include="..\..\src\server\utility\log.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\server\dominion.h" />
     <ClInclude Include="..\..\src\server\utility\log.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

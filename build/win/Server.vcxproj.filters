@@ -15,10 +15,16 @@
     <ClCompile Include="..\..\src\server\utility\log.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\dominion.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\server\utility\log.h">
       <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\dominion.h">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

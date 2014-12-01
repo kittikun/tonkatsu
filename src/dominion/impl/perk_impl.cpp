@@ -46,14 +46,14 @@ namespace Dominion
                 continue;
 
             if (strcmp(col[i], "Id") == 0) {
-                uint32_t id = ClassID::Perk + boost::lexical_cast<uint32_t>(argv[i]);
+                uint32_t id = ClassID_Perk + boost::lexical_cast<uint32_t>(argv[i]);
                 perk = std::make_shared<PerkImpl>(id);
             } else if (strcmp(col[i], "type") == 0) {
-                perk->type_ = static_cast<EPerkType>(boost::lexical_cast<uint8_t>(argv[i]));
+                perk->type_ = static_cast<EPerkType>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "name") == 0) {
                 perk->name_ = argv[i];
             } else if (strcmp(col[i], "roll") == 0) {
-                perk->roll_ = boost::lexical_cast<uint8_t>(argv[i]);
+                perk->roll_ = (uint8_t)boost::lexical_cast<int32_t>(argv[i]);
             } else if (strcmp(col[i], "target") == 0) {
                 int32_t target = boost::lexical_cast<int32_t>(argv[i]);
 
@@ -63,7 +63,7 @@ namespace Dominion
                     break;
 
                 case EPerkType::Skill:
-                    perk->target_ = ClassID::Skill + target;
+                    perk->target_ = ClassID_Skill + target;
                     break;
 
                 case EPerkType::Advancement_Points:
@@ -75,19 +75,19 @@ namespace Dominion
                     return 1;
                 }
             } else if (strcmp(col[i], "bonus") == 0) {
-                perk->bonus_ = boost::lexical_cast<uint8_t>(argv[i]);
+                perk->bonus_ = (uint8_t)boost::lexical_cast<int32_t>(argv[i]);
             } else if (strcmp(col[i], "isHuman") == 0) {
-                perk->usableRace_[ERace::Human] = boost::lexical_cast<bool>(argv[i]);
+                perk->usableRace_[ERace::RaceHuman] = boost::lexical_cast<bool>(argv[i]);
             } else if (strcmp(col[i], "isElf") == 0) {
-                perk->usableRace_[ERace::Elf] = boost::lexical_cast<bool>(argv[i]);
+                perk->usableRace_[ERace::RaceElf] = boost::lexical_cast<bool>(argv[i]);
             } else if (strcmp(col[i], "isDwarf") == 0) {
-                perk->usableRace_[ERace::Dwarf] = boost::lexical_cast<bool>(argv[i]);
+                perk->usableRace_[ERace::RaceDwarf] = boost::lexical_cast<bool>(argv[i]);
             } else if (strcmp(col[i], "isHalfling") == 0) {
-                perk->usableRace_[ERace::Halfling] = boost::lexical_cast<bool>(argv[i]);
+                perk->usableRace_[ERace::RaceHalfling] = boost::lexical_cast<bool>(argv[i]);
             } else if (strcmp(col[i], "isHumanoid") == 0) {
-                perk->usableRace_[ERace::Humanoid] = boost::lexical_cast<bool>(argv[i]);
+                perk->usableRace_[ERace::RaceHumanoid] = boost::lexical_cast<bool>(argv[i]);
             } else if (strcmp(col[i], "isBeast") == 0) {
-                perk->usableRace_[ERace::Beast] = boost::lexical_cast<bool>(argv[i]);
+                perk->usableRace_[ERace::RaceBeast] = boost::lexical_cast<bool>(argv[i]);
             }
         }
 

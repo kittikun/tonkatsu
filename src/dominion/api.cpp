@@ -23,13 +23,19 @@
 
 #include "api.h"
 
+#include "database.h"
+
 #include "impl/api_impl.h"
 
 namespace Dominion
 {
-	void Initialise(const std::string& dataPath)
-	{
-		ApiImpl::instance().LoadDatabase(dataPath);
-	}
+    void Initialise(const std::string& dataPath)
+    {
+        ApiImpl::instance().LoadDatabase(dataPath);
+    }
 
+    std::shared_ptr<DataBase> DOMINION_API GetDatabase()
+    {
+        return ApiImpl::instance().GetDatabase();
+    }
 } // namespace Dominion

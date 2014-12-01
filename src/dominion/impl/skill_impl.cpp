@@ -47,16 +47,29 @@ namespace Dominion
                 continue;
 
             if (strcmp(col[i], "Id") == 0) {
-                uint32_t id = ClassID::Skill + boost::lexical_cast<uint32_t>(argv[i]);
+                uint32_t id = ClassID_Skill + boost::lexical_cast<uint32_t>(argv[i]);
                 skill = std::make_shared<SkillImpl>(id);
             } else if (strcmp(col[i], "type") == 0) {
-                skill->type_ = static_cast<ESkillType>(boost::lexical_cast<uint8_t>(argv[i]));
+                skill->type_ = static_cast<ESkillType>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "name") == 0) {
                 skill->name_ = argv[i];
+            } else if (strcmp(col[i], "dependency") == 0) {
+                skill->dependency_ = static_cast<ESkillDependency>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "target") == 0) {
-                skill->target_ = boost::lexical_cast<int32_t>(argv[i]);
+                skill->target_ = boost::lexical_cast<uint32_t>(argv[i]);
+            } else if (strcmp(col[i], "bySentient") == 0) {
+                skill->usableRace_[ERace::RaceHuman] = boost::lexical_cast<bool>(argv[i]);;
+                skill->usableRace_[ERace::RaceElf] = boost::lexical_cast<bool>(argv[i]);;
+                skill->usableRace_[ERace::RaceDwarf] = boost::lexical_cast<bool>(argv[i]);;
+                skill->usableRace_[ERace::RaceHalfling] = boost::lexical_cast<bool>(argv[i]);;
+            } else if (strcmp(col[i], "byHumanoid") == 0) {
+                skill->usableRace_[ERace::RaceHumanoid] = boost::lexical_cast<bool>(argv[i]);;
+            } else if (strcmp(col[i], "byBeast") == 0) {
+                skill->usableRace_[ERace::RaceBeast] = boost::lexical_cast<bool>(argv[i]);;
             }
         }
+
+        db->AddData(skill);
 
         return 0;
     }

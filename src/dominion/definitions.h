@@ -33,12 +33,12 @@ namespace Dominion
 	// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
 	enum EAttribute
 	{
-		Agility,
-		Intuition,
-		Intellect,
-		Luck,
-		Stamina,
-		Vigour,
+        AttributeAgility,
+        AttributeIntuition,
+        AttributeIntellect,
+        AttributeLuck,
+        AttributeStamina,
+        AttributeVigour,
 		AttributeCount
 	};
 
@@ -72,19 +72,20 @@ namespace Dominion
 
 	// (DR3.1.1 p29, 4-5 Character generation table)
 	enum ERace {
-		Beast,
-		Dwarf,
-		Elf,
-		Halfling,
-		Human,
-		Humanoid,
+		RaceBeast,
+        RaceDwarf,
+        RaceElf,
+        RaceHalfling,
+        RaceHuman,
+        RaceHumanoid,
 		RaceCount
 	};
 
-	enum class Archetype : uint8_t	{
-		Beast,
-		Priest,
-		Witch
+	enum EArchetype {
+        ArchetypeBeast,
+        ArchetypePriest,
+        ArchetypeWitch,
+        ArchetypeCount
 	};
 
 	// Number of points / Remainder

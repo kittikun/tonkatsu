@@ -24,7 +24,6 @@
 #include "database_impl.h"
 
 #include <boost/format.hpp>
-#include <sqlite/sqlite3.h>
 
 #include "perk_impl.h"
 
@@ -58,18 +57,19 @@ namespace Dominion
         }
     }
 
-    void DatabaseImpl::LoadPerks()
+    void DatabaseImpl::ExecuteQuery(const std::string& query, SQLiteCallback callback)
     {
         int rc;
-        const char* sql = "select * from perk";
         char *err = nullptr;
 
-        // very bad to pass this like this but there is also no point in passing
-        // a pointer to a smart ptr :/
-        rc = sqlite3_exec(dbConnection, sql, PerkImpl::LoadFromDB, this, &err);
+        rc = sqlite3_exec(dbConnection, query.c_str(), callback, this, &err);
 
         if (rc) {
-            throw std::runtime_error("Couldn't load perks from DB");
+            throw std::runtime_error("Query returned with an error");
         }
+    }
+
+    void DatabaseImpl::MakeOpaque(void*, int argc, char** argv, char** col)
+    {
     }
 } // namespace Dominion

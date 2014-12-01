@@ -21,39 +21,30 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef CHARACTER_IMPL_H
-#define CHARACTER_IMPL_H
+#ifndef STYLE_IMPL_H
+#define STYLE_IMPL_H
 
-#include <memory>
-#include <unordered_map>
-#include <array>
+#include <bitset>
 
+#include "../data.h"
 #include "../definitions.h"
 
 namespace Dominion
 {
-    class PerkImpl;
-    class SkillImpl;
-    class StyleImpl;
-
-    class CharacterImpl
+    class StyleImpl : public Data
     {
-        CharacterImpl(const CharacterImpl&) = delete;
-        CharacterImpl& operator=(const CharacterImpl&) = delete;
+        StyleImpl(const StyleImpl&) = delete;
+        StyleImpl& operator=(const StyleImpl&) = delete;
 
     public:
-        CharacterImpl();
+        StyleImpl(uint32_t id);
 
-        void SetStyle(uint32_t guid);
+        static int LoadFromDB(void*, int, char**, char**);
 
     public:
-        AttributeArray attributes_;
-        std::shared_ptr<PerkImpl> perk_;
-        std::shared_ptr<StyleImpl> style_;
-        std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
-        ERace race_;
-        uint16_t ap_;
+        std::bitset<EArchetype::ArchetypeCount> archetypes_;
+        std::string name_;
     };
 } // namespace Dominion
 
-#endif // CHARACTER_IMPL_H
+#endif // STYLE_IMPL_H

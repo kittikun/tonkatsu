@@ -28,16 +28,16 @@
 #include <unordered_map>
 #include <boost/functional/hash.hpp>
 #include <boost/filesystem.hpp>
+#include <sqlite/sqlite3.h>
 
 #include "../data.h"
 
-struct sqlite3;
-
 namespace Dominion
 {
+    typedef int(*SQLiteCallback)(void*, int, char**, char**);
+
     class DatabaseImpl
     {
-        friend class ApiImpl;
         DatabaseImpl(const DatabaseImpl&) = delete;
         DatabaseImpl& operator=(const DatabaseImpl&) = delete;
 
@@ -49,10 +49,31 @@ namespace Dominion
 
         void AddData(std::shared_ptr<Data>);
 
-    private:
-        void LoadPerks();
+        template <class T>
+        std::vector<std::shared_ptr<T>> GetListAsOpaque(const std::string& query)
+        {
+            int rc;
+            char *err = nullptr;
+            std::vector<T> res{4};
 
-        std::unordered_map<size_t, std::shared_ptr<Data>> database_;
+            // very bad to pass this like this but there is also no point in passing
+            // a pointer to a smart ptr :/
+            rc = sqlite3_exec(dbConnection, query.c_str(), std::bind(&DatabaseImpl::MakeOpaque, this), nullptr, &err);
+
+            if (rc) {
+                throw std::runtime_error("Query returned with an error");
+            }
+
+            return res;
+        }
+
+        void ExecuteQuery(const std::string&, SQLiteCallback);
+
+    private:
+        void MakeOpaque(void*, int, char**, char**);
+
+    private:
+        std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;
         sqlite3* dbConnection;
     };
 } // namespace Dominion

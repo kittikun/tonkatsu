@@ -26,11 +26,12 @@
 
 namespace Dominion
 {
-	enum ClassID
-	{
-		Perk = 1000,
-		Skill = 2000,
-	};
+    enum ClassID
+    {
+        ClassID_Perk = 1000,
+        ClassID_Skill = 2000,
+        ClassID_Style = 3000
+    };
 } // namespace Dominion
 
 #endif // CLASS_ID_H

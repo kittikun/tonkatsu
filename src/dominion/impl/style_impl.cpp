@@ -21,39 +21,47 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef CHARACTER_IMPL_H
-#define CHARACTER_IMPL_H
+#include "style_impl.h"
 
 #include <memory>
-#include <unordered_map>
-#include <array>
+#include <boost/lexical_cast.hpp>
 
-#include "../definitions.h"
+#include "classid.h"
+#include "database_impl.h"
 
 namespace Dominion
 {
-    class PerkImpl;
-    class SkillImpl;
-    class StyleImpl;
+    StyleImpl::StyleImpl(uint32_t id) :
+        Data(id)
+    {}
 
-    class CharacterImpl
+    int StyleImpl::LoadFromDB(void* data, int argc, char** argv, char** col)
     {
-        CharacterImpl(const CharacterImpl&) = delete;
-        CharacterImpl& operator=(const CharacterImpl&) = delete;
+        DatabaseImpl* db = static_cast<DatabaseImpl*>(data);
+        std::shared_ptr<StyleImpl> style;
 
-    public:
-        CharacterImpl();
+        for (int i = 0; i < argc; ++i) {
+            if (argv[i] == nullptr)
+                continue;
 
-        void SetStyle(uint32_t guid);
+            if (strcmp(col[i], "Id") == 0) {
+                uint32_t id = ClassID_Style + boost::lexical_cast<uint32_t>(argv[i]);
+                style = std::make_shared<StyleImpl>(id);
+            } else if (strcmp(col[i], "name") == 0) {
+                style->name_ = argv[i];
+            } else if (strcmp(col[i], "isPriest") == 0) {
+                style->archetypes_[ArchetypePriest] = boost::lexical_cast<bool>(argv[i]);
+            }
+            else if (strcmp(col[i], "isWitch") == 0) {
+                style->archetypes_[ArchetypeWitch] = boost::lexical_cast<bool>(argv[i]);
+            }
+            else if (strcmp(col[i], "isBeast") == 0) {
+                style->archetypes_[ArchetypeBeast] = boost::lexical_cast<bool>(argv[i]);
+            }
+        }
 
-    public:
-        AttributeArray attributes_;
-        std::shared_ptr<PerkImpl> perk_;
-        std::shared_ptr<StyleImpl> style_;
-        std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
-        ERace race_;
-        uint16_t ap_;
-    };
+        db->AddData(style);
+
+        return 0;
+    }
 } // namespace Dominion
-
-#endif // CHARACTER_IMPL_H

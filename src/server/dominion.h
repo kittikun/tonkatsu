@@ -13,23 +13,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
+#ifndef DOMINION_H
+#define DOMINION_H
 
-#include "dominion.h"
-#include "utility/log.h"
+#include <memory>
 
-int main(int, char**)
+#include <dominion/database.h>
+
+namespace Tonkatsu
 {
-    Tonkatsu::DominionLib dom;
+    class DominionLib
+    {
+        DominionLib(const DominionLib&) = delete;
+        DominionLib& operator=(const DominionLib&) = delete;
 
-    Tonkatsu::Utility::Log::Initialize();
-    dom.Initialise();
+    public:
+        DominionLib() {};
 
-    LOGC << "Hello World!";
+        void Initialise();
 
-#if defined(_WIN32)
-    std::cin.get();
-#endif
+    private:
+        std::shared_ptr<Dominion::DataBase> db_;
+    };
+} // namespace Tonkatsu
 
-    return 0;
-}
+#endif DOMINION_H

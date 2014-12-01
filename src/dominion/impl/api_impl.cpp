@@ -26,36 +26,48 @@
 #include <stdexcept>
 #include <boost/filesystem.hpp>
 
+#include "../database.h"
+
 #include "database_impl.h"
+#include "perk_impl.h"
+#include "skill_impl.h"
+#include "style_impl.h"
 
 namespace Dominion
 {
-	ApiImpl::ApiImpl() :
-		db(std::make_shared<DatabaseImpl>())
-	{
-	}
+    ApiImpl::ApiImpl() :
+        db_(std::make_shared<DatabaseImpl>())
+    {}
 
-	ApiImpl& ApiImpl::instance()
-	{
-		static ApiImpl instance;
+    ApiImpl& ApiImpl::instance()
+    {
+        static ApiImpl instance;
 
-		return instance;
-	}
+        return instance;
+    }
 
-	void ApiImpl::LoadDatabase(const std::string& dataPath)
-	{
-		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("dominion.db");
-		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
+    std::shared_ptr<DataBase> ApiImpl::GetDatabase()
+    {
+        return std::make_shared<DataBase>(db_);
+    }
 
-		canonical = canonical.make_preferred();
+    void ApiImpl::LoadDatabase(const std::string& dataPath)
+    {
+        boost::filesystem::path path(dataPath);
+        boost::filesystem::path file("dominion.db_");
+        boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
 
-		if (boost::filesystem::exists(canonical)) {
-			db->ConnectDatabase(canonical);
-			db->LoadPerks();
-		}
-		else {
-			throw std::invalid_argument("Invalid path to database");
-		}
-	}
+        canonical = canonical.make_preferred();
+
+        if (boost::filesystem::exists(canonical)) {
+            db_->ConnectDatabase(canonical);
+
+            // create data structure from db info
+            db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
+            db_->ExecuteQuery("select * from skill", SkillImpl::LoadFromDB);
+            db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
+        } else {
+            throw std::invalid_argument("Invalid path to database");
+        }
+    }
 } // namespace Dominion

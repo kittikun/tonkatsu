@@ -21,39 +21,36 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef CHARACTER_IMPL_H
-#define CHARACTER_IMPL_H
+#ifndef STYLE_H
+#define STYLE_H
 
 #include <memory>
-#include <unordered_map>
-#include <array>
+#include <string>
 
 #include "../definitions.h"
+#include "../platform.h"
 
 namespace Dominion
 {
-    class PerkImpl;
-    class SkillImpl;
     class StyleImpl;
 
-    class CharacterImpl
+#ifdef _WIN32
+    template class DOMINION_API std::shared_ptr < StyleImpl > ;
+#endif
+
+    // (DR3.1.1 p13, 4-4 SkillS)
+    class DOMINION_API Style
     {
-        CharacterImpl(const CharacterImpl&) = delete;
-        CharacterImpl& operator=(const CharacterImpl&) = delete;
+        Style(const Style&) = delete;
+        Style& operator=(const Style&) = delete;
 
     public:
-        CharacterImpl();
+        Style(const std::shared_ptr<StyleImpl>& impl);
+        ~Style();
 
-        void SetStyle(uint32_t guid);
-
-    public:
-        AttributeArray attributes_;
-        std::shared_ptr<PerkImpl> perk_;
-        std::shared_ptr<StyleImpl> style_;
-        std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
-        ERace race_;
-        uint16_t ap_;
+    private:
+        std::shared_ptr<StyleImpl> impl_;
     };
 } // namespace Dominion
 
-#endif // CHARACTER_IMPL_H
+#endif // STYLE_H

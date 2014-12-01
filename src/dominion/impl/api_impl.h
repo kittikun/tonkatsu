@@ -29,24 +29,26 @@
 
 namespace Dominion
 {
-	class DatabaseImpl;
+    class DataBase;
+    class DatabaseImpl;
 
-	class ApiImpl
-	{
-		ApiImpl(const ApiImpl&) = delete;
-		ApiImpl& operator=(const ApiImpl&) = delete;
+    class ApiImpl
+    {
+        ApiImpl(const ApiImpl&) = delete;
+        ApiImpl& operator=(const ApiImpl&) = delete;
 
-	public:
-		ApiImpl();
+    public:
+        ApiImpl();
 
-		void LoadDatabase(const std::string& dataPath);
+        void LoadDatabase(const std::string& dataPath);
 
-		static ApiImpl& instance();
+        std::shared_ptr<DataBase> GetDatabase();
 
-	private:
-		std::shared_ptr<DatabaseImpl> db;
-	};
+        static ApiImpl& instance();
 
+    private:
+        std::shared_ptr<DatabaseImpl> db_;
+    };
 } // namespace Dominion
 
 #endif // API_IMPL_H

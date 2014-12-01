@@ -24,6 +24,8 @@
 #ifndef SKILL_IMPL_H
 #define SKILL_IMPL_H
 
+#include <bitset>
+
 #include "../data.h"
 #include "../definitions.h"
 
@@ -43,10 +45,12 @@ namespace Dominion
 
     public:
         // Main attribute governing the skill
+        ESkillDependency dependency_;
+        uint8_t level_;
+        std::string name_;
         ESkillType type_;
         int32_t target_;
-        std::string name_;
-        uint8_t level_;
+        std::bitset<ERace::RaceCount> usableRace_;
     };
 } // namespace Dominion
 

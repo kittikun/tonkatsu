@@ -13,23 +13,36 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
-
 #include "dominion.h"
-#include "utility/log.h"
 
-int main(int, char**)
-{
-    Tonkatsu::DominionLib dom;
-
-    Tonkatsu::Utility::Log::Initialize();
-    dom.Initialise();
-
-    LOGC << "Hello World!";
+#include <chrono>
 
 #if defined(_WIN32)
-    std::cin.get();
+#include <windows.h>
 #endif
 
-    return 0;
-}
+#include <dominion/api.h>
+
+#include "utility/log.h"
+
+namespace Tonkatsu
+{
+    void DominionLib::Initialise()
+    {
+        auto t1 = std::chrono::system_clock::now();
+
+#if defined(_WIN32)
+        if (IsDebuggerPresent())
+            Dominion::Initialise("../../data/dominion");
+#else
+        Dominion::Initialise("./data/dominion");
+#endif
+
+        auto t2 = std::chrono::system_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+
+        LOGD << "Initialization time " << elapsed << "ms";
+
+        db_ = Dominion::GetDatabase();
+    }
+} // namespace Tonkatsu

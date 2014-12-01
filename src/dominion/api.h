@@ -24,13 +24,18 @@
 #ifndef API_H
 #define API_H
 
+#include <memory>
 #include <string>
 
 #include "platform.h"
 
 namespace Dominion
 {
-	void DOMINION_API Initialise(const std::string&);
+    class DataBase;
+
+    void DOMINION_API Initialise(const std::string&);
+
+    std::shared_ptr<DataBase> DOMINION_API GetDatabase();
 } // namespace Dominion
 
 #endif // API_H
