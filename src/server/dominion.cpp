@@ -39,21 +39,23 @@ namespace Tonkatsu
 		Dominion::Initialise("./data/dominion");
 #endif
 
-		auto t2 = std::chrono::system_clock::now();
+		auto t2 = std::chrono::steady_clock::now();
 		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 
 		LOGD << "Initialization time " << elapsed << "ms";
 
-		t1 = std::chrono::system_clock::now();
 		db_ = Dominion::GetDatabase();
-		t2 = std::chrono::system_clock::now();
-		elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+
+		auto t3 = std::chrono::steady_clock::now();
 
 		auto styles = db_->GetStyles();
+
+		auto t4 = std::chrono::steady_clock::now();
+		elapsed = std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
 
 		for (auto s : styles)
 			LOGD << s->name();
 
-		LOGD << "GetStyles time " << elapsed << "ms";
+		LOGD << "GetStyles time " << elapsed << "us";
 	}
 } // namespace Tonkatsu
