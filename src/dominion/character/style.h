@@ -25,32 +25,33 @@
 #define STYLE_H
 
 #include <memory>
-#include <string>
 
 #include "../definitions.h"
 #include "../platform.h"
 
 namespace Dominion
 {
-    class StyleImpl;
+	class StyleImpl;
 
 #ifdef _WIN32
-    template class DOMINION_API std::shared_ptr < StyleImpl > ;
+	template class DOMINION_API std::shared_ptr < StyleImpl > ;
 #endif
 
-    // (DR3.1.1 p13, 4-4 SkillS)
-    class DOMINION_API Style
-    {
-        Style(const Style&) = delete;
-        Style& operator=(const Style&) = delete;
+	// (DR3.1.1 p13, 4-4 Skills)
+	class DOMINION_API Style
+	{
+		Style(const Style&) = delete;
+		Style& operator=(const Style&) = delete;
 
-    public:
-        Style(const std::shared_ptr<StyleImpl>& impl);
-        ~Style();
+	public:
+		Style(const std::shared_ptr<StyleImpl>& impl);
+		~Style();
 
-    private:
-        std::shared_ptr<StyleImpl> impl_;
-    };
+		const std::string& name();
+
+	private:
+		std::shared_ptr<StyleImpl> impl_;
+	};
 } // namespace Dominion
 
 #endif // STYLE_H

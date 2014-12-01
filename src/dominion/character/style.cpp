@@ -23,13 +23,20 @@
 
 #include "style.h"
 
+#include "../impl/style_impl.h"
+
 namespace Dominion
 {
-    Style::Style(const std::shared_ptr<StyleImpl>& impl)
-        : impl_(impl_)
-    {}
+	Style::Style(const std::shared_ptr<StyleImpl>& impl)
+		: impl_(impl)
+	{}
 
-    Style::~Style()
-    {
-    }
+	Style::~Style()
+	{
+	}
+
+	const std::string& Style::name()
+	{
+		return impl_->name_;
+	}
 } // namespace Dominion

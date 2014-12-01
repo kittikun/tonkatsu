@@ -140,6 +140,9 @@
     <ClInclude Include="..\..\src\dominion\character\style.h">
       <Filter>source\character</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\utility.h">
+      <Filter>source\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\dominion\LICENSE" />

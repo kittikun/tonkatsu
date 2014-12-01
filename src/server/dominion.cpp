@@ -22,27 +22,38 @@
 #endif
 
 #include <dominion/api.h>
+#include <dominion/character/style.h>
 
 #include "utility/log.h"
 
 namespace Tonkatsu
 {
-    void DominionLib::Initialise()
-    {
-        auto t1 = std::chrono::system_clock::now();
+	void DominionLib::Initialise()
+	{
+		auto t1 = std::chrono::system_clock::now();
 
 #if defined(_WIN32)
-        if (IsDebuggerPresent())
-            Dominion::Initialise("../../data/dominion");
+		if (IsDebuggerPresent())
+			Dominion::Initialise("../../data/dominion");
 #else
-        Dominion::Initialise("./data/dominion");
+		Dominion::Initialise("./data/dominion");
 #endif
 
-        auto t2 = std::chrono::system_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+		auto t2 = std::chrono::system_clock::now();
+		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 
-        LOGD << "Initialization time " << elapsed << "ms";
+		LOGD << "Initialization time " << elapsed << "ms";
 
-        db_ = Dominion::GetDatabase();
-    }
+		t1 = std::chrono::system_clock::now();
+		db_ = Dominion::GetDatabase();
+		t2 = std::chrono::system_clock::now();
+		elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+
+		auto styles = db_->GetStyles();
+
+		for (auto s : styles)
+			LOGD << s->name();
+
+		LOGD << "GetStyles time " << elapsed << "ms";
+	}
 } // namespace Tonkatsu

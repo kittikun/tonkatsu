@@ -23,53 +23,47 @@
 
 #include "database_impl.h"
 
-#include <boost/format.hpp>
-
 #include "perk_impl.h"
 
 namespace Dominion
 {
-    DatabaseImpl::DatabaseImpl() :
-        dbConnection(nullptr)
-    {}
+	DatabaseImpl::DatabaseImpl() :
+		dbConnection(nullptr)
+	{}
 
-    DatabaseImpl::~DatabaseImpl()
-    {
-        if (dbConnection != nullptr) {
-            sqlite3_close(dbConnection);
-            dbConnection = nullptr;
-        }
-    }
+	DatabaseImpl::~DatabaseImpl()
+	{
+		if (dbConnection != nullptr) {
+			sqlite3_close(dbConnection);
+			dbConnection = nullptr;
+		}
+	}
 
-    void DatabaseImpl::AddData(std::shared_ptr<Data> data)
-    {
-        database_.insert(std::make_pair(data->guid(), data));
-    }
+	void DatabaseImpl::AddData(std::shared_ptr<Data> data)
+	{
+		database_.insert(std::make_pair(data->guid(), data));
+	}
 
-    void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
-    {
-        int rc;
-        rc = sqlite3_open(path.string().c_str(), &dbConnection);
+	void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
+	{
+		int rc;
+		rc = sqlite3_open(path.string().c_str(), &dbConnection);
 
-        if (rc) {
-            boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
-            throw std::runtime_error(boost::str(err));
-        }
-    }
+		if (rc) {
+			boost::format err = boost::format("Couldn't open database: %1%") % sqlite3_errmsg(dbConnection);
+			throw std::runtime_error(boost::str(err));
+		}
+	}
 
-    void DatabaseImpl::ExecuteQuery(const std::string& query, SQLiteCallback callback)
-    {
-        int rc;
-        char *err = nullptr;
+	void DatabaseImpl::ExecuteQuery(const std::string& query, SQLiteCallback callback)
+	{
+		int rc;
+		char *err = nullptr;
 
-        rc = sqlite3_exec(dbConnection, query.c_str(), callback, this, &err);
+		rc = sqlite3_exec(dbConnection, query.c_str(), callback, this, &err);
 
-        if (rc) {
-            throw std::runtime_error("Query returned with an error");
-        }
-    }
-
-    void DatabaseImpl::MakeOpaque(void*, int argc, char** argv, char** col)
-    {
-    }
+		if (rc) {
+			throw std::runtime_error("Query returned with an error");
+		}
+	}
 } // namespace Dominion

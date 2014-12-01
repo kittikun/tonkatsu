@@ -60,6 +60,7 @@
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\skill_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\style_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\utility.h" />
     <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3.h" />
     <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3ext.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />

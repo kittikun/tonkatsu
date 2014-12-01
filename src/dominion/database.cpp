@@ -29,15 +29,15 @@
 
 namespace Dominion
 {
-    DataBase::DataBase(const std::shared_ptr<DatabaseImpl>& impl) :
-        impl_(impl)
-    {}
+	DataBase::DataBase(const std::shared_ptr<DatabaseImpl>& impl) :
+		impl_(impl)
+	{}
 
-    DataBase::~DataBase()
-    {}
+	DataBase::~DataBase()
+	{}
 
-    std::shared_ptr<Style> DataBase::GetStyles()
-    {
-        impl_->GetListAsOpaque<Style>("select * from style");
-    }
+	std::vector<std::shared_ptr<Style>> DataBase::GetStyles()
+	{
+		return impl_->GetListAsOpaque<Style>();
+	}
 } // namespace Dominion

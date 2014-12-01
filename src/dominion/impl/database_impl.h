@@ -25,57 +25,79 @@
 #define DATABASE_IMPL
 
 #include <memory>
+#include <tuple>
 #include <unordered_map>
+#include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/functional/hash.hpp>
 #include <boost/filesystem.hpp>
 #include <sqlite/sqlite3.h>
 
 #include "../data.h"
+#include "utility.h"
 
 namespace Dominion
 {
-    typedef int(*SQLiteCallback)(void*, int, char**, char**);
+	typedef int(*SQLiteCallback)(void*, int, char**, char**);
 
-    class DatabaseImpl
-    {
-        DatabaseImpl(const DatabaseImpl&) = delete;
-        DatabaseImpl& operator=(const DatabaseImpl&) = delete;
+	class DatabaseImpl
+	{
+		DatabaseImpl(const DatabaseImpl&) = delete;
+		DatabaseImpl& operator=(const DatabaseImpl&) = delete;
 
-    public:
-        DatabaseImpl();
-        ~DatabaseImpl();
+	public:
+		DatabaseImpl();
+		~DatabaseImpl();
 
-        void ConnectDatabase(boost::filesystem::path path);
+		void ConnectDatabase(boost::filesystem::path path);
 
-        void AddData(std::shared_ptr<Data>);
+		void AddData(std::shared_ptr<Data>);
 
-        template <class T>
-        std::vector<std::shared_ptr<T>> GetListAsOpaque(const std::string& query)
-        {
-            int rc;
-            char *err = nullptr;
-            std::vector<T> res{4};
+		template <class T>
+		std::vector<std::shared_ptr<T>> GetListAsOpaque()
+		{
+			typedef std::unordered_map<uint32_t, std::shared_ptr<Data>> DictionaryType;
+			typedef std::vector<std::shared_ptr<T>> ResultType;
+			typedef std::tuple<DictionaryType&, ResultType&> TupleType;
 
-            // very bad to pass this like this but there is also no point in passing
-            // a pointer to a smart ptr :/
-            rc = sqlite3_exec(dbConnection, query.c_str(), std::bind(&DatabaseImpl::MakeOpaque, this), nullptr, &err);
+			int rc;
+			char *err = nullptr;
+			ResultType res;
 
-            if (rc) {
-                throw std::runtime_error("Query returned with an error");
-            }
+			// lambda with capture cannot be passed as __cdecl so we have to resort to tuple usage
+			TupleType tuple = std::tie(database_, res);
 
-            return res;
-        }
+			auto f = [](void* data, int argc, char** argv, char**sdf) {
+				TupleType* tuple = static_cast<TupleType*>(data);
 
-        void ExecuteQuery(const std::string&, SQLiteCallback);
+				std::get<1>(*tuple).reserve(argc);
 
-    private:
-        void MakeOpaque(void*, int, char**, char**);
+				for (int i = 0; i < argc; ++i) {
+					int index = Utility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
+					std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<Utility<T>::ImplType>(std::get<0>(*tuple)[index])));
+				}
 
-    private:
-        std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;
-        sqlite3* dbConnection;
-    };
+				return 0;
+			};
+
+			boost::format fmt = boost::format("select id from %1%") % Utility<T>::SQLColumnName();
+			std::string query = boost::str(fmt);
+
+			rc = sqlite3_exec(dbConnection, query.c_str(), f, static_cast<void*>(&tuple), &err);
+
+			if (rc) {
+				throw std::runtime_error("Query returned with an error");
+			}
+
+			return res;
+		}
+
+		void ExecuteQuery(const std::string&, SQLiteCallback);
+
+	private:
+		std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;
+		sqlite3* dbConnection;
+	};
 } // namespace Dominion
 
 #endif // DATABASE_IMPL
