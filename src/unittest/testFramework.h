@@ -25,52 +25,50 @@
 
 template <typename Derived, typename TimePrecision>
 struct BaseFixture {
-	explicit BaseFixture(std::string filename, std::vector<std::string> testNames) :
-		os(filename.c_str(), std::ios_base::app)
-	{
-		static bool initalized = false;
+    explicit BaseFixture(std::string filename, std::vector<std::string> testNames) :
+        os(filename.c_str(), std::ios_base::app)
+    {
+        static bool initalized = false;
 
-		os.set_delimiter(',');
+        os.set_delimiter(',');
 
-		if (!initalized && os.is_open())
-		{
-			for (auto& str : testNames) {
-				os << str;
-			}
+        if (!initalized && os.is_open()) {
+            for (auto& str : testNames) {
+                os << str;
+            }
 
-			os << NEWLINE;
-			initalized = true;
-		}
-	}
+            os << NEWLINE;
+            initalized = true;
+        }
+    }
 
-	~BaseFixture() {}
+    ~BaseFixture() {}
 
-	template<typename F>
-	void TestFunc(int times, F lambda)
-	{
-		std::array<typename TimePrecision::rep, 10> time;
+    template<typename F>
+    void TestFunc(int times, F lambda)
+    {
+        std::array<typename TimePrecision::rep, 10> time;
 
-		for (int i = 0; i < 10; ++i) {
-			auto t1 = std::chrono::system_clock::now();
+        for (int i = 0; i < 10; ++i) {
+            auto t1 = std::chrono::high_resolution_clock::now();
 
-			for (int j = 0; j < times; ++j) {
-				lambda();
-			}
+            for (int j = 0; j < times; ++j) {
+                lambda();
+            }
 
-			auto t2 = std::chrono::system_clock::now();
+            auto t2 = std::chrono::high_resolution_clock::now();
 
-			time[i] = std::chrono::duration_cast<TimePrecision>(t2 - t1).count();
-		}
+            time[i] = std::chrono::duration_cast<TimePrecision>(t2 - t1).count();
+        }
 
-		typename TimePrecision::rep avg = std::accumulate(begin(time), end(time), (typename TimePrecision::rep)0) / (typename TimePrecision::rep)time.size();
+        typename TimePrecision::rep avg = std::accumulate(begin(time), end(time), (typename TimePrecision::rep)0) / (typename TimePrecision::rep)time.size();
 
-		if (os.is_open())
-		{
-			os << avg << "";
-		}
-	}
+        if (os.is_open()) {
+            os << avg << "";
+        }
+    }
 
-	csv::ofstream os;
+    csv::ofstream os;
 };
 
 #endif // TEST_FRAMEWORK_H

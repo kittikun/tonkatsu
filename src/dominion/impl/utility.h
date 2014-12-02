@@ -27,22 +27,41 @@
 #include <string>
 
 #include "classid.h"
+#include "perk_impl.h"
+#include "skill_impl.h"
 #include "style_impl.h"
+#include "../character/perk.h"
+#include "../character/skill.h"
 #include "../character/style.h"
 
 namespace Dominion
 {
-  template <typename T>
+    template <typename T>
     struct Utility;
-  
-  template <>
+
+    template <>
+    struct Utility < Perk >
+    {
+        typedef PerkImpl ImplType;
+        static int ClassIDFromType() { return ClassID_Perk; }
+        static std::string SQLColumnName() { return std::string("perk"); }
+    };
+
+    template <>
+    struct Utility < Skill >
+    {
+        typedef SkillImpl ImplType;
+        static int ClassIDFromType() { return ClassID_Skill; }
+        static std::string SQLColumnName() { return std::string("skill"); }
+    };
+
+    template <>
     struct Utility < Style >
-	{
-	  typedef StyleImpl ImplType;
-	  
-	  static int ClassIDFromType() { return ClassID_Style; }
-	  static std::string SQLColumnName() { return std::string("style"); }
-	};
+    {
+        typedef StyleImpl ImplType;
+        static int ClassIDFromType() { return ClassID_Style; }
+        static std::string SQLColumnName() { return std::string("style"); }
+    };
 } // namespace Dominion
 
 #endif // UTILITY_H

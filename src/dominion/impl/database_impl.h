@@ -38,66 +38,95 @@
 
 namespace Dominion
 {
-	typedef int(*SQLiteCallback)(void*, int, char**, char**);
+    typedef int(*SQLiteCallback)(void*, int, char**, char**);
 
-	class DatabaseImpl
-	{
-		DatabaseImpl(const DatabaseImpl&) = delete;
-		DatabaseImpl& operator=(const DatabaseImpl&) = delete;
+    class DatabaseImpl
+    {
+        DatabaseImpl(const DatabaseImpl&) = delete;
+        DatabaseImpl& operator=(const DatabaseImpl&) = delete;
 
-	public:
-		DatabaseImpl();
-		~DatabaseImpl();
+    public:
+        DatabaseImpl();
+        ~DatabaseImpl();
 
-		void ConnectDatabase(boost::filesystem::path path);
+        void ConnectDatabase(boost::filesystem::path path);
 
-		void AddData(std::shared_ptr<Data>);
+        void AddData(std::shared_ptr<Data>);
 
-		template <class T>
-		std::vector<std::shared_ptr<T>> GetListAsOpaque()
-		{
-			typedef std::unordered_map<uint32_t, std::shared_ptr<Data>> DictionaryType;
-			typedef std::vector<std::shared_ptr<T>> ResultType;
-			typedef std::tuple<DictionaryType&, ResultType&> TupleType;
+        template <typename T>
+        size_t GetCount()
+        {
+            int rc;
+            char *err = nullptr;
+            size_t res;
 
-			int rc;
-			char *err = nullptr;
-			ResultType res;
+            auto f = [](void* data, int, char** argv, char**) {
+                size_t* res = static_cast<size_t*>(data);
 
-			// lambda with capture cannot be passed as __cdecl so we have to resort to tuple usage
-			TupleType tuple = std::tie(database_, res);
+                *res = boost::lexical_cast<size_t>(argv[0]);
 
-			auto f = [](void* data, int argc, char** argv, char**sdf) {
-				TupleType* tuple = static_cast<TupleType*>(data);
+                return 0;
+            };
 
-				std::get<1>(*tuple).reserve(argc);
+            boost::format fmt = boost::format("select count(id) from %1%") % Utility<T>::SQLColumnName();
+            std::string query = boost::str(fmt);
 
-				for (int i = 0; i < argc; ++i) {
-					int index = Utility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
-					std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename Utility<T>::ImplType>(std::get<0>(*tuple)[index])));
-				}
+            rc = sqlite3_exec(dbConnection, query.c_str(), f, static_cast<void*>(&res), &err);
 
-				return 0;
-			};
+            if (rc) {
+                throw std::runtime_error("Query returned with an error");
+            }
 
-			boost::format fmt = boost::format("select id from %1%") % Utility<T>::SQLColumnName();
-			std::string query = boost::str(fmt);
+            return res;
+        }
 
-			rc = sqlite3_exec(dbConnection, query.c_str(), f, static_cast<void*>(&tuple), &err);
+        template <typename T>
+        std::vector<std::shared_ptr<T>> GetListAsOpaque()
+        {
+            typedef std::unordered_map<uint32_t, std::shared_ptr<Data>> DictionaryType;
+            typedef std::vector<std::shared_ptr<T>> ResultType;
+            typedef std::tuple<DictionaryType&, ResultType&> TupleType;
 
-			if (rc) {
-				throw std::runtime_error("Query returned with an error");
-			}
+            int rc;
+            size_t count = GetCount<T>();
+            char *err = nullptr;
 
-			return res;
-		}
+            ResultType res;
 
-		void ExecuteQuery(const std::string&, SQLiteCallback);
+            res.reserve(count);
 
-	private:
-		std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;
-		sqlite3* dbConnection;
-	};
+            // lambda with capture cannot be passed as __cdecl so we have to resort to tuple usage
+            TupleType tuple = std::tie(database_, res);
+
+            auto f = [](void* data, int argc, char** argv, char**) {
+                TupleType* tuple = static_cast<TupleType*>(data);
+
+                for (int i = 0; i < argc; ++i) {
+                    int index = Utility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
+                    std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename Utility<T>::ImplType>(std::get<0>(*tuple)[index])));
+                }
+
+                return 0;
+            };
+
+            boost::format fmt = boost::format("select id from %1%") % Utility<T>::SQLColumnName();
+            std::string query = boost::str(fmt);
+
+            rc = sqlite3_exec(dbConnection, query.c_str(), f, static_cast<void*>(&tuple), &err);
+
+            if (rc) {
+                throw std::runtime_error("Query returned with an error");
+            }
+
+            return res;
+        }
+
+        void ExecuteQuery(const std::string&, SQLiteCallback);
+
+    private:
+        std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;
+        sqlite3* dbConnection;
+    };
 } // namespace Dominion
 
 #endif // DATABASE_IMPL

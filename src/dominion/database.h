@@ -31,27 +31,31 @@
 
 namespace Dominion
 {
-	class Style;
-	class DatabaseImpl;
+    class Perk;
+    class Skill;
+    class Style;
+    class DatabaseImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::shared_ptr < DatabaseImpl > ;
+    template class DOMINION_API std::shared_ptr < DatabaseImpl > ;
 #endif
 
-	class DOMINION_API DataBase
-	{
-		DataBase(const DataBase&) = delete;
-		DataBase& operator=(const DataBase&) = delete;
+    class DOMINION_API DataBase
+    {
+        DataBase(const DataBase&) = delete;
+        DataBase& operator=(const DataBase&) = delete;
 
-	public:
-		DataBase(const std::shared_ptr<DatabaseImpl>& impl);
-		~DataBase();
+    public:
+        DataBase(const std::shared_ptr<DatabaseImpl>& impl);
+        ~DataBase();
 
-		std::vector<std::shared_ptr<Style>> GetStyles();
+        std::vector<std::shared_ptr<Perk>> GetPerks();
+        std::vector<std::shared_ptr<Skill>> GetSkills();
+        std::vector<std::shared_ptr<Style>> GetStyles();
 
-	private:
-		std::shared_ptr<DatabaseImpl> impl_;
-	};
+    private:
+        std::shared_ptr<DatabaseImpl> impl_;
+    };
 }
 
 #endif // DATABASE_H

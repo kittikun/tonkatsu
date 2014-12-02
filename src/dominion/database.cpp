@@ -23,21 +23,33 @@
 
 #include "database.h"
 
+#include "character/perk.h"
+#include "character/skill.h"
 #include "character/style.h"
 
 #include "impl/database_impl.h"
 
 namespace Dominion
 {
-	DataBase::DataBase(const std::shared_ptr<DatabaseImpl>& impl) :
-		impl_(impl)
-	{}
+    DataBase::DataBase(const std::shared_ptr<DatabaseImpl>& impl) :
+        impl_(impl)
+    {}
 
-	DataBase::~DataBase()
-	{}
+    DataBase::~DataBase()
+    {}
 
-	std::vector<std::shared_ptr<Style>> DataBase::GetStyles()
-	{
-		return impl_->GetListAsOpaque<Style>();
-	}
+    std::vector<std::shared_ptr<Perk>> DataBase::GetPerks()
+    {
+        return impl_->GetListAsOpaque<Perk>();
+    }
+
+    std::vector<std::shared_ptr<Skill>> DataBase::GetSkills()
+    {
+        return impl_->GetListAsOpaque<Skill>();
+    }
+
+    std::vector<std::shared_ptr<Style>> DataBase::GetStyles()
+    {
+        return impl_->GetListAsOpaque<Style>();
+    }
 } // namespace Dominion

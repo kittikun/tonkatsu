@@ -16,6 +16,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <memory>
+#include <chrono>
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -23,21 +24,36 @@
 
 #include <dominion/api.h>
 
+#include "../lib/minicsv.h"
+
 class ApiSetup  {
 public:
-	ApiSetup()
-	{
-#if defined(_WIN32)
-		if (IsDebuggerPresent())
-			Dominion::Initialise("../../data/dominion");
-#else
-		Dominion::Initialise("./data/dominion");
-#endif
-	}
+    ApiSetup()
+    {
+        csv::ofstream os("Dominion_Api.csv", std::ios_base::app);
 
-	~ApiSetup()
-	{
-	}
+        os.set_delimiter(',');
+        os << "Initialise" << NEWLINE;
+
+        auto t1 = std::chrono::high_resolution_clock::now();
+
+#if defined(_WIN32)
+        if (IsDebuggerPresent())
+            Dominion::Initialise("../../data/dominion");
+#else
+        Dominion::Initialise("./data/dominion");
+#endif
+        auto t2 = std::chrono::high_resolution_clock::now();
+
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+
+        os << elapsed << NEWLINE;
+
+        os.close();
+    }
+
+    ~ApiSetup()
+    {}
 };
 
 BOOST_GLOBAL_FIXTURE(ApiSetup);
