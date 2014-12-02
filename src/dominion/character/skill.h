@@ -21,8 +21,8 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef Skill_H
-#define Skill_H
+#ifndef SKILL_H
+#define SKILL_H
 
 #include <memory>
 #include <string>
@@ -32,25 +32,25 @@
 
 namespace Dominion
 {
-	class SkillImpl;
+    class SkillImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::shared_ptr < SkillImpl > ;
+    template class DOMINION_API std::shared_ptr < SkillImpl > ;
 #endif
 
-	// (DR3.1.1 p13, 4-4 SkillS)
-	class DOMINION_API Skill
-	{
-		Skill(const Skill&) = delete;
-		Skill& operator=(const Skill&) = delete;
+    // (DR3.1.1 p13, 4-4 SkillS)
+    class DOMINION_API Skill
+    {
+        Skill(const Skill&) = delete;
+        Skill& operator=(const Skill&) = delete;
 
-	public:
-		Skill(const std::shared_ptr<SkillImpl>& impl);
-		~Skill();
+    public:
+        Skill(const std::shared_ptr<SkillImpl>& impl);
+        ~Skill();
 
-	private:
-		std::shared_ptr<SkillImpl> impl_;
-	};
+    private:
+        std::shared_ptr<SkillImpl> impl_;
+    };
 } // namespace Dominion
 
-#endif // Skill_H
+#endif // SKILL_H

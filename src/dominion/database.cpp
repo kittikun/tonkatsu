@@ -23,21 +23,21 @@
 
 #include "database.h"
 
+#include "character/style.h"
+
 #include "impl/database_impl.h"
 
 namespace Dominion
 {
-
-	//----------------------------------------------------------------------------------------------
-	// ABILITIES
-	//----------------------------------------------------------------------------------------------
 	DataBase::DataBase(const std::shared_ptr<DatabaseImpl>& impl) :
 		impl_(impl)
-	{
-	}
+	{}
 
 	DataBase::~DataBase()
-	{
-	}
+	{}
 
+	std::vector<std::shared_ptr<Style>> DataBase::GetStyles()
+	{
+		return impl_->GetListAsOpaque<Style>();
+	}
 } // namespace Dominion

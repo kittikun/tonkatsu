@@ -57,6 +57,18 @@
     <ClCompile Include="..\..\src\dominion\impl\perk_impl.cpp">
       <Filter>source\impl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dominion\impl\skill_impl.cpp">
+      <Filter>source\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\impl\style_impl.cpp">
+      <Filter>source\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\character\character.cpp">
+      <Filter>source\character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\character\style.cpp">
+      <Filter>source\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\definitions.h">
@@ -66,9 +78,6 @@
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\character\attributes.h">
-      <Filter>source\character</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\dominion\character\race.h">
       <Filter>source\character</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\character\perk.h">
@@ -81,9 +90,6 @@
       <Filter>source\character</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\database.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\dominion\data.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\platform.h">
@@ -120,6 +126,21 @@
       <Filter>source\impl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\impl\classid.h">
+      <Filter>source\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\style_impl.h">
+      <Filter>source\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\character\character.h">
+      <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\data.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\character\style.h">
+      <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\utility.h">
       <Filter>source\impl</Filter>
     </ClInclude>
   </ItemGroup>

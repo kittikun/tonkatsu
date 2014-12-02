@@ -23,17 +23,13 @@
 
 #include "database_impl.h"
 
-#include <boost/format.hpp>
-#include <sqlite/sqlite3.h>
-
 #include "perk_impl.h"
 
 namespace Dominion
 {
 	DatabaseImpl::DatabaseImpl() :
 		dbConnection(nullptr)
-	{
-	}
+	{}
 
 	DatabaseImpl::~DatabaseImpl()
 	{
@@ -41,6 +37,11 @@ namespace Dominion
 			sqlite3_close(dbConnection);
 			dbConnection = nullptr;
 		}
+	}
+
+	void DatabaseImpl::AddData(std::shared_ptr<Data> data)
+	{
+		database_.insert(std::make_pair(data->guid(), data));
 	}
 
 	void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
@@ -54,12 +55,15 @@ namespace Dominion
 		}
 	}
 
-	void DatabaseImpl::LoadPerks()
+	void DatabaseImpl::ExecuteQuery(const std::string& query, SQLiteCallback callback)
 	{
 		int rc;
-		const char* sql = "select * from perk";
 		char *err = nullptr;
 
-		rc = sqlite3_exec(dbConnection, sql, PerkImpl::LoadFromDB, this, &err);
+		rc = sqlite3_exec(dbConnection, query.c_str(), callback, this, &err);
+
+		if (rc) {
+			throw std::runtime_error("Query returned with an error");
+		}
 	}
 } // namespace Dominion

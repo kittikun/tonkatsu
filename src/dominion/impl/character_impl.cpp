@@ -23,6 +23,15 @@
 
 #include "character_impl.h"
 
+#include "perk_impl.h"
+
 namespace Dominion
 {
+    CharacterImpl::CharacterImpl() :
+        // (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
+        // All starting characters are given 45 Advancement
+        // Points(APs) to spend as you see fit.Some characters
+        // start with more that 45 APs.
+        ap_(45)
+    {}
 } // namespace Dominion

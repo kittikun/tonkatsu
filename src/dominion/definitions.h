@@ -24,26 +24,43 @@
 #ifndef DEFINITION_H
 #define DEFINITION_H
 
+#include <array>
 #include <cstdint>
+#include <tuple>
 
 namespace Dominion
 {
 	// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
 	enum EAttribute
 	{
-		Agility,
-		Intuition,
-		Intellect,
-		Luck,
-		Stamina,
-		Vigour,
+        AttributeAgility,
+        AttributeIntuition,
+        AttributeIntellect,
+        AttributeLuck,
+        AttributeStamina,
+        AttributeVigour,
 		AttributeCount
 	};
 
 	enum class ESkillType : uint8_t {
+		Beast_Combat,
+		Beast_Defensive,
+		Bease_Normal,
+		Usable_Combat,
+		Usable_Defensive,
+		Usable_Normal,
+		Passive,
+		Priestcraft,
+		Weapon_Profiency,
+		Witchcraft
+	};
+
+	enum class ESkillDependency : uint8_t {
 		Attribute,
-		Combat_Offensive,
-		Combat_Defensive
+		None,
+		Weapon,
+		Armor,
+		Archetype
 	};
 
 	enum class EPerkType : uint8_t {
@@ -55,27 +72,25 @@ namespace Dominion
 
 	// (DR3.1.1 p29, 4-5 Character generation table)
 	enum ERace {
-		Beast,
-		Dwarf,
-		Elf,
-		Halfling,
-		Human,
-		Humanoid,
+		RaceBeast,
+        RaceDwarf,
+        RaceElf,
+        RaceHalfling,
+        RaceHuman,
+        RaceHumanoid,
 		RaceCount
 	};
 
-	// (DR3.1.1 p26, 4-2 CHARACTER STYLES)
-	enum class Style : uint8_t {
-		Crusader,
-		Fool,
-		MerchantAdventurer,
-		Monk,
-		Priest,
-		Ranger,
-		Rogue,
-		Soldier,
-		Witch
+	enum EArchetype {
+        ArchetypeBeast,
+        ArchetypePriest,
+        ArchetypeWitch,
+        ArchetypeCount
 	};
+
+	// Number of points / Remainder
+	typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
+	typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
 } // namespace Dominion
 
 #endif // DEFINITION_H

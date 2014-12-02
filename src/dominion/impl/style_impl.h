@@ -21,54 +21,30 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "api_impl.h"
+#ifndef STYLE_IMPL_H
+#define STYLE_IMPL_H
 
-#include <stdexcept>
-#include <boost/filesystem.hpp>
+#include <bitset>
 
-#include "../database.h"
-
-#include "database_impl.h"
-#include "perk_impl.h"
-#include "skill_impl.h"
-#include "style_impl.h"
+#include "../data.h"
+#include "../definitions.h"
 
 namespace Dominion
 {
-	ApiImpl::ApiImpl() :
-		db_(std::make_shared<DatabaseImpl>())
-	{}
+    class StyleImpl : public Data
+    {
+        StyleImpl(const StyleImpl&) = delete;
+        StyleImpl& operator=(const StyleImpl&) = delete;
 
-	ApiImpl& ApiImpl::instance()
-	{
-		static ApiImpl instance;
+    public:
+        StyleImpl(uint32_t id);
 
-		return instance;
-	}
+        static int LoadFromDB(void*, int, char**, char**);
 
-	std::shared_ptr<DataBase> ApiImpl::GetDatabase()
-	{
-		return std::make_shared<DataBase>(db_);
-	}
-
-	void ApiImpl::LoadDatabase(const std::string& dataPath)
-	{
-		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("dominion.db");
-		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
-
-		canonical = canonical.make_preferred();
-
-		if (boost::filesystem::exists(canonical)) {
-			db_->ConnectDatabase(canonical);
-
-			// create data structure from db info
-			db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
-			db_->ExecuteQuery("select * from skill", SkillImpl::LoadFromDB);
-			db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
-		}
-		else {
-			throw std::invalid_argument("Invalid path to database");
-		}
-	}
+    public:
+        std::bitset<EArchetype::ArchetypeCount> archetypes_;
+        std::string name_;
+    };
 } // namespace Dominion
+
+#endif // STYLE_IMPL_H

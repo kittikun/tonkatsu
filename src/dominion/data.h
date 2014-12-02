@@ -24,31 +24,23 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include <cereal/cereal.hpp>
-
-#include "extra/cereal_boost_uuid.h"
+#include <cstdint>
 
 namespace Dominion
 {
-	class Data
-	{
-		Data(const Data&) = delete;
-		Data& operator=(const Data&) = delete;
+    class Data
+    {
+        Data(const Data&) = delete;
+        Data& operator=(const Data&) = delete;
 
-	public:
-		Data(uint32_t id) : guid_(id) {}
+    public:
+        Data(uint32_t id) : guid_(id) {}
 
-		inline const uint32_t guid() const { return guid_; }
+        inline const uint32_t guid() const { return guid_; }
 
-		template <class Archive>
-		void serialize(Archive & ar)
-		{
-			ar(CEREAL_NVP(guid_));
-		}
-
-	private:
-		uint32_t guid_;
-	};
+    private:
+        uint32_t guid_;
+    };
 }
 
 #endif // DATA_H

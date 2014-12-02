@@ -21,54 +21,22 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#include "api_impl.h"
+#include "style.h"
 
-#include <stdexcept>
-#include <boost/filesystem.hpp>
-
-#include "../database.h"
-
-#include "database_impl.h"
-#include "perk_impl.h"
-#include "skill_impl.h"
-#include "style_impl.h"
+#include "../impl/style_impl.h"
 
 namespace Dominion
 {
-	ApiImpl::ApiImpl() :
-		db_(std::make_shared<DatabaseImpl>())
+	Style::Style(const std::shared_ptr<StyleImpl>& impl)
+		: impl_(impl)
 	{}
 
-	ApiImpl& ApiImpl::instance()
+	Style::~Style()
 	{
-		static ApiImpl instance;
-
-		return instance;
 	}
 
-	std::shared_ptr<DataBase> ApiImpl::GetDatabase()
+	const std::string& Style::name()
 	{
-		return std::make_shared<DataBase>(db_);
-	}
-
-	void ApiImpl::LoadDatabase(const std::string& dataPath)
-	{
-		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("dominion.db");
-		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
-
-		canonical = canonical.make_preferred();
-
-		if (boost::filesystem::exists(canonical)) {
-			db_->ConnectDatabase(canonical);
-
-			// create data structure from db info
-			db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
-			db_->ExecuteQuery("select * from skill", SkillImpl::LoadFromDB);
-			db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
-		}
-		else {
-			throw std::invalid_argument("Invalid path to database");
-		}
+		return impl_->name_;
 	}
 } // namespace Dominion

@@ -35,7 +35,7 @@ BOOST_FIXTURE_TEST_SUITE(Dominion_Dice, DiceFixture)
 BOOST_AUTO_TEST_CASE(Roll)
 {
 	TestFunc(1000, [&] {
-		const uint16_t rnd = dice->Roll();
+		const uint8_t rnd = dice->Roll();
 		BOOST_CHECK((rnd > 0) && (rnd <= 12));
 	});
 }

@@ -24,20 +24,36 @@
 #ifndef CHARACTER_IMPL_H
 #define CHARACTER_IMPL_H
 
+#include <memory>
+#include <unordered_map>
 #include <array>
 
 #include "../definitions.h"
 
 namespace Dominion
 {
-	class CharacterImpl
-	{
-	public:
+    class PerkImpl;
+    class SkillImpl;
+    class StyleImpl;
 
-	private:
-		std::array<uint8_t, EAttribute::AttributeCount> attributes_;
-		ERace race_;
-	};
+    class CharacterImpl
+    {
+        CharacterImpl(const CharacterImpl&) = delete;
+        CharacterImpl& operator=(const CharacterImpl&) = delete;
+
+    public:
+        CharacterImpl();
+
+        void SetStyle(uint32_t guid);
+
+    public:
+        AttributeArray attributes_;
+        std::shared_ptr<PerkImpl> perk_;
+        std::shared_ptr<StyleImpl> style_;
+        std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
+        ERace race_;
+        uint16_t ap_;
+    };
 } // namespace Dominion
 
-#endif // CHARACTER_IMPL_H 
+#endif // CHARACTER_IMPL_H

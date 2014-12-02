@@ -21,11 +21,11 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef RACE_H
-#define RACE_H
+#ifndef CHARACTER_H
+#define CHARACTER_H
 
 namespace Dominion
 {
 } // namespace Dominion
 
-#endif // RACE_H
+#endif // CHARACTER_H

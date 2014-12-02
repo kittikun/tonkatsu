@@ -25,18 +25,20 @@
 #define DATABASE_H
 
 #include <memory>
+#include <vector>
 
 #include "platform.h"
 
 namespace Dominion
 {
+	class Style;
 	class DatabaseImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::shared_ptr < DatabaseImpl >;
+	template class DOMINION_API std::shared_ptr < DatabaseImpl > ;
 #endif
 
-	class DOMINION_API DataBase 
+	class DOMINION_API DataBase
 	{
 		DataBase(const DataBase&) = delete;
 		DataBase& operator=(const DataBase&) = delete;
@@ -44,6 +46,8 @@ namespace Dominion
 	public:
 		DataBase(const std::shared_ptr<DatabaseImpl>& impl);
 		~DataBase();
+
+		std::vector<std::shared_ptr<Style>> GetStyles();
 
 	private:
 		std::shared_ptr<DatabaseImpl> impl_;
