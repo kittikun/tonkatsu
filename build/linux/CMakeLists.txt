@@ -22,29 +22,35 @@ if (Boost_FOUND)
                       ${SRC_PATH}/dominion/lib)
 
   set(DOMINION_SRC    ${DOMINION_PATH}/api.cpp
-                      ${DOMINION_PATH}/data.cpp
                       ${DOMINION_PATH}/database.cpp
                       ${DOMINION_PATH}/dice.cpp
                       ${DOMINION_PATH}/character/attributes.cpp
+                      ${DOMINION_PATH}/character/character.cpp
                       ${DOMINION_PATH}/character/perk.cpp
-					  ${DOMINION_PATH}/character/skill.cpp
-					  ${DOMINION_PATH}/impl/api_impl.cpp
-					  ${DOMINION_PATH}/impl/database_impl.cpp
-					  ${DOMINION_PATH}/lib/sqlite/shell.c
-					  ${DOMINION_PATH}/lib/sqlite/sqlite3.c)
+		      ${DOMINION_PATH}/character/skill.cpp
+                      ${DOMINION_PATH}/character/style.cpp
+		      ${DOMINION_PATH}/impl/api_impl.cpp
+                      ${DOMINION_PATH}/impl/character.cpp
+		      ${DOMINION_PATH}/impl/database_impl.cpp
+                      ${DOMINION_PATH}/impl/perk_impl.cpp
+                      ${DOMINION_PATH}/impl/skill_impl.cpp
+                      ${DOMINION_PATH}/impl/style_impl.cpp
+		      ${DOMINION_PATH}/lib/sqlite/shell.c
+		      ${DOMINION_PATH}/lib/sqlite/sqlite3.c)
   add_library(dominion SHARED ${DOMINION_SRC})
 
   set(TEST_SRC    ${TEST_PATH}/main.cpp
                   ${TEST_PATH}/dominion/api.cpp
                   ${TEST_PATH}/dominion/attributes.cpp
                   ${TEST_PATH}/dominion/dice.cpp
-		          ${TEST_PATH}/dominion/perk.cpp
-				  ${TEST_PATH}/dominion/skill.cpp
+	          ${TEST_PATH}/dominion/perk.cpp
+		  ${TEST_PATH}/dominion/skill.cpp
                   ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
   target_link_libraries(unittest dominion ${Boost_LIBRARIES} dl)
 
   set(EXE_SRC ${EXE_PATH}/main.cpp
+              ${EXE_PATH}/dominion.cpp
               ${EXE_PATH}/utility/log.cpp)
   add_executable(server ${EXE_SRC})
   target_link_libraries(server ${Boost_LIBRARIES} dominion)
