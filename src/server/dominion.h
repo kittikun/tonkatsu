@@ -37,4 +37,4 @@ namespace Tonkatsu
     };
 } // namespace Tonkatsu
 
-#endif DOMINION_H
+#endif // DOMINION_H

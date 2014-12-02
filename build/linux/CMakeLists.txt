@@ -30,7 +30,7 @@ if (Boost_FOUND)
 		      ${DOMINION_PATH}/character/skill.cpp
                       ${DOMINION_PATH}/character/style.cpp
 		      ${DOMINION_PATH}/impl/api_impl.cpp
-                      ${DOMINION_PATH}/impl/character.cpp
+                      ${DOMINION_PATH}/impl/character_impl.cpp
 		      ${DOMINION_PATH}/impl/database_impl.cpp
                       ${DOMINION_PATH}/impl/perk_impl.cpp
                       ${DOMINION_PATH}/impl/skill_impl.cpp
@@ -53,6 +53,6 @@ if (Boost_FOUND)
               ${EXE_PATH}/dominion.cpp
               ${EXE_PATH}/utility/log.cpp)
   add_executable(server ${EXE_SRC})
-  target_link_libraries(server ${Boost_LIBRARIES} dominion)
+  target_link_libraries(server ${Boost_LIBRARIES} dominion dl)
 
 endif(Boost_FOUND)

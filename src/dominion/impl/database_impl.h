@@ -74,7 +74,7 @@ namespace Dominion
 
 				for (int i = 0; i < argc; ++i) {
 					int index = Utility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
-					std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<Utility<T>::ImplType>(std::get<0>(*tuple)[index])));
+					std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename Utility<T>::ImplType>(std::get<0>(*tuple)[index])));
 				}
 
 				return 0;

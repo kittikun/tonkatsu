@@ -33,8 +33,8 @@ namespace Dominion
 {
     SkillImpl::SkillImpl(uint32_t id) :
         Data(id),
-        target_(-1),
-        level_(1)
+        level_(1),
+	target_(-1)
     {}
 
     int SkillImpl::LoadFromDB(void* data, int argc, char** argv, char** col)

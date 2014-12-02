@@ -32,16 +32,16 @@
 
 namespace Dominion
 {
-	template <typename T>
-	struct Utility;
-
-	template <>
-	struct Utility < Style >
+  template <typename T>
+    struct Utility;
+  
+  template <>
+    struct Utility < Style >
 	{
-		typedef StyleImpl ImplType;
-
-		static int ClassIDFromType() { return ClassID_Style; }
-		static std::string SQLColumnName() { return std::string("style"); }
+	  typedef StyleImpl ImplType;
+	  
+	  static int ClassIDFromType() { return ClassID_Style; }
+	  static std::string SQLColumnName() { return std::string("style"); }
 	};
 } // namespace Dominion
 
