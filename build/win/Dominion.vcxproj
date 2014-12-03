@@ -46,7 +46,6 @@
     <ClInclude Include="..\..\src\dominion\character\perk.h" />
     <ClInclude Include="..\..\src\dominion\character\skill.h" />
     <ClInclude Include="..\..\src\dominion\character\style.h" />
-    <ClInclude Include="..\..\src\dominion\data.h" />
     <ClInclude Include="..\..\src\dominion\database.h" />
     <ClInclude Include="..\..\src\dominion\definitions.h" />
     <ClInclude Include="..\..\src\dominion\dice.h" />
@@ -55,6 +54,7 @@
     <ClInclude Include="..\..\src\dominion\impl\attribute_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\character_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\classid.h" />
+    <ClInclude Include="..\..\src\dominion\impl\data.h" />
     <ClInclude Include="..\..\src\dominion\impl\database_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />

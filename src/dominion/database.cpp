@@ -38,17 +38,12 @@ namespace Dominion
     DataBase::~DataBase()
     {}
 
-    std::vector<std::shared_ptr<Perk>> DataBase::GetPerks()
-    {
-        return impl_->GetListAsOpaque<Perk>();
-    }
-
-    std::vector<std::shared_ptr<Skill>> DataBase::GetSkills()
+    std::vector<std::shared_ptr<Skill>> DataBase::GetSkills() const
     {
         return impl_->GetListAsOpaque<Skill>();
     }
 
-    std::vector<std::shared_ptr<Style>> DataBase::GetStyles()
+    std::vector<std::shared_ptr<Style>> DataBase::GetStyles() const
     {
         return impl_->GetListAsOpaque<Style>();
     }

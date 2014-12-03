@@ -49,9 +49,8 @@ namespace Dominion
         DataBase(const std::shared_ptr<DatabaseImpl>& impl);
         ~DataBase();
 
-        std::vector<std::shared_ptr<Perk>> GetPerks();
-        std::vector<std::shared_ptr<Skill>> GetSkills();
-        std::vector<std::shared_ptr<Style>> GetStyles();
+        std::vector<std::shared_ptr<Skill>> GetSkills() const;
+        std::vector<std::shared_ptr<Style>> GetStyles() const;
 
     private:
         std::shared_ptr<DatabaseImpl> impl_;

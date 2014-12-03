@@ -26,7 +26,7 @@
 
 #include <bitset>
 
-#include "../data.h"
+#include "data.h"
 #include "../definitions.h"
 
 namespace Dominion
@@ -35,9 +35,11 @@ namespace Dominion
     {
         SkillImpl(const SkillImpl&) = delete;
         SkillImpl& operator=(const SkillImpl&) = delete;
+        SkillImpl(SkillImpl&&) = delete;
+        SkillImpl& operator=(SkillImpl&&) = delete;
 
     public:
-        SkillImpl(uint32_t id);
+        SkillImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

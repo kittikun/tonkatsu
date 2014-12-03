@@ -29,6 +29,7 @@
 
 namespace Dominion
 {
+    class Character;
     class DataBase;
     class DatabaseImpl;
 
@@ -36,15 +37,17 @@ namespace Dominion
     {
         ApiImpl(const ApiImpl&) = delete;
         ApiImpl& operator=(const ApiImpl&) = delete;
+        ApiImpl(ApiImpl&&) = delete;
+        ApiImpl& operator=(ApiImpl&&) = delete;
 
     public:
         ApiImpl();
 
-        void LoadDatabase(const std::string& dataPath);
-
-        std::shared_ptr<DataBase> GetDatabase();
-
         static ApiImpl& instance();
+
+        std::shared_ptr<Character> CreateCharacter();
+        void LoadDatabase(const std::string& dataPath);
+        std::shared_ptr<DataBase> database();
 
     private:
         std::shared_ptr<DatabaseImpl> db_;

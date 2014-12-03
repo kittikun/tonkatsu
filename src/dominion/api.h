@@ -31,11 +31,12 @@
 
 namespace Dominion
 {
+    class Character;
     class DataBase;
 
-    void DOMINION_API Initialise(const std::string&);
-
+    std::shared_ptr<Character> DOMINION_API CreateCharacter();
     std::shared_ptr<DataBase> DOMINION_API GetDatabase();
+    void DOMINION_API Initialise(const std::string&);
 } // namespace Dominion
 
 #endif // API_H

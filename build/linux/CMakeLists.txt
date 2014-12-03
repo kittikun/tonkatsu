@@ -42,6 +42,7 @@ if (Boost_FOUND)
   set(TEST_SRC  ${TEST_PATH}/main.cpp
                 ${TEST_PATH}/dominion/api.cpp
                 ${TEST_PATH}/dominion/attributes.cpp
+                ${TEST_PATH}/dominion/character.cpp
                 ${TEST_PATH}/dominion/database.cpp
                 ${TEST_PATH}/dominion/dice.cpp
 	            ${TEST_PATH}/dominion/perk.cpp

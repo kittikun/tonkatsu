@@ -34,6 +34,9 @@
     <ClCompile Include="..\..\src\unittest\dominion\database.cpp">
       <Filter>source\dominion</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\unittest\dominion\character.cpp">
+      <Filter>source\dominion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\unittest\testFramework.h" />

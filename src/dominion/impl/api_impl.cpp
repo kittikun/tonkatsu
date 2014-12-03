@@ -23,52 +23,61 @@
 
 #include "api_impl.h"
 
-#include <stdexcept>
 #include <boost/filesystem.hpp>
 
-#include "../database.h"
-
+#include "character_impl.h"
 #include "database_impl.h"
 #include "perk_impl.h"
 #include "skill_impl.h"
 #include "style_impl.h"
+#include "../database.h"
 
 namespace Dominion
 {
-	ApiImpl::ApiImpl() :
-		db_(std::make_shared<DatabaseImpl>())
-	{}
+    ApiImpl::ApiImpl() :
+        db_(std::make_shared<DatabaseImpl>())
+    {}
 
-	ApiImpl& ApiImpl::instance()
-	{
-		static ApiImpl instance;
+    std::shared_ptr<DataBase> ApiImpl::database()
+    {
+        return std::make_shared<DataBase>(db_);
+    }
 
-		return instance;
-	}
+    std::shared_ptr<Character> ApiImpl::CreateCharacter()
+    {
+        uint32_t guid = db_->GetCount<Character>() + 1;
 
-	std::shared_ptr<DataBase> ApiImpl::GetDatabase()
-	{
-		return std::make_shared<DataBase>(db_);
-	}
+        std::shared_ptr<CharacterImpl> impl = std::make_shared<CharacterImpl>(db_, guid);
 
-	void ApiImpl::LoadDatabase(const std::string& dataPath)
-	{
-		boost::filesystem::path path(dataPath);
-		boost::filesystem::path file("dominion.db");
-		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
+        db_->AddData(impl);
 
-		canonical = canonical.make_preferred();
+        return std::make_shared<Character>(impl);
+    }
 
-		if (boost::filesystem::exists(canonical)) {
-			db_->ConnectDatabase(canonical);
+    ApiImpl& ApiImpl::instance()
+    {
+        static ApiImpl instance;
 
-			// create data structure from db info
-			db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
-			db_->ExecuteQuery("select * from skill", SkillImpl::LoadFromDB);
-			db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
-		}
-		else {
-			throw std::invalid_argument("Invalid path to database");
-		}
-	}
+        return instance;
+    }
+
+    void ApiImpl::LoadDatabase(const std::string& dataPath)
+    {
+        boost::filesystem::path path(dataPath);
+        boost::filesystem::path file("dominion.db");
+        boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
+
+        canonical = canonical.make_preferred();
+
+        if (boost::filesystem::exists(canonical)) {
+            db_->ConnectDatabase(canonical);
+
+            // create data structure from db_ info
+            db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
+            db_->ExecuteQuery("select * from skill", SkillImpl::LoadFromDB);
+            db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
+        } else {
+            throw std::invalid_argument("Invalid path to database");
+        }
+    }
 } // namespace Dominion

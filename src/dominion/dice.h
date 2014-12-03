@@ -31,28 +31,30 @@
 
 namespace Dominion
 {
-	class DiceImpl;
+    class DiceImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::unique_ptr < DiceImpl > ;
+    template class DOMINION_API std::unique_ptr < DiceImpl > ;
 #endif
 
-	class DOMINION_API Dice
-	{
-		Dice(const Dice&) = delete;
-		Dice& operator=(const Dice&) = delete;
+    class DOMINION_API Dice
+    {
+        Dice(const Dice&) = delete;
+        Dice& operator=(const Dice&) = delete;
+        Dice(Dice&&) = delete;
+        Dice& operator=(Dice&&) = delete;
 
-	public:
-		Dice();
-		~Dice();
+    public:
+        Dice();
+        ~Dice();
 
-		// (DR3.1.1 p7, 4-2 WHAT YOU NEED TO PLAY)
-		// To play DR, you need [..] A one twelve-sided die.
-		const uint8_t Roll() const;
+        // (DR3.1.1 p7, 4-2 WHAT YOU NEED TO PLAY)
+        // To play DR, you need [..] A one twelve-sided die.
+        const uint8_t Roll() const;
 
-	private:
-		std::unique_ptr<DiceImpl> impl_;
-	};
+    private:
+        std::unique_ptr<DiceImpl> impl_;
+    };
 } // namespace Dominion
 
 #endif // DICE_H

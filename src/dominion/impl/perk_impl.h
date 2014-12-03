@@ -27,7 +27,7 @@
 #include <memory>
 #include <bitset>
 
-#include "../data.h"
+#include "data.h"
 #include "../definitions.h"
 
 namespace Dominion
@@ -40,7 +40,7 @@ namespace Dominion
         PerkImpl& operator=(const PerkImpl&) = delete;
 
     public:
-        PerkImpl(uint32_t id);
+        PerkImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

@@ -29,13 +29,18 @@
 
 namespace Dominion
 {
+    std::shared_ptr<Character> CreateCharacter()
+    {
+        return ApiImpl::instance().CreateCharacter();
+    }
+
     void Initialise(const std::string& dataPath)
     {
         ApiImpl::instance().LoadDatabase(dataPath);
     }
 
-    std::shared_ptr<DataBase> DOMINION_API GetDatabase()
+    std::shared_ptr<DataBase> GetDatabase()
     {
-        return ApiImpl::instance().GetDatabase();
+        return ApiImpl::instance().database();
     }
 } // namespace Dominion

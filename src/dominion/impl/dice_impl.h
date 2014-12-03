@@ -32,29 +32,29 @@
 
 namespace Dominion
 {
-	class DiceImpl
-	{
-		DiceImpl(const DiceImpl&) = delete;
-		DiceImpl& operator=(const DiceImpl&) = delete;
+    class DiceImpl
+    {
+        DiceImpl(const DiceImpl&) = delete;
+        DiceImpl& operator=(const DiceImpl&) = delete;
 
-	public:
+    public:
 
-		DiceImpl()
-		{
-			std::random_device rd;
-			rng = std::mt19937{ rd() };
-		}
+        DiceImpl()
+        {
+            std::random_device rd;
+            rng_ = std::mt19937{rd()};
+        }
 
-		~DiceImpl() {}
+        ~DiceImpl() {}
 
-		const uint8_t Roll()
-		{
-			return static_cast<uint8_t>(std::uniform_int_distribution < > { 1, 12 }(rng));
-		}
+        const uint8_t Roll()
+        {
+            return static_cast<uint8_t>(std::uniform_int_distribution < > { 1, 12 }(rng_));
+        }
 
-	private:
-		std::mt19937 rng;
-	};
+    private:
+        std::mt19937 rng_;
+    };
 } // namespace Dominion
 
 #endif // DICE_IMPL_H

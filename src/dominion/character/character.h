@@ -24,8 +24,52 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include <memory>
+
+#include "../definitions.h"
+#include "../platform.h"
+
 namespace Dominion
 {
+    class CharacterImpl;
+    class Perk;
+    class Style;
+
+#ifdef _WIN32
+    template class DOMINION_API std::shared_ptr < CharacterImpl > ;
+#endif
+
+    class DOMINION_API Character
+    {
+        Character(const Character&) = delete;
+        Character& operator=(const Character&) = delete;
+        Character(Character&&) = delete;
+        Character& operator=(Character&&) = delete;
+
+    public:
+        Character(const std::shared_ptr<CharacterImpl>&);
+        ~Character();
+
+        // (DR3.1.1 p26, 4-2 STEP ONE: THINK ABOUT YOUR CHARACTER)
+        // What sort of creature do you want to play?
+        ERace race() const;
+        void race(ERace race);
+
+        // (DR3.1.1 p26, 4-2 CHARACTER STYLES)
+        // Once you have thought about these questions, you may want to consider
+        // some classic RPG character styles.
+        std::shared_ptr<Style> style() const;
+        void style(const std::shared_ptr<Style>& style);
+
+        // (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // Once you have determined who your character is, you must make a roll
+        // on the Character Generation Table.This table give perks to starting characters.
+        std::shared_ptr<Perk> perk() const;
+        void perk(uint8_t roll);
+
+    private:
+        std::shared_ptr<CharacterImpl> impl_;
+    };
 } // namespace Dominion
 
 #endif // CHARACTER_H

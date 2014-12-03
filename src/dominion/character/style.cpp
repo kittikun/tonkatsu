@@ -27,16 +27,15 @@
 
 namespace Dominion
 {
-	Style::Style(const std::shared_ptr<StyleImpl>& impl)
-		: impl_(impl)
-	{}
+    Style::Style(const std::shared_ptr<StyleImpl>& impl)
+        : impl_(impl)
+    {}
 
-	Style::~Style()
-	{
-	}
+    Style::~Style()
+    {}
 
-	const std::string& Style::name()
-	{
-		return impl_->name_;
-	}
+    const std::string& Style::name()
+    {
+        return impl_->name_;
+    }
 } // namespace Dominion

@@ -134,13 +134,13 @@
     <ClInclude Include="..\..\src\dominion\character\character.h">
       <Filter>source\character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dominion\data.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\dominion\character\style.h">
       <Filter>source\character</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\impl\utility.h">
+      <Filter>source\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\data.h">
       <Filter>source\impl</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,17 +33,19 @@
 #include <boost/filesystem.hpp>
 #include <sqlite/sqlite3.h>
 
-#include "../data.h"
+#include "data.h"
 #include "utility.h"
 
 namespace Dominion
 {
     typedef int(*SQLiteCallback)(void*, int, char**, char**);
 
-    class DatabaseImpl
+    class DatabaseImpl : public std::enable_shared_from_this < DatabaseImpl >
     {
         DatabaseImpl(const DatabaseImpl&) = delete;
         DatabaseImpl& operator=(const DatabaseImpl&) = delete;
+        DatabaseImpl(DatabaseImpl&&) = delete;
+        DatabaseImpl& operator=(DatabaseImpl&&) = delete;
 
     public:
         DatabaseImpl();
@@ -54,38 +56,26 @@ namespace Dominion
         void AddData(std::shared_ptr<Data>);
 
         template <typename T>
-        size_t GetCount()
+        std::shared_ptr<T> Get(uint32_t guid) const
         {
-            int rc;
-            char *err = nullptr;
-            size_t res;
-
-            auto f = [](void* data, int, char** argv, char**) {
-                size_t* res = static_cast<size_t*>(data);
-
-                *res = boost::lexical_cast<size_t>(argv[0]);
-
-                return 0;
-            };
-
-            boost::format fmt = boost::format("select count(id) from %1%") % Utility<T>::SQLColumnName();
-            std::string query = boost::str(fmt);
-
-            rc = sqlite3_exec(dbConnection, query.c_str(), f, static_cast<void*>(&res), &err);
-
-            if (rc) {
-                throw std::runtime_error("Query returned with an error");
-            }
-
-            return res;
+            return std::static_pointer_cast<T>(database_.find(guid)->second);
         }
 
         template <typename T>
-        std::vector<std::shared_ptr<T>> GetListAsOpaque()
+        const uint32_t GetCount() const
+        {
+            boost::format fmt = boost::format("select count(id) from %1%") % Utility<T>::SQLColumnName();
+            std::string query = boost::str(fmt);
+
+            return GetIntValue(query);
+        }
+
+        template <typename T>
+        std::vector<std::shared_ptr<T>> GetListAsOpaque() const
         {
             typedef std::unordered_map<uint32_t, std::shared_ptr<Data>> DictionaryType;
             typedef std::vector<std::shared_ptr<T>> ResultType;
-            typedef std::tuple<DictionaryType&, ResultType&> TupleType;
+            typedef std::tuple<const DictionaryType&, ResultType&> TupleType;
 
             int rc;
             size_t count = GetCount<T>();
@@ -103,7 +93,7 @@ namespace Dominion
 
                 for (int i = 0; i < argc; ++i) {
                     int index = Utility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
-                    std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename Utility<T>::ImplType>(std::get<0>(*tuple)[index])));
+                    std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename Utility<T>::ImplType>(std::get<0>(*tuple).at(index))));
                 }
 
                 return 0;
@@ -121,7 +111,9 @@ namespace Dominion
             return res;
         }
 
-        void ExecuteQuery(const std::string&, SQLiteCallback);
+        uint32_t GetIntValue(const std::string& query) const;
+
+        void ExecuteQuery(const std::string&, SQLiteCallback) const;
 
     private:
         std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;

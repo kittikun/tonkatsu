@@ -26,8 +26,8 @@
 
 #include <memory>
 #include <unordered_map>
-#include <array>
 
+#include "data.h"
 #include "../definitions.h"
 
 namespace Dominion
@@ -36,15 +36,20 @@ namespace Dominion
     class SkillImpl;
     class StyleImpl;
 
-    class CharacterImpl
+    class CharacterImpl : public Data
     {
         CharacterImpl(const CharacterImpl&) = delete;
         CharacterImpl& operator=(const CharacterImpl&) = delete;
+        CharacterImpl(CharacterImpl&&) = delete;
+        CharacterImpl& operator=(CharacterImpl&&) = delete;
 
     public:
-        CharacterImpl();
+        CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
 
-        void SetStyle(uint32_t guid);
+        void set_perk(uint8_t roll);
+
+    private:
+        std::string RaceToPerkQuery();
 
     public:
         AttributeArray attributes_;

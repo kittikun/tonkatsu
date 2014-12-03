@@ -31,10 +31,10 @@
 
 namespace Dominion
 {
-    SkillImpl::SkillImpl(uint32_t id) :
-        Data(id),
+    SkillImpl::SkillImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
+        Data(db, id),
         level_(1),
-	target_(-1)
+        target_(-1)
     {}
 
     int SkillImpl::LoadFromDB(void* data, int argc, char** argv, char** col)
@@ -48,7 +48,7 @@ namespace Dominion
 
             if (strcmp(col[i], "Id") == 0) {
                 uint32_t id = ClassID_Skill + boost::lexical_cast<uint32_t>(argv[i]);
-                skill = std::make_shared<SkillImpl>(id);
+                skill = std::make_shared<SkillImpl>(db->shared_from_this(), id);
             } else if (strcmp(col[i], "type") == 0) {
                 skill->type_ = static_cast<ESkillType>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "name") == 0) {

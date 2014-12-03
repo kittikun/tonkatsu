@@ -23,33 +23,30 @@
 
 #include "perk.h"
 
-#include "../data.h"
 #include "../impl/perk_impl.h"
 
 namespace Dominion
 {
-	Perk::Perk(const std::shared_ptr<PerkImpl>& impl) :
-		impl_(impl)
-	{
-	}
+    Perk::Perk(const std::shared_ptr<PerkImpl>& impl) :
+        impl_(impl)
+    {}
 
-	Perk::~Perk()
-	{
-	}
+    Perk::~Perk()
+    {}
 
-	bool Perk::isRaceUsable(ERace race) const
-	{
-		return impl_->isRaceUsable(race);
-	}
+    bool Perk::isRaceUsable(ERace race) const
+    {
+        return impl_->isRaceUsable(race);
+    }
 
-	// Roll required to get this perk
-	const uint8_t Perk::roll() const
-	{
-		return impl_->roll_;
-	}
+    // Roll required to get this perk
+    const uint8_t Perk::roll() const
+    {
+        return impl_->roll_;
+    }
 
-	const EPerkType Perk::type() const
-	{
-		return impl_->type_;
-	}
+    const EPerkType Perk::type() const
+    {
+        return impl_->type_;
+    }
 } // namespace Dominion

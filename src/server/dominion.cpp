@@ -28,34 +28,34 @@
 
 namespace Tonkatsu
 {
-	void DominionLib::Initialise()
-	{
-		auto t1 = std::chrono::high_resolution_clock::now();
+    void DominionLib::Initialise()
+    {
+        auto t1 = std::chrono::high_resolution_clock::now();
 
 #if defined(_WIN32)
-		if (IsDebuggerPresent())
-			Dominion::Initialise("../../data/dominion");
+        if (IsDebuggerPresent())
+            Dominion::Initialise("../../data/dominion");
 #else
-		Dominion::Initialise("./data/dominion");
+        Dominion::Initialise("./data/dominion");
 #endif
 
-		auto t2 = std::chrono::high_resolution_clock::now();
-		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 
-		LOGD << "Initialization time " << elapsed << "ms";
+        LOGD << "Initialization time " << elapsed << "ms";
 
-		db_ = Dominion::GetDatabase();
+        db_ = Dominion::GetDatabase();
 
-		auto t3 = std::chrono::high_resolution_clock::now();
+        auto t3 = std::chrono::high_resolution_clock::now();
 
-		auto styles = db_->GetStyles();
+        auto styles = db_->GetStyles();
 
-		auto t4 = std::chrono::high_resolution_clock::now();
-		elapsed = std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
+        auto t4 = std::chrono::high_resolution_clock::now();
+        elapsed = std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
 
-		for (auto s : styles)
-			LOGD << s->name();
+        for (auto s : styles)
+            LOGD << s->name();
 
-		LOGD << "GetStyles time " << elapsed << "us";
-	}
+        LOGD << "GetStyles time " << elapsed << "us";
+    }
 } // namespace Tonkatsu

@@ -26,7 +26,7 @@
 
 #include <bitset>
 
-#include "../data.h"
+#include "data.h"
 #include "../definitions.h"
 
 namespace Dominion
@@ -35,9 +35,12 @@ namespace Dominion
     {
         StyleImpl(const StyleImpl&) = delete;
         StyleImpl& operator=(const StyleImpl&) = delete;
-
+        StyleImpl(StyleImpl&&) = delete;
+        StyleImpl& operator=(StyleImpl&&) = delete;
     public:
-        StyleImpl(uint32_t id);
+        using Data::guid;
+
+        StyleImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

@@ -25,18 +25,29 @@
 #define DATA_H
 
 #include <cstdint>
+#include <memory>
 
 namespace Dominion
 {
+    class DatabaseImpl;
+
     class Data
     {
         Data(const Data&) = delete;
         Data& operator=(const Data&) = delete;
+        Data(Data&&) = delete;
+        Data& operator=(Data&&) = delete;
 
     public:
-        Data(uint32_t id) : guid_(id) {}
+        Data(std::weak_ptr<DatabaseImpl> db, uint32_t guid) :
+            db_(db),
+            guid_(guid)
+        {}
 
-        inline const uint32_t guid() const { return guid_; }
+        const uint32_t guid() const { return guid_; }
+
+    protected:
+        std::weak_ptr < DatabaseImpl > db_;
 
     private:
         uint32_t guid_;

@@ -31,27 +31,33 @@
 
 namespace Dominion
 {
-	class StyleImpl;
+    class StyleImpl;
 
 #ifdef _WIN32
-	template class DOMINION_API std::shared_ptr < StyleImpl > ;
+    template class DOMINION_API std::shared_ptr < StyleImpl > ;
 #endif
 
-	// (DR3.1.1 p13, 4-4 Skills)
-	class DOMINION_API Style
-	{
-		Style(const Style&) = delete;
-		Style& operator=(const Style&) = delete;
+    // (DR3.1.1 p26, 4-2 CHARACTER STYLES)
+    // Once you have thought about these questions, you may want to consider
+    // some classic RPG character styles.
+    class DOMINION_API Style
+    {
+        friend class Character;
 
-	public:
-		Style(const std::shared_ptr<StyleImpl>& impl);
-		~Style();
+        Style(const Style&) = delete;
+        Style& operator=(const Style&) = delete;
+        Style(Style&&) = delete;
+        Style& operator=(Style&&) = delete;
 
-		const std::string& name();
+    public:
+        Style(const std::shared_ptr<StyleImpl>& impl);
+        ~Style();
 
-	private:
-		std::shared_ptr<StyleImpl> impl_;
-	};
+        const std::string& name();
+
+    private:
+        std::shared_ptr<StyleImpl> impl_;
+    };
 } // namespace Dominion
 
 #endif // STYLE_H

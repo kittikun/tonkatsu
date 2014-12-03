@@ -27,9 +27,11 @@
 #include <string>
 
 #include "classid.h"
+#include "character_impl.h"
 #include "perk_impl.h"
 #include "skill_impl.h"
 #include "style_impl.h"
+#include "../character/character.h"
 #include "../character/perk.h"
 #include "../character/skill.h"
 #include "../character/style.h"
@@ -38,6 +40,14 @@ namespace Dominion
 {
     template <typename T>
     struct Utility;
+
+    template <>
+    struct Utility < Character >
+    {
+        typedef CharacterImpl ImplType;
+        static int ClassIDFromType() { return ClassID_Character; }
+        static std::string SQLColumnName() { return std::string("character"); }
+    };
 
     template <>
     struct Utility < Perk >

@@ -31,8 +31,8 @@
 
 namespace Dominion
 {
-    StyleImpl::StyleImpl(uint32_t id) :
-        Data(id)
+    StyleImpl::StyleImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
+        Data(db, id)
     {}
 
     int StyleImpl::LoadFromDB(void* data, int argc, char** argv, char** col)
@@ -46,16 +46,14 @@ namespace Dominion
 
             if (strcmp(col[i], "Id") == 0) {
                 uint32_t id = ClassID_Style + boost::lexical_cast<uint32_t>(argv[i]);
-                style = std::make_shared<StyleImpl>(id);
+                style = std::make_shared<StyleImpl>(db->shared_from_this(), id);
             } else if (strcmp(col[i], "name") == 0) {
                 style->name_ = argv[i];
             } else if (strcmp(col[i], "isPriest") == 0) {
                 style->archetypes_[ArchetypePriest] = boost::lexical_cast<bool>(argv[i]);
-            }
-            else if (strcmp(col[i], "isWitch") == 0) {
+            } else if (strcmp(col[i], "isWitch") == 0) {
                 style->archetypes_[ArchetypeWitch] = boost::lexical_cast<bool>(argv[i]);
-            }
-            else if (strcmp(col[i], "isBeast") == 0) {
+            } else if (strcmp(col[i], "isBeast") == 0) {
                 style->archetypes_[ArchetypeBeast] = boost::lexical_cast<bool>(argv[i]);
             }
         }
