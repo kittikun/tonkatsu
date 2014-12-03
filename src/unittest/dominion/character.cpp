@@ -28,7 +28,7 @@
 
 struct CharacterFixture : public BaseFixture < CharacterFixture, std::chrono::milliseconds > {
 	CharacterFixture() :
-		BaseFixture{ "Dominion_Characters.csv", { "Style", "Perk" } }
+		BaseFixture{ "Dominion_Character.csv", { "Style", "Race", "Perk" } }
 	{
 		std::random_device rd;
 
@@ -63,8 +63,10 @@ BOOST_AUTO_TEST_CASE(Race)
 {
 	std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
 
-	for (int i = 0; i < Dominion::RaceCount; ++i)
-		BOOST_CHECK_NO_THROW(character->race((Dominion::ERace)i));
+	TestFunc(1000, [&] {
+		for (int i = 0; i < Dominion::RaceCount; ++i)
+			BOOST_CHECK_NO_THROW(character->race((Dominion::ERace)i));
+	});
 
 	BOOST_CHECK_THROW(character->race((Dominion::ERace) - 1), std::invalid_argument);
 	BOOST_CHECK_THROW(character->race(Dominion::RaceCount), std::invalid_argument);
