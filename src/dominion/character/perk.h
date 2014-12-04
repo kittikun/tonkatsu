@@ -36,37 +36,29 @@
 
 namespace Dominion
 {
-    class PerkImpl;
+	class PerkImpl;
 
 #ifdef _WIN32
-    template class DOMINION_API std::shared_ptr < PerkImpl > ;
+	template class DOMINION_API std::shared_ptr < PerkImpl > ;
 #endif
 
-    // (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-    // Once you have determined who your character is, you must make a roll
-    // on the Character Generation Table.This table give perks to starting characters.
-    class DOMINION_API Perk
-    {
-        Perk(const Perk&) = delete;
-        Perk& operator=(const Perk&) = delete;
+	// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
+	// Once you have determined who your character is, you must make a roll
+	// on the Character Generation Table.This table give perks to starting characters.
+	class DOMINION_API Perk
+	{
+		Perk(const Perk&) = delete;
+		Perk& operator=(const Perk&) = delete;
 
-    public:
-        Perk(const std::shared_ptr<PerkImpl>& impl);
-        ~Perk();
+	public:
+		Perk(const std::shared_ptr<PerkImpl>& impl);
+		~Perk();
 
-        const boost::uuids::uuid& guid() const;
+		const std::string& name();
 
-        const EPerkType type() const;
-
-        // Roll required to get this perk
-        const uint8_t roll() const;
-
-        // Some perks are shared across multiple races
-        bool isRaceUsable(ERace) const;
-
-    private:
-        std::shared_ptr<PerkImpl> impl_;
-    };
+	private:
+		std::shared_ptr<PerkImpl> impl_;
+	};
 }
 
 #endif // PERK_H
