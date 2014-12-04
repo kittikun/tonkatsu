@@ -27,73 +27,69 @@
 #include "../testFramework.h"
 
 struct CharacterFixture : public BaseFixture < CharacterFixture, std::chrono::milliseconds > {
-	CharacterFixture() :
-		BaseFixture{ "Dominion_Character.csv", { "Style", "Race", "Perk" } }
-	{
-		std::random_device rd;
+    CharacterFixture() :
+        BaseFixture{"Dominion_Character.csv", {"Style", "Race", "Perk"}}
+    {
+        std::random_device rd;
 
-		rng_ = std::mt19937{ rd() };
-		db_ = Dominion::GetDatabase();
-	}
+        rng_ = std::mt19937{rd()};
+        db_ = Dominion::GetDatabase();
+    }
 
-	std::mt19937 rng_;
-	std::shared_ptr<Dominion::DataBase> db_;
+    std::mt19937 rng_;
+    std::shared_ptr<Dominion::DataBase> db_;
 };
 
 BOOST_FIXTURE_TEST_SUITE(Dominion_Character, CharacterFixture)
 
 BOOST_AUTO_TEST_CASE(Style)
 {
-	std::random_device rd;
-	std::mt19937 rng_{ rd() };
-	std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
-	std::vector<std::shared_ptr<Dominion::Style>> styles = db_->GetStyles();
+    std::random_device rd;
+    std::mt19937 rng_{rd()};
+    std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
+    std::vector<std::shared_ptr<Dominion::Style>> styles = db_->GetStyles();
 
-	TestFunc(1000, [&] {
-		size_t index = std::uniform_int_distribution < size_t > { 0, styles.size() - 1 }(rng_);
-		std::shared_ptr<Dominion::Style> target = styles[index];
+    TestFunc(1000, [&] {
+        size_t index = std::uniform_int_distribution < size_t > { 0, styles.size() - 1 }(rng_);
+        std::shared_ptr<Dominion::Style> target = styles[index];
 
-		character->style(target);
+        character->style(target);
 
-		BOOST_CHECK(character->style()->name() == target->name());
-	});
+        BOOST_CHECK(character->style()->name() == target->name());
+    });
 }
 
 BOOST_AUTO_TEST_CASE(Race)
 {
-	std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
+    std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
 
-	TestFunc(1000, [&] {
-		for (int i = 0; i < Dominion::RaceCount; ++i)
-			BOOST_CHECK_NO_THROW(character->race((Dominion::ERace)i));
-	});
+    TestFunc(1000, [&] {
+        for (int i = 0; i < Dominion::RaceCount; ++i)
+            BOOST_CHECK_NO_THROW(character->race((Dominion::ERace)i));
+    });
 
-	BOOST_CHECK_THROW(character->race((Dominion::ERace) - 1), std::invalid_argument);
-	BOOST_CHECK_THROW(character->race(Dominion::RaceCount), std::invalid_argument);
-	BOOST_CHECK_THROW(character->race((Dominion::ERace)(Dominion::RaceCount + 1)), std::invalid_argument);
+    BOOST_CHECK_THROW(character->race((Dominion::ERace) - 1), std::invalid_argument);
+    BOOST_CHECK_THROW(character->race(Dominion::RaceCount), std::invalid_argument);
+    BOOST_CHECK_THROW(character->race((Dominion::ERace)(Dominion::RaceCount + 1)), std::invalid_argument);
 }
 
 BOOST_AUTO_TEST_CASE(Perk)
 {
-	std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
-	std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
+    std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
+    std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
 
-	BOOST_CHECK_THROW(character->perk(0), std::invalid_argument);
-	BOOST_CHECK_THROW(character->perk(20), std::invalid_argument);
+    BOOST_CHECK_THROW(character->perk(0), std::invalid_argument);
+    BOOST_CHECK_THROW(character->perk(20), std::invalid_argument);
 
-	// race is not set and error should be thrown
-	BOOST_CHECK_THROW(character->perk(20), std::logic_error);
+    TestFunc(1000, [&] {
+        for (int i = 0; i < Dominion::RaceCount; ++i) {
+            character->race((Dominion::ERace)i);
 
-	TestFunc(1000, [&] {
-		for (int i = 0; i < Dominion::RaceCount; ++i)
-		{
-			character->race((Dominion::ERace)i);
+            character->perk(dice->Roll());
+        }
 
-			character->perk(dice->Roll());
-		}
-
-		BOOST_CHECK(static_cast<bool>(character->perk()));
-	});
+        BOOST_CHECK(static_cast<bool>(character->perk()));
+    });
 }
 
 BOOST_AUTO_TEST_SUITE_END()

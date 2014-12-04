@@ -46,14 +46,15 @@ namespace Dominion
     public:
         CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
 
-        void set_perk(uint8_t roll);
+        std::shared_ptr<PerkImpl> perk() const;
+        void perk(uint8_t roll);
 
     private:
         std::string RaceToPerkQuery();
 
     public:
         AttributeArray attributes_;
-        std::shared_ptr<PerkImpl> perk_;
+        uint32_t perk_;
         std::shared_ptr<StyleImpl> style_;
         std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
         ERace race_;

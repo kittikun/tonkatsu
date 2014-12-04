@@ -28,50 +28,55 @@
 
 namespace Dominion
 {
-	CharacterImpl::CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
-		Data{ db, id },
-		race_{ RaceCount },
-		// (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
-		// All starting characters are given 45 Advancement
-		// Points(APs) to spend as you see fit.Some characters
-		// start with more that 45 APs.
-		ap_{ 45 }
-	{}
+    CharacterImpl::CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
+        Data{db, id},
+        race_{RaceCount},
+        // (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
+        // All starting characters are given 45 Advancement
+        // Points(APs) to spend as you see fit.Some characters
+        // start with more that 45 APs.
+        ap_{45}
+    {}
 
-	void CharacterImpl::set_perk(uint8_t roll)
-	{
-		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint32_t)roll;
-		std::string query = boost::str(fmt);
-		std::shared_ptr<DatabaseImpl> db = db_.lock();
-		uint32_t id = db->GetIntValue(query);
-		perk_ = db->Get<PerkImpl>(ClassID_Perk + id);
-	}
+    std::shared_ptr<CharacterImpl::PerkImpl> perk() const
+    {
+        db_.lock()->
+    }
 
-	std::string CharacterImpl::RaceToPerkQuery()
-	{
-		switch (race_) {
-		case RaceBeast:
-			return "isBeast";
+    void CharacterImpl::perk(uint8_t roll)
+    {
+        boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint32_t)roll;
+        std::string query = boost::str(fmt);
+        std::shared_ptr<DatabaseImpl> db = db_.lock();
+        uint32_t id = db->GetIntValue(query);
+        perk_ = ClassID_Perk + id;
+    }
 
-		case RaceDwarf:
-			return "isDwarf";
+    std::string CharacterImpl::RaceToPerkQuery()
+    {
+        switch (race_) {
+        case RaceBeast:
+            return "isBeast";
 
-		case RaceElf:
-			return "isElf";
+        case RaceDwarf:
+            return "isDwarf";
 
-		case RaceHalfling:
-			return "isHalfling";
+        case RaceElf:
+            return "isElf";
 
-		case RaceHuman:
-			return "isHuman";
+        case RaceHalfling:
+            return "isHalfling";
 
-		case RaceHumanoid:
-			return "isHumanoid";
+        case RaceHuman:
+            return "isHuman";
 
-		default:
-			throw std::out_of_range("race value");
-		}
+        case RaceHumanoid:
+            return "isHumanoid";
 
-		return std::string();
-	}
+        default:
+            throw std::out_of_range("race value");
+        }
+
+        return std::string();
+    }
 } // namespace Dominion

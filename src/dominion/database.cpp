@@ -40,11 +40,11 @@ namespace Dominion
 
     std::vector<std::shared_ptr<Skill>> DataBase::GetSkills() const
     {
-        return impl_->GetListAsOpaque<Skill>();
+        return impl_->GetListAsOpaque<Skill>("select id from skill");
     }
 
     std::vector<std::shared_ptr<Style>> DataBase::GetStyles() const
     {
-        return impl_->GetListAsOpaque<Style>();
+        return impl_->GetListAsOpaque<Style>("select id from style");
     }
 } // namespace Dominion

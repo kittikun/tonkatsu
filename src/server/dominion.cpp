@@ -15,13 +15,12 @@
 
 #include "dominion.h"
 
-#include <chrono>
-
 #if defined(_WIN32)
 #include <windows.h>
 #endif
 
 #include <dominion/api.h>
+#include <dominion/character/character.h>
 #include <dominion/character/style.h>
 
 #include "utility/log.h"
@@ -30,8 +29,6 @@ namespace Tonkatsu
 {
     void DominionLib::Initialise()
     {
-        auto t1 = std::chrono::high_resolution_clock::now();
-
 #if defined(_WIN32)
         if (IsDebuggerPresent())
             Dominion::Initialise("../../data/dominion");
@@ -39,23 +36,8 @@ namespace Tonkatsu
         Dominion::Initialise("./data/dominion");
 #endif
 
-        auto t2 = std::chrono::high_resolution_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
-
-        LOGD << "Initialization time " << elapsed << "ms";
-
         db_ = Dominion::GetDatabase();
 
-        auto t3 = std::chrono::high_resolution_clock::now();
-
-        auto styles = db_->GetStyles();
-
-        auto t4 = std::chrono::high_resolution_clock::now();
-        elapsed = std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
-
-        for (auto s : styles)
-            LOGD << s->name();
-
-        LOGD << "GetStyles time " << elapsed << "us";
+        std::shared_ptr<Dominion::Character> npc = Dominion::CreateCharacter();
     }
 } // namespace Tonkatsu

@@ -71,7 +71,7 @@ namespace Dominion
         }
 
         template <typename T>
-        std::vector<std::shared_ptr<T>> GetListAsOpaque() const
+        std::vector<std::shared_ptr<T>> GetListAsOpaque(const std::string& query) const
         {
             typedef std::unordered_map<uint32_t, std::shared_ptr<Data>> DictionaryType;
             typedef std::vector<std::shared_ptr<T>> ResultType;
@@ -98,9 +98,6 @@ namespace Dominion
 
                 return 0;
             };
-
-            boost::format fmt = boost::format("select id from %1%") % Utility<T>::SQLColumnName();
-            std::string query = boost::str(fmt);
 
             rc = sqlite3_exec(dbConnection, query.c_str(), f, static_cast<void*>(&tuple), &err);
 

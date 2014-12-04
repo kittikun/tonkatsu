@@ -32,50 +32,50 @@
 
 namespace Dominion
 {
-	Character::Character(const std::shared_ptr<CharacterImpl>& impl) :
-		impl_(impl)
-	{}
+    Character::Character(const std::shared_ptr<CharacterImpl>& impl) :
+        impl_(impl)
+    {}
 
-	Character::~Character()
-	{}
+    Character::~Character()
+    {}
 
-	std::shared_ptr<Perk> Character::perk() const
-	{
-		return std::make_shared<Perk>(impl_->perk_);
-	}
+    std::shared_ptr<Perk> Character::perk() const
+    {
+        return std::make_shared<Perk>(impl_->perk());
+    }
 
-	void Character::perk(uint8_t roll)
-	{
-		// We are using a 12 sided dice to play
-		if ((roll == 0) || (roll > 12))
-			throw std::invalid_argument("Trying to set perk with roll outside of 12 sided dice range");
+    void Character::perk(uint8_t roll)
+    {
+        // We are using a 12 sided dice to play
+        if ((roll == 0) || (roll > 12))
+            throw std::invalid_argument("Trying to set perk with roll outside of 12 sided dice range");
 
-		if (impl_->race_ == RaceCount)
-			throw std::logic_error("Race wasn't set yet, please follow the same order as described in the Dominion Rules");
+        if (impl_->race_ == RaceCount)
+            throw std::logic_error("Race wasn't set yet, please follow the same order as described in the Dominion Rules");
 
-		impl_->set_perk(roll);
-	}
+        impl_->perk(roll);
+    }
 
-	ERace Character::race() const
-	{
-		return impl_->race_;
-	}
+    ERace Character::race() const
+    {
+        return impl_->race_;
+    }
 
-	void Character::race(ERace race)
-	{
-		if ((race < 0) || (race >= RaceCount))
-			throw std::invalid_argument("Value is outside of allowed race bounds");
+    void Character::race(ERace race)
+    {
+        if ((race < 0) || (race >= RaceCount))
+            throw std::invalid_argument("Value is outside of allowed race bounds");
 
-		impl_->race_ = race;
-	}
+        impl_->race_ = race;
+    }
 
-	std::shared_ptr<Style> Character::style() const
-	{
-		return std::make_shared<Style>(impl_->style_);
-	}
+    std::shared_ptr<Style> Character::style() const
+    {
+        return std::make_shared<Style>(impl_->style_);
+    }
 
-	void Character::style(const std::shared_ptr<Style>& style)
-	{
-		impl_->style_ = style->impl_;
-	}
+    void Character::style(const std::shared_ptr<Style>& style)
+    {
+        impl_->style_ = style->impl_;
+    }
 } // namespace Dominion
