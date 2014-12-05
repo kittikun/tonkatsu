@@ -48,17 +48,6 @@ namespace Dominion
         Attributes(const Attributes&) = delete;
         Attributes& operator=(const Attributes&) = delete;
 
-        // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
-        // 1. Assign a minimum score of 1 to each of your character six Attributes.
-        static AttributeArray GetBaseAttributes();
-
-        // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
-        // 2. Roll the twelve - sided die three times and record your results.
-        // 3. Calculate the average of your three rolls. This is done by adding the three rolls together and
-        // dividing the sum by three.The result is the number of Attribute Points you have to distribute between
-        // your six Attributes.Make note of the remainder, if you get one
-        static AttributePointsRemainder GetAttributeRoll(const std::shared_ptr<Dice>& dice);
-
     private:
         std::unique_ptr<AttributesImpl> impl_;
     };

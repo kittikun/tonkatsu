@@ -69,6 +69,9 @@
     <ClCompile Include="..\..\src\dominion\character\style.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dominion\impl\dice_impl.cpp">
+      <Filter>source\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\definitions.h">

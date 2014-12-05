@@ -21,30 +21,26 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef DICE_IMPL_H
-#define DICE_IMPL_H
+#include "dice_impl.h"
 
-#include <cstdint>
-#include <random>
+#include <algorithm>
+#include <ctime>
+#include <iterator>
+#include <numeric>
 
 namespace Dominion
 {
-    class DiceImpl
+    DiceImpl::DiceImpl()
     {
-        DiceImpl(const DiceImpl&) = delete;
-        DiceImpl& operator=(const DiceImpl&) = delete;
-        DiceImpl(DiceImpl&&) = delete;
-        DiceImpl& operator=(DiceImpl&&) = delete;
+        std::random_device rd;
+        rng_ = std::mt19937{rd()};
+    }
 
-    public:
-        DiceImpl();
-        ~DiceImpl();
+    DiceImpl::~DiceImpl()
+    {}
 
-        const uint8_t Roll();
-
-    private:
-        std::mt19937 rng_;
-    };
+    const uint8_t DiceImpl::Roll()
+    {
+        return static_cast<uint8_t>(std::uniform_int_distribution < > { 1, 12 }(rng_));
+    }
 } // namespace Dominion
-
-#endif // DICE_IMPL_H

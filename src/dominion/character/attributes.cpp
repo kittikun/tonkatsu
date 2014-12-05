@@ -23,13 +23,7 @@
 
 #include "attributes.h"
 
-#include <iterator>
-#include <algorithm>
-#include <numeric>
-
-#include "../dice.h"
 #include "../impl/attribute_impl.h"
-#include "../impl/dice_impl.h"
 
 namespace Dominion
 {
@@ -39,24 +33,4 @@ namespace Dominion
 
     Attributes::~Attributes()
     {}
-
-    AttributeArray Attributes::GetBaseAttributes()
-    {
-        AttributeArray attributes;
-
-        attributes.fill(1);
-
-        return attributes;
-    }
-
-    AttributePointsRemainder Attributes::GetAttributeRoll(const std::shared_ptr<Dice>& dice)
-    {
-        std::array < uint8_t, 3 >  res;
-
-        res.fill(dice->Roll());
-
-        const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
-
-        return std::make_tuple(sum / 3, sum % 3);
-    }
 } // namespace Dominion

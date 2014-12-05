@@ -32,6 +32,7 @@ if (Boost_FOUND)
 		            ${DOMINION_PATH}/impl/api_impl.cpp
                     ${DOMINION_PATH}/impl/character_impl.cpp
 		            ${DOMINION_PATH}/impl/database_impl.cpp
+		            ${DOMINION_PATH}/impl/dice_impl.cpp
                     ${DOMINION_PATH}/impl/perk_impl.cpp
                     ${DOMINION_PATH}/impl/skill_impl.cpp
                     ${DOMINION_PATH}/impl/style_impl.cpp

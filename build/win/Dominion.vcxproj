@@ -33,6 +33,7 @@
     <ClCompile Include="..\..\src\dominion\impl\api_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\character_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\database_impl.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\dice_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\perk_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\skill_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\style_impl.cpp" />
@@ -148,7 +149,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -180,7 +181,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;DOMINION_DATAGEN;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

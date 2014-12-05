@@ -21,6 +21,7 @@
 
 #include <dominion/api.h>
 #include <dominion/dice.h>
+#include <dominion/character/attributes.h>
 #include <dominion/character/character.h>
 #include <dominion/character/perk.h>
 #include <dominion/character/style.h>
@@ -29,30 +30,38 @@
 
 namespace Tonkatsu
 {
-	void DominionLib::Initialise()
-	{
+    void DominionLib::Initialise()
+    {
 #if defined(_WIN32)
-		if (IsDebuggerPresent())
-			Dominion::Initialise("../../data/dominion");
+        if (IsDebuggerPresent())
+            Dominion::Initialise("../../data/dominion");
 #else
-		Dominion::Initialise("./data/dominion");
+        Dominion::Initialise("./data/dominion");
 #endif
 
-		db_ = Dominion::GetDatabase();
+        db_ = Dominion::GetDatabase();
 
-		std::shared_ptr<Dominion::Character> npc = Dominion::CreateCharacter();
-		std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
-		std::vector<std::shared_ptr<Dominion::Style>> styles = db_->GetStyles();
+        auto npc = Dominion::CreateCharacter();
+        auto dice = std::make_shared<Dominion::Dice>();
+        auto styles = db_->GetStyles();
+        auto attributes = Dominion::GetBaseAttributes();
+        auto apr = Dominion::GetAttributeRoll(dice);
 
-		for (auto style : styles)
-			LOGD << style->name();
+        for (auto style : styles)
+            LOGD << style->name();
 
-		npc->race(Dominion::RaceHuman);
-		npc->style(styles[0]);
-		npc->perk(dice->Roll());
+        npc->race(Dominion::RaceHuman);
+        npc->style(styles[0]);
+        npc->perk(dice->Roll());
 
-		LOGD << npc->race();
-		LOGD << npc->style()->name();
-		LOGD << npc->perk()->name();
-	}
+        LOGD << npc->race();
+        LOGD << npc->style()->name();
+        LOGD << npc->perk()->name();
+
+        for (auto a : attributes)
+            LOGD << (int)a;
+
+        LOGD << "Attribute Points " << (int)std::get<0>(apr);
+        LOGD << "Remainder " << (int)std::get<1>(apr);
+    }
 } // namespace Tonkatsu

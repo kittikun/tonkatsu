@@ -23,9 +23,12 @@
 
 #include "api.h"
 
-#include "database.h"
+#include <numeric>
 
+#include "database.h"
+#include "dice.h"
 #include "impl/api_impl.h"
+#include "impl/dice_impl.h"
 
 namespace Dominion
 {
@@ -42,5 +45,26 @@ namespace Dominion
     std::shared_ptr<DataBase> GetDatabase()
     {
         return ApiImpl::instance().database();
+    }
+
+    AttributeArray GetBaseAttributes()
+    {
+        AttributeArray attributes;
+
+        attributes.fill(1);
+
+        return attributes;
+    }
+
+    AttributePointsRemainder GetAttributeRoll(const std::shared_ptr<Dice>& dice)
+    {
+        std::array < uint8_t, 3 >  res;
+
+        for (int i = 0; i < res.size(); ++i)
+            res[i] = dice->Roll();
+
+        const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
+
+        return std::make_tuple(sum / 3, sum % 3);
     }
 } // namespace Dominion

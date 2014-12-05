@@ -28,69 +28,71 @@
 #include <cstdint>
 #include <tuple>
 
+#include "platform.h"
+
 namespace Dominion
 {
-	// (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
-	enum EAttribute
-	{
+    // (DR3.1.1 p9, 1-1 THE SIX ATTRIBUTES)
+    enum EAttribute
+    {
         AttributeAgility,
         AttributeIntuition,
         AttributeIntellect,
         AttributeLuck,
         AttributeStamina,
         AttributeVigour,
-		AttributeCount
-	};
+        AttributeCount
+    };
 
-	enum class ESkillType : uint8_t {
-		Beast_Combat,
-		Beast_Defensive,
-		Bease_Normal,
-		Usable_Combat,
-		Usable_Defensive,
-		Usable_Normal,
-		Passive,
-		Priestcraft,
-		Weapon_Profiency,
-		Witchcraft
-	};
+    enum class ESkillType : uint8_t {
+        Beast_Combat,
+        Beast_Defensive,
+        Bease_Normal,
+        Usable_Combat,
+        Usable_Defensive,
+        Usable_Normal,
+        Passive,
+        Priestcraft,
+        Weapon_Profiency,
+        Witchcraft
+    };
 
-	enum class ESkillDependency : uint8_t {
-		Attribute,
-		None,
-		Weapon,
-		Armor,
-		Archetype
-	};
+    enum class ESkillDependency : uint8_t {
+        Attribute,
+        None,
+        Weapon,
+        Armor,
+        Archetype
+    };
 
-	enum class EPerkType : uint8_t {
-		Attribute,
-		Advancement_Points,
-		Passive,
-		Skill,
-	};
+    enum class EPerkType : uint8_t {
+        Attribute,
+        Advancement_Points,
+        Passive,
+        Skill,
+    };
 
-	// (DR3.1.1 p29, 4-5 Character generation table)
-	enum ERace {
-		RaceBeast,
+    // (DR3.1.1 p29, 4-5 Character generation table)
+    enum ERace {
+        RaceBeast,
         RaceDwarf,
         RaceElf,
         RaceHalfling,
         RaceHuman,
         RaceHumanoid,
-		RaceCount
-	};
+        RaceCount
+    };
 
-	enum EArchetype {
+    enum EArchetype {
         ArchetypeBeast,
         ArchetypePriest,
         ArchetypeWitch,
         ArchetypeCount
-	};
+    };
 
-	// Number of points / Remainder
-	typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
-	typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
+    // Number of points / Remainder
+    typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
+    typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
 } // namespace Dominion
 
 #endif // DEFINITION_H
