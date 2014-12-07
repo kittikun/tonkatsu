@@ -39,16 +39,16 @@ namespace Dominion
         SkillImpl& operator=(SkillImpl&&) = delete;
 
     public:
-        SkillImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
+        SkillImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 
-        uint32_t CostToRaise(uint8_t toLevel);
+        uint_fast32_t CostToRaise(uint_fast8_t toLevel);
 
     public:
         // Main attribute governing the skill
         ESkillDependency dependency_;
-        uint8_t level_;
+        uint_fast8_t level_;
         std::string name_;
         ESkillType type_;
         int32_t target_;

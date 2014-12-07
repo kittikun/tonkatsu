@@ -68,16 +68,16 @@ namespace Dominion
         }
     }
 
-    uint32_t DatabaseImpl::GetIntValue(const std::string& query) const
+    uint_fast32_t DatabaseImpl::GetIntValue(const std::string& query) const
     {
         int rc;
         char *err = nullptr;
-        uint32_t res;
+        uint_fast32_t res;
 
         auto f = [](void* data, int, char** argv, char**) {
-            uint32_t* res = static_cast<uint32_t*>(data);
+            uint_fast32_t* res = static_cast<uint_fast32_t*>(data);
 
-            *res = boost::lexical_cast<uint32_t>(argv[0]);
+            *res = boost::lexical_cast<uint_fast32_t>(argv[0]);
 
             return 0;
         };

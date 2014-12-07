@@ -48,7 +48,7 @@ namespace Dominion
 		Character& operator=(Character&&) = delete;
 
 	public:
-		enum class ValidationResult : uint8_t
+		enum class ValidationResult : uint_fast8_t
 		{
 			// (DR3.1.1 p30, 4-6 STEP FOUR: DETERMINE COMPOSITE STATS
 			// (If you are automatically entitled to Favourable Rounding, but your character already
@@ -77,7 +77,7 @@ namespace Dominion
 		// Once you have determined who your character is, you must make a roll
 		// on the Character Generation Table.This table give perks to starting characters.
 		std::vector<std::shared_ptr<Perk>> perks() const;
-		void perk(const uint8_t roll);
+		void perk(const uint_fast8_t roll);
 
 	private:
 		std::shared_ptr<CharacterImpl> impl_;

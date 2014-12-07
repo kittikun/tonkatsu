@@ -39,7 +39,7 @@ namespace Dominion
 	{
 	}
 
-	const uint8_t Dice::Roll() const
+	const uint_fast8_t Dice::Roll() const
 	{
 		return impl_->Roll();
 	}

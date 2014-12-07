@@ -39,8 +39,8 @@ namespace Dominion
     DiceImpl::~DiceImpl()
     {}
 
-    const uint8_t DiceImpl::Roll()
+    const uint_fast8_t DiceImpl::Roll()
     {
-        return static_cast<uint8_t>(std::uniform_int_distribution < > { 1, 12 }(rng_));
+        return static_cast<uint_fast8_t>(std::uniform_int_distribution < > { 1, 12 }(rng_));
     }
 } // namespace Dominion

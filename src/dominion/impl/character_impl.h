@@ -45,21 +45,21 @@ namespace Dominion
 		CharacterImpl& operator=(CharacterImpl&&) = delete;
 
 	public:
-		CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
+		CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id);
 
 		std::vector<std::shared_ptr<PerkImpl>> perks() const;
-		void perk(uint8_t roll);
+		void perk(uint_fast8_t roll);
 
 	private:
 		std::string RaceToPerkQuery();
 
 	public:
 		AttributeArray attributes_;
-		std::vector<uint32_t> perks_;
+		std::vector<uint_fast32_t> perks_;
 		std::shared_ptr<StyleImpl> style_;
-		std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
+		std::unordered_map<uint_fast32_t, std::shared_ptr<SkillImpl>> skills_;
 		ERace race_;
-		uint16_t ap_;
+		uint_fast16_t ap_;
 	};
 } // namespace Dominion
 

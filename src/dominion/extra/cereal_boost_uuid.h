@@ -44,7 +44,7 @@ namespace cereal
 		//ar(make_size_tag(size));
 
 		//for (auto it = uuid.begin(), end = uuid.end(); it != end; ++it) {
-		//	uint8_t val;
+		//	uint_fast8_t val;
 		//	ar(val);
 		//	*it = val;
 		//}

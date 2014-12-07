@@ -47,13 +47,13 @@ namespace Dominion
 
 		res.reserve(perks.size());
 
-		for (int i = 0; i < perks.size(); ++i)
+		for (size_t i = 0; i < perks.size(); ++i)
 			res.push_back(std::make_shared<Perk>(perks[i]));
 
 		return res;
 	}
 
-	void Character::perk(uint8_t roll)
+	void Character::perk(uint_fast8_t roll)
 	{
 		// We are using a 12 sided dice to play
 		if ((roll == 0) || (roll > 12))

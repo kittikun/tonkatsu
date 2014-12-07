@@ -28,7 +28,7 @@
 
 namespace Dominion
 {
-	CharacterImpl::CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
+	CharacterImpl::CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id) :
 		Data{ db, id },
 		race_{ RaceCount },
 		// (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
@@ -44,18 +44,18 @@ namespace Dominion
 
 		res.reserve(perks_.size());
 
-		for (int i = 0; i < perks_.size(); ++i)
+		for (size_t i = 0; i < perks_.size(); ++i)
 			res.push_back(db_.lock()->Get<PerkImpl>(perks_[i]));
 
 		return res;
 	}
 
-	void CharacterImpl::perk(uint8_t roll)
+	void CharacterImpl::perk(uint_fast8_t roll)
 	{
-		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint32_t)roll;
+		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)roll;
 		std::string query = boost::str(fmt);
 		std::shared_ptr<DatabaseImpl> db = db_.lock();
-		uint32_t id = ClassID_Perk + db->GetIntValue(query);
+		uint_fast32_t id = ClassID_Perk + db->GetIntValue(query);
 
 		if (perks_.size() > 0)
 			perks_[0] = id;

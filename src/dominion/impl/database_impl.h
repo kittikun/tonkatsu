@@ -56,13 +56,13 @@ namespace Dominion
         void AddData(std::shared_ptr<Data>);
 
         template <typename T>
-        std::shared_ptr<T> Get(uint32_t guid) const
+        std::shared_ptr<T> Get(uint_fast32_t guid) const
         {
             return std::static_pointer_cast<T>(database_.find(guid)->second);
         }
 
         template <typename T>
-        const uint32_t GetCount() const
+        const uint_fast32_t GetCount() const
         {
             boost::format fmt = boost::format("select count(id) from %1%") % Utility<T>::SQLColumnName();
             std::string query = boost::str(fmt);
@@ -73,7 +73,7 @@ namespace Dominion
         template <typename T>
         std::vector<std::shared_ptr<T>> GetListAsOpaque(const std::string& query) const
         {
-            typedef std::unordered_map<uint32_t, std::shared_ptr<Data>> DictionaryType;
+            typedef std::unordered_map<uint_fast32_t, std::shared_ptr<Data>> DictionaryType;
             typedef std::vector<std::shared_ptr<T>> ResultType;
             typedef std::tuple<const DictionaryType&, ResultType&> TupleType;
 
@@ -108,12 +108,12 @@ namespace Dominion
             return res;
         }
 
-        uint32_t GetIntValue(const std::string& query) const;
+        uint_fast32_t GetIntValue(const std::string& query) const;
 
         void ExecuteQuery(const std::string&, SQLiteCallback) const;
 
     private:
-        std::unordered_map<uint32_t, std::shared_ptr<Data>> database_;
+        std::unordered_map<uint_fast32_t, std::shared_ptr<Data>> database_;
         sqlite3* dbConnection;
     };
 } // namespace Dominion

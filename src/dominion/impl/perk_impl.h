@@ -40,15 +40,15 @@ namespace Dominion
         PerkImpl& operator=(const PerkImpl&) = delete;
 
     public:
-        PerkImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
+        PerkImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 
         bool isRaceUsable(ERace race) const;
     public:
         EPerkType type_;
-        uint8_t roll_;
-        uint8_t bonus_;
+        uint_fast8_t roll_;
+        uint_fast8_t bonus_;
         int32_t target_;
         std::bitset<ERace::RaceCount> usableRace_;
         std::string name_;

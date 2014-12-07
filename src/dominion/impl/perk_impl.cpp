@@ -30,7 +30,7 @@
 
 namespace Dominion
 {
-    PerkImpl::PerkImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
+    PerkImpl::PerkImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id) :
         Data(db, id),
         bonus_(0),
         target_(-1)
@@ -46,14 +46,14 @@ namespace Dominion
                 continue;
 
             if (strcmp(col[i], "Id") == 0) {
-                uint32_t id = ClassID_Perk + boost::lexical_cast<uint32_t>(argv[i]);
+                uint_fast32_t id = ClassID_Perk + boost::lexical_cast<uint_fast32_t>(argv[i]);
                 perk = std::make_shared<PerkImpl>(db->shared_from_this(), id);
             } else if (strcmp(col[i], "type") == 0) {
                 perk->type_ = static_cast<EPerkType>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "name") == 0) {
                 perk->name_ = argv[i];
             } else if (strcmp(col[i], "roll") == 0) {
-                perk->roll_ = (uint8_t)boost::lexical_cast<int32_t>(argv[i]);
+                perk->roll_ = (uint_fast8_t)boost::lexical_cast<int32_t>(argv[i]);
             } else if (strcmp(col[i], "target") == 0) {
                 int32_t target = boost::lexical_cast<int32_t>(argv[i]);
 
@@ -75,7 +75,7 @@ namespace Dominion
                     return 1;
                 }
             } else if (strcmp(col[i], "bonus") == 0) {
-                perk->bonus_ = (uint8_t)boost::lexical_cast<int32_t>(argv[i]);
+                perk->bonus_ = (uint_fast8_t)boost::lexical_cast<int32_t>(argv[i]);
             } else if (strcmp(col[i], "isHuman") == 0) {
                 perk->usableRace_[ERace::RaceHuman] = boost::lexical_cast<bool>(argv[i]);
             } else if (strcmp(col[i], "isElf") == 0) {

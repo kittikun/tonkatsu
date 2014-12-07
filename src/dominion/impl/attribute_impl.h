@@ -40,12 +40,12 @@ namespace Dominion
         AttributesImpl(AttributesImpl&&) = delete;
         AttributesImpl& operator=(AttributesImpl&&) = delete;
 
-        const uint8_t Agility() const { return attributes_[EAttribute::AttributeAgility]; }
-        const uint8_t Intuition() const { return attributes_[EAttribute::AttributeIntuition]; }
-        const uint8_t Intellect() const { return attributes_[EAttribute::AttributeIntellect]; }
-        const uint8_t Luck() const { return attributes_[EAttribute::AttributeLuck]; }
-        const uint8_t Stamina() const { return attributes_[EAttribute::AttributeStamina]; }
-        const uint8_t Vigour() const { return attributes_[EAttribute::AttributeVigour]; }
+        const uint_fast8_t Agility() const { return attributes_[EAttribute::AttributeAgility]; }
+        const uint_fast8_t Intuition() const { return attributes_[EAttribute::AttributeIntuition]; }
+        const uint_fast8_t Intellect() const { return attributes_[EAttribute::AttributeIntellect]; }
+        const uint_fast8_t Luck() const { return attributes_[EAttribute::AttributeLuck]; }
+        const uint_fast8_t Stamina() const { return attributes_[EAttribute::AttributeStamina]; }
+        const uint_fast8_t Vigour() const { return attributes_[EAttribute::AttributeVigour]; }
 
     private:
         AttributeArray attributes_;

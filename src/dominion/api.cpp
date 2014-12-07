@@ -32,39 +32,39 @@
 
 namespace Dominion
 {
-    std::shared_ptr<Character> CreateCharacter()
-    {
-        return ApiImpl::instance().CreateCharacter();
-    }
+	std::shared_ptr<Character> CreateCharacter()
+	{
+		return ApiImpl::instance().CreateCharacter();
+	}
 
-    void Initialise(const std::string& dataPath)
-    {
-        ApiImpl::instance().LoadDatabase(dataPath);
-    }
+	void Initialise(const std::string& dataPath)
+	{
+		ApiImpl::instance().LoadDatabase(dataPath);
+	}
 
-    std::shared_ptr<DataBase> GetDatabase()
-    {
-        return ApiImpl::instance().database();
-    }
+	std::shared_ptr<DataBase> GetDatabase()
+	{
+		return ApiImpl::instance().database();
+	}
 
-    AttributeArray GetBaseAttributes()
-    {
-        AttributeArray attributes;
+	AttributeArray GetBaseAttributes()
+	{
+		AttributeArray attributes;
 
-        attributes.fill(1);
+		attributes.fill(1);
 
-        return attributes;
-    }
+		return attributes;
+	}
 
-    AttributePointsRemainder GetAttributeRoll(const std::shared_ptr<Dice>& dice)
-    {
-        std::array < uint8_t, 3 >  res;
+	AttributePointsRemainder GetAttributeRoll(const std::shared_ptr<Dice>& dice)
+	{
+		std::array < uint_fast8_t, 3 >  res;
 
-        for (int i = 0; i < res.size(); ++i)
-            res[i] = dice->Roll();
+		for (size_t i = 0; i < res.size(); ++i)
+			res[i] = dice->Roll();
 
-        const uint8_t sum = std::accumulate(std::begin(res), std::end(res), uint8_t(0));
+		const uint_fast8_t sum = std::accumulate(std::begin(res), std::end(res), uint_fast8_t(0));
 
-        return std::make_tuple(sum / 3, sum % 3);
-    }
+		return std::make_tuple(sum / 3, sum % 3);
+	}
 } // namespace Dominion

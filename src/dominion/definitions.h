@@ -44,7 +44,7 @@ namespace Dominion
         AttributeCount
     };
 
-    enum class ESkillType : uint8_t {
+    enum class ESkillType : uint_fast8_t {
         Beast_Combat,
         Beast_Defensive,
         Bease_Normal,
@@ -57,7 +57,7 @@ namespace Dominion
         Witchcraft
     };
 
-    enum class ESkillDependency : uint8_t {
+    enum class ESkillDependency : uint_fast8_t {
         Attribute,
         None,
         Weapon,
@@ -65,7 +65,7 @@ namespace Dominion
         Archetype
     };
 
-    enum class EPerkType : uint8_t {
+    enum class EPerkType : uint_fast8_t {
         Attribute,
         Advancement_Points,
         Passive,
@@ -91,8 +91,8 @@ namespace Dominion
     };
 
     // Number of points / Remainder
-    typedef std::tuple<uint8_t, uint8_t> AttributePointsRemainder;
-    typedef std::array<uint8_t, EAttribute::AttributeCount> AttributeArray;
+    typedef std::tuple<uint_fast8_t, uint_fast8_t> AttributePointsRemainder;
+    typedef std::array<uint_fast8_t, EAttribute::AttributeCount> AttributeArray;
 } // namespace Dominion
 
 #endif // DEFINITION_H

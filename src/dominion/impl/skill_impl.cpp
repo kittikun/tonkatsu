@@ -31,7 +31,7 @@
 
 namespace Dominion
 {
-    SkillImpl::SkillImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id) :
+    SkillImpl::SkillImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id) :
         Data(db, id),
         level_(1),
         target_(-1)
@@ -47,7 +47,7 @@ namespace Dominion
                 continue;
 
             if (strcmp(col[i], "Id") == 0) {
-                uint32_t id = ClassID_Skill + boost::lexical_cast<uint32_t>(argv[i]);
+                uint_fast32_t id = ClassID_Skill + boost::lexical_cast<uint_fast32_t>(argv[i]);
                 skill = std::make_shared<SkillImpl>(db->shared_from_this(), id);
             } else if (strcmp(col[i], "type") == 0) {
                 skill->type_ = static_cast<ESkillType>(boost::lexical_cast<int32_t>(argv[i]));
@@ -56,7 +56,7 @@ namespace Dominion
             } else if (strcmp(col[i], "dependency") == 0) {
                 skill->dependency_ = static_cast<ESkillDependency>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "target") == 0) {
-                skill->target_ = boost::lexical_cast<uint32_t>(argv[i]);
+                skill->target_ = boost::lexical_cast<uint_fast32_t>(argv[i]);
             } else if (strcmp(col[i], "bySentient") == 0) {
                 skill->usableRace_[ERace::RaceHuman] = boost::lexical_cast<bool>(argv[i]);;
                 skill->usableRace_[ERace::RaceElf] = boost::lexical_cast<bool>(argv[i]);;
@@ -74,11 +74,11 @@ namespace Dominion
         return 0;
     }
 
-    uint32_t SkillImpl::CostToRaise(uint8_t toLevel)
+    uint_fast32_t SkillImpl::CostToRaise(uint_fast8_t toLevel)
     {
         // Triangular numbers: a(n) = C(n+1,2) = n(n+1)/2 = 0+1+2+...+n.
         // https://oeis.org/A000217
-        static std::array<uint32_t, 54> costPerLevel = {
+        static std::array<uint_fast32_t, 54> costPerLevel = {
             0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105,
             120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325, 351,
             378, 406, 435, 465, 496, 528, 561, 595, 630, 666, 703, 741,
@@ -88,8 +88,8 @@ namespace Dominion
         if (toLevel >= costPerLevel.size())
             throw std::out_of_range("Requested level is too high");
 
-        uint32_t current = costPerLevel[level_];
-        uint32_t wanted = costPerLevel[level_];
+        uint_fast32_t current = costPerLevel[level_];
+        uint_fast32_t wanted = costPerLevel[level_];
 
         return wanted - current;
     }

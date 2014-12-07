@@ -39,18 +39,18 @@ namespace Dominion
         Data& operator=(Data&&) = delete;
 
     public:
-        Data(std::weak_ptr<DatabaseImpl> db, uint32_t guid) :
+        Data(std::weak_ptr<DatabaseImpl> db, uint_fast32_t guid) :
             db_(db),
             guid_(guid)
         {}
 
-        const uint32_t guid() const { return guid_; }
+        const uint_fast32_t guid() const { return guid_; }
 
     protected:
         std::weak_ptr < DatabaseImpl > db_;
 
     private:
-        uint32_t guid_;
+        uint_fast32_t guid_;
     };
 }
 
