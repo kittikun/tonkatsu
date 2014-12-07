@@ -38,9 +38,16 @@ namespace Dominion
 		ap_{ 45 }
 	{}
 
-	std::shared_ptr<PerkImpl> CharacterImpl::perk() const
+	std::vector<std::shared_ptr<PerkImpl>> CharacterImpl::perks() const
 	{
-		return db_.lock()->Get<PerkImpl>(perk_);
+		std::vector<std::shared_ptr<PerkImpl>> res;
+
+		res.reserve(perks_.size());
+
+		for (int i = 0; i < perks_.size(); ++i)
+			res.push_back(db_.lock()->Get<PerkImpl>(perks_[i]));
+
+		return res;
 	}
 
 	void CharacterImpl::perk(uint8_t roll)
@@ -48,8 +55,12 @@ namespace Dominion
 		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint32_t)roll;
 		std::string query = boost::str(fmt);
 		std::shared_ptr<DatabaseImpl> db = db_.lock();
-		uint32_t id = db->GetIntValue(query);
-		perk_ = ClassID_Perk + id;
+		uint32_t id = ClassID_Perk + db->GetIntValue(query);
+
+		if (perks_.size() > 0)
+			perks_[0] = id;
+		else
+			perks_.push_back(id);
 	}
 
 	std::string CharacterImpl::RaceToPerkQuery()

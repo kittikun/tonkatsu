@@ -75,8 +75,8 @@ BOOST_AUTO_TEST_CASE(Race)
 
 BOOST_AUTO_TEST_CASE(Perk)
 {
-	std::shared_ptr<Dominion::Character> character = Dominion::CreateCharacter();
-	std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
+	auto character = Dominion::CreateCharacter();
+	auto dice = std::make_shared<Dominion::Dice>();
 
 	BOOST_CHECK_THROW(character->perk(0), std::invalid_argument);
 	BOOST_CHECK_THROW(character->perk(20), std::invalid_argument);
@@ -86,7 +86,12 @@ BOOST_AUTO_TEST_CASE(Perk)
 			character->race((Dominion::ERace)i);
 
 			character->perk(dice->Roll());
-			BOOST_CHECK(static_cast<bool>(character->perk()));
+
+			auto perks = character->perks();
+
+			for (auto perk : perks) {
+				BOOST_CHECK(static_cast<bool>(perk));
+			}
 		}
 	});
 }

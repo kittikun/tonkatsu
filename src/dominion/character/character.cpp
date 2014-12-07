@@ -28,54 +28,65 @@
 #include "perk.h"
 #include "style.h"
 #include "../impl/character_impl.h"
+#include "../impl/perk_impl.h"
 #include "../impl/style_impl.h"
 
 namespace Dominion
 {
-    Character::Character(const std::shared_ptr<CharacterImpl>& impl) :
-        impl_(impl)
-    {}
+	Character::Character(const std::shared_ptr<CharacterImpl>& impl) :
+		impl_(impl)
+	{}
 
-    Character::~Character()
-    {}
+	Character::~Character()
+	{}
 
-    std::shared_ptr<Perk> Character::perk() const
-    {
-        return std::make_shared<Perk>(impl_->perk());
-    }
+	std::vector<std::shared_ptr<Perk>> Character::perks() const
+	{
+		std::vector<std::shared_ptr<Perk>> res;
+		std::vector<std::shared_ptr<PerkImpl>> perks = impl_->perks();
 
-    void Character::perk(uint8_t roll)
-    {
-        // We are using a 12 sided dice to play
-        if ((roll == 0) || (roll > 12))
-            throw std::invalid_argument("Trying to set perk with roll outside of 12 sided dice range");
+		res.reserve(perks.size());
 
-        if (impl_->race_ == RaceCount)
-            throw std::logic_error("Race wasn't set yet, please follow the same order as described in the Dominion Rules");
+		for (int i = 0; i < perks.size(); ++i)
+			res.push_back(std::make_shared<Perk>(perks[i]));
 
-        impl_->perk(roll);
-    }
+		return res;
+	}
 
-    ERace Character::race() const
-    {
-        return impl_->race_;
-    }
+	void Character::perk(uint8_t roll)
+	{
+		// We are using a 12 sided dice to play
+		if ((roll == 0) || (roll > 12))
+			throw std::invalid_argument("Trying to set perk with roll outside of 12 sided dice range");
 
-    void Character::race(ERace race)
-    {
-        if ((race < 0) || (race >= RaceCount))
-            throw std::invalid_argument("Value is outside of allowed race bounds");
+		impl_->perk(roll);
+	}
 
-        impl_->race_ = race;
-    }
+	const ERace Character::race() const
+	{
+		return impl_->race_;
+	}
 
-    std::shared_ptr<Style> Character::style() const
-    {
-        return std::make_shared<Style>(impl_->style_);
-    }
+	void Character::race(const ERace race)
+	{
+		if ((race < 0) || (race >= RaceCount))
+			throw std::invalid_argument("Value is outside of allowed race bounds");
 
-    void Character::style(const std::shared_ptr<Style>& style)
-    {
-        impl_->style_ = style->impl_;
-    }
+		impl_->race_ = race;
+	}
+
+	std::shared_ptr<Style> Character::style() const
+	{
+		return std::make_shared<Style>(impl_->style_);
+	}
+
+	void Character::style(const std::shared_ptr<Style>& style)
+	{
+		impl_->style_ = style->impl_;
+	}
+
+	Character::ValidationResult Character::Validate()
+	{
+		return ValidationResult::Valid;
+	}
 } // namespace Dominion

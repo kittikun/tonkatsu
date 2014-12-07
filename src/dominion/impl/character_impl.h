@@ -26,40 +26,41 @@
 
 #include <memory>
 #include <unordered_map>
+#include <vector>
 
 #include "data.h"
 #include "../definitions.h"
 
 namespace Dominion
 {
-    class PerkImpl;
-    class SkillImpl;
-    class StyleImpl;
+	class PerkImpl;
+	class SkillImpl;
+	class StyleImpl;
 
-    class CharacterImpl : public Data
-    {
-        CharacterImpl(const CharacterImpl&) = delete;
-        CharacterImpl& operator=(const CharacterImpl&) = delete;
-        CharacterImpl(CharacterImpl&&) = delete;
-        CharacterImpl& operator=(CharacterImpl&&) = delete;
+	class CharacterImpl : public Data
+	{
+		CharacterImpl(const CharacterImpl&) = delete;
+		CharacterImpl& operator=(const CharacterImpl&) = delete;
+		CharacterImpl(CharacterImpl&&) = delete;
+		CharacterImpl& operator=(CharacterImpl&&) = delete;
 
-    public:
-        CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
+	public:
+		CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint32_t id);
 
-        std::shared_ptr<PerkImpl> perk() const;
-        void perk(uint8_t roll);
+		std::vector<std::shared_ptr<PerkImpl>> perks() const;
+		void perk(uint8_t roll);
 
-    private:
-        std::string RaceToPerkQuery();
+	private:
+		std::string RaceToPerkQuery();
 
-    public:
-        AttributeArray attributes_;
-        uint32_t perk_;
-        std::shared_ptr<StyleImpl> style_;
-        std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
-        ERace race_;
-        uint16_t ap_;
-    };
+	public:
+		AttributeArray attributes_;
+		std::vector<uint32_t> perks_;
+		std::shared_ptr<StyleImpl> style_;
+		std::unordered_map<uint32_t, std::shared_ptr<SkillImpl>> skills_;
+		ERace race_;
+		uint16_t ap_;
+	};
 } // namespace Dominion
 
 #endif // CHARACTER_IMPL_H

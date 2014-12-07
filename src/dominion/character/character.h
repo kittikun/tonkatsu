@@ -25,51 +25,63 @@
 #define CHARACTER_H
 
 #include <memory>
+#include <vector>
 
 #include "../definitions.h"
 #include "../platform.h"
 
 namespace Dominion
 {
-    class CharacterImpl;
-    class Perk;
-    class Style;
+	class CharacterImpl;
+	class Perk;
+	class Style;
 
 #ifdef _WIN32
-    template class DOMINION_API std::shared_ptr < CharacterImpl > ;
+	template class DOMINION_API std::shared_ptr < CharacterImpl > ;
 #endif
 
-    class DOMINION_API Character
-    {
-        Character(const Character&) = delete;
-        Character& operator=(const Character&) = delete;
-        Character(Character&&) = delete;
-        Character& operator=(Character&&) = delete;
+	class DOMINION_API Character
+	{
+		Character(const Character&) = delete;
+		Character& operator=(const Character&) = delete;
+		Character(Character&&) = delete;
+		Character& operator=(Character&&) = delete;
 
-    public:
-        Character(const std::shared_ptr<CharacterImpl>&);
-        ~Character();
+	public:
+		enum class ValidationResult : uint8_t
+		{
+			// (DR3.1.1 p30, 4-6 STEP FOUR: DETERMINE COMPOSITE STATS
+			// (If you are automatically entitled to Favourable Rounding, but your character already
+			// got Favourable Rounding from the Character Generation Table, go back and reroll on that table.
+			RerollPerk,
+			Valid
+		};
 
-        // (DR3.1.1 p26, 4-2 STEP ONE: THINK ABOUT YOUR CHARACTER)
-        // What sort of creature do you want to play?
-        ERace race() const;
-        void race(ERace race);
+		Character(const std::shared_ptr<CharacterImpl>&);
+		~Character();
 
-        // (DR3.1.1 p26, 4-2 CHARACTER STYLES)
-        // Once you have thought about these questions, you may want to consider
-        // some classic RPG character styles.
-        std::shared_ptr<Style> style() const;
-        void style(const std::shared_ptr<Style>& style);
+		ValidationResult Validate();
 
-        // (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
-        // Once you have determined who your character is, you must make a roll
-        // on the Character Generation Table.This table give perks to starting characters.
-        std::shared_ptr<Perk> perk() const;
-        void perk(uint8_t roll);
+		// (DR3.1.1 p26, 4-2 STEP ONE: THINK ABOUT YOUR CHARACTER)
+		// What sort of creature do you want to play?
+		const ERace race() const;
+		void race(const ERace race);
 
-    private:
-        std::shared_ptr<CharacterImpl> impl_;
-    };
+		// (DR3.1.1 p26, 4-2 CHARACTER STYLES)
+		// Once you have thought about these questions, you may want to consider
+		// some classic RPG character styles.
+		std::shared_ptr<Style> style() const;
+		void style(const std::shared_ptr<Style>& style);
+
+		// (DR3.1.1 p28, 4-4 STEP TWO: THE CHARACTER GENERATION TABLE)
+		// Once you have determined who your character is, you must make a roll
+		// on the Character Generation Table.This table give perks to starting characters.
+		std::vector<std::shared_ptr<Perk>> perks() const;
+		void perk(const uint8_t roll);
+
+	private:
+		std::shared_ptr<CharacterImpl> impl_;
+	};
 } // namespace Dominion
 
 #endif // CHARACTER_H
