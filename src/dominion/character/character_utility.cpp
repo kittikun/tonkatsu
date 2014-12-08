@@ -21,57 +21,54 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef UTILITY_H
-#define UTILITY_H
+#include "character_utility.h"
 
-#include <string>
+#include "style.h"
+#include "../dice.h"
 
-#include "classid.h"
-#include "character_impl.h"
-#include "perk_impl.h"
-#include "skill_impl.h"
-#include "style_impl.h"
-#include "../character/character.h"
-#include "../character/perk.h"
-#include "../character/skill.h"
-#include "../character/style.h"
+#include "../impl/character_utility_impl.h"
+#include "../impl/dice_impl.h"
 
 namespace Dominion
 {
-    template <typename T>
-    struct Utility;
+    CharacterUtility::CharacterUtility() :
+        impl_{std::make_shared<CharacterUtilityImpl>()}
+    {}
 
-    template <>
-    struct Utility < Character >
-    {
-        typedef CharacterImpl ImplType;
-        static int ClassIDFromType() { return ClassID_Character; }
-        static std::string SQLColumnName() { return std::string("character"); }
-    };
+    CharacterUtility::~CharacterUtility()
+    {}
 
-    template <>
-    struct Utility < Perk >
+    void CharacterUtility::attributes(const AttributeArray& attributes)
     {
-        typedef PerkImpl ImplType;
-        static int ClassIDFromType() { return ClassID_Perk; }
-        static std::string SQLColumnName() { return std::string("perk"); }
-    };
+        impl_->attributes_ = attributes;
+    }
 
-    template <>
-    struct Utility < Skill >
+    AttributeArray CharacterUtility::attributesBase() const
     {
-        typedef SkillImpl ImplType;
-        static int ClassIDFromType() { return ClassID_Skill; }
-        static std::string SQLColumnName() { return std::string("skill"); }
-    };
+        AttributeArray attributes;
 
-    template <>
-    struct Utility < Style >
+        attributes.fill(1);
+
+        return attributes;
+    }
+
+    std::shared_ptr<const AttributePointsRemainder> CharacterUtility::attributesRoll(const std::shared_ptr<Dice>& dice) const
     {
-        typedef StyleImpl ImplType;
-        static int ClassIDFromType() { return ClassID_Style; }
-        static std::string SQLColumnName() { return std::string("style"); }
-    };
+        return impl_->attributesRoll(dice);
+    }
+
+    void CharacterUtility::race(const ERace race)
+    {
+        impl_->race_ = race;
+    }
+
+    void CharacterUtility::perk(uint_fast8_t roll)
+    {
+        impl_->perkRoll_ = roll;
+    }
+
+    void CharacterUtility::style(const std::shared_ptr<Style>& style)
+    {
+        impl_->style_ = style->impl_;
+    }
 } // namespace Dominion
-
-#endif // UTILITY_H

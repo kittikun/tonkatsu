@@ -31,8 +31,8 @@
 
 namespace Dominion
 {
-    StyleImpl::StyleImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id) :
-        Data(db, id)
+    StyleImpl::StyleImpl(const uint_fast32_t id) :
+        Data(id)
     {}
 
     int StyleImpl::LoadFromDB(void* data, int argc, char** argv, char** col)
@@ -46,7 +46,7 @@ namespace Dominion
 
             if (strcmp(col[i], "Id") == 0) {
                 uint_fast32_t id = ClassID_Style + boost::lexical_cast<uint_fast32_t>(argv[i]);
-                style = std::make_shared<StyleImpl>(db->shared_from_this(), id);
+                style = std::make_shared<StyleImpl>(id);
             } else if (strcmp(col[i], "name") == 0) {
                 style->name_ = argv[i];
             } else if (strcmp(col[i], "isPriest") == 0) {
@@ -58,7 +58,7 @@ namespace Dominion
             }
         }
 
-        db->AddData(style);
+        db->AddData<Style>(style);
 
         return 0;
     }

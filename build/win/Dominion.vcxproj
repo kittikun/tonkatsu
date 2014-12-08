@@ -25,6 +25,7 @@
     <ClCompile Include="..\..\src\dominion\api.cpp" />
     <ClCompile Include="..\..\src\dominion\character\attributes.cpp" />
     <ClCompile Include="..\..\src\dominion\character\character.cpp" />
+    <ClCompile Include="..\..\src\dominion\character\character_utility.cpp" />
     <ClCompile Include="..\..\src\dominion\character\perk.cpp" />
     <ClCompile Include="..\..\src\dominion\character\skill.cpp" />
     <ClCompile Include="..\..\src\dominion\character\style.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="..\..\src\dominion\dice.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\api_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\character_impl.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\character_utility_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\database_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\dice_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\perk_impl.cpp" />
@@ -44,6 +46,7 @@
     <ClInclude Include="..\..\src\dominion\api.h" />
     <ClInclude Include="..\..\src\dominion\character\attributes.h" />
     <ClInclude Include="..\..\src\dominion\character\character.h" />
+    <ClInclude Include="..\..\src\dominion\character\character_utility.h" />
     <ClInclude Include="..\..\src\dominion\character\perk.h" />
     <ClInclude Include="..\..\src\dominion\character\skill.h" />
     <ClInclude Include="..\..\src\dominion\character\style.h" />
@@ -54,14 +57,15 @@
     <ClInclude Include="..\..\src\dominion\impl\api_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\attribute_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\character_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\character_utility_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\classid.h" />
+    <ClInclude Include="..\..\src\dominion\impl\classid_utility.h" />
     <ClInclude Include="..\..\src\dominion\impl\data.h" />
     <ClInclude Include="..\..\src\dominion\impl\database_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\skill_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\style_impl.h" />
-    <ClInclude Include="..\..\src\dominion\impl\utility.h" />
     <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3.h" />
     <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3ext.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />

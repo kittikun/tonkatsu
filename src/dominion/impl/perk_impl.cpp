@@ -30,8 +30,8 @@
 
 namespace Dominion
 {
-    PerkImpl::PerkImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id) :
-        Data(db, id),
+    PerkImpl::PerkImpl(const uint_fast32_t id) :
+        Data(id),
         bonus_(0),
         target_(-1)
     {}
@@ -47,7 +47,7 @@ namespace Dominion
 
             if (strcmp(col[i], "Id") == 0) {
                 uint_fast32_t id = ClassID_Perk + boost::lexical_cast<uint_fast32_t>(argv[i]);
-                perk = std::make_shared<PerkImpl>(db->shared_from_this(), id);
+                perk = std::make_shared<PerkImpl>(id);
             } else if (strcmp(col[i], "type") == 0) {
                 perk->type_ = static_cast<EPerkType>(boost::lexical_cast<int32_t>(argv[i]));
             } else if (strcmp(col[i], "name") == 0) {
@@ -91,7 +91,7 @@ namespace Dominion
             }
         }
 
-        db->AddData(perk);
+        db->AddData<Perk>(perk);
 
         return 0;
     }

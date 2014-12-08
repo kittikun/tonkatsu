@@ -39,11 +39,6 @@ namespace Dominion
         }
     }
 
-    void DatabaseImpl::AddData(std::shared_ptr<Data> data)
-    {
-        database_.insert(std::make_pair(data->guid(), data));
-    }
-
     void DatabaseImpl::ConnectDatabase(boost::filesystem::path path)
     {
         int rc;

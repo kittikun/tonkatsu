@@ -26,7 +26,6 @@
 
 #include <memory>
 
-#include "../definitions.h"
 #include "../platform.h"
 
 namespace Dominion
@@ -37,19 +36,17 @@ namespace Dominion
     template class DOMINION_API std::unique_ptr < AttributesImpl > ;
 #endif
 
-    class Dice;
-
     class DOMINION_API Attributes
     {
     public:
-        Attributes(AttributeArray);
+        Attributes(const std::shared_ptr<AttributesImpl>&);
         ~Attributes();
 
         Attributes(const Attributes&) = delete;
         Attributes& operator=(const Attributes&) = delete;
 
     private:
-        std::unique_ptr<AttributesImpl> impl_;
+        std::shared_ptr<AttributesImpl> impl_;
     };
 }
 

@@ -21,38 +21,46 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef DATA_H
-#define DATA_H
+#ifndef CHARACTER_UTILITY_IMPL_H
+#define CHARACTER_UTILITY_IMPL_H
 
-#include <cstdint>
 #include <memory>
+
+#include "../definitions.h"
+#include "../character/character_utility.h"
 
 namespace Dominion
 {
-    class DatabaseImpl;
+    class Style;
+    class CharacterImpl;
+    class StyleImpl;
 
-    class Data
+    class CharacterUtilityImpl
     {
-        friend class DatabaseImpl;
-
-        Data(const Data&) = delete;
-        Data& operator=(const Data&) = delete;
-        Data(Data&&) = delete;
-        Data& operator=(Data&&) = delete;
+        CharacterUtilityImpl(const CharacterUtilityImpl&) = delete;
+        CharacterUtilityImpl& operator=(const CharacterUtilityImpl&) = delete;
+        CharacterUtilityImpl(CharacterUtilityImpl&&) = delete;
+        CharacterUtilityImpl& operator=(CharacterUtilityImpl&&) = delete;
 
     public:
-        Data(uint_fast32_t guid) :
-            guid_(guid)
-        {}
+        CharacterUtilityImpl();
+        ~CharacterUtilityImpl();
 
-        const uint_fast32_t guid() const { return guid_; }
+        std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice);
 
-    protected:
-        std::weak_ptr < DatabaseImpl > db_;
+        void race(const ERace race);
+        void perk(uint_fast8_t roll);
 
-    private:
-        uint_fast32_t guid_;
+        std::shared_ptr<CharacterImpl> MakeCharacter() const;
+        CharacterValidationResult Validate() const;
+
+    public:
+        AttributeArray attributes_;
+        std::shared_ptr<const AttributePointsRemainder> aPtRemain_;
+        ERace race_;
+        uint_fast8_t perkRoll_;
+        std::shared_ptr<StyleImpl> style_;
     };
-}
+} // namespace Dominion
 
-#endif // DATA_H
+#endif // CHARACTER_UTILITY_IMPL_H

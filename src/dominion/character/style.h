@@ -42,7 +42,7 @@ namespace Dominion
     // some classic RPG character styles.
     class DOMINION_API Style
     {
-        friend class Character;
+        friend class CharacterUtility;
 
         Style(const Style&) = delete;
         Style& operator=(const Style&) = delete;

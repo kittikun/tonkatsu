@@ -23,6 +23,7 @@
 
 #include "api_impl.h"
 
+#include <numeric>
 #include <boost/filesystem.hpp>
 
 #include "character_impl.h"
@@ -41,17 +42,6 @@ namespace Dominion
     std::shared_ptr<DataBase> ApiImpl::database()
     {
         return std::make_shared<DataBase>(db_);
-    }
-
-    std::shared_ptr<Character> ApiImpl::CreateCharacter()
-    {
-        uint_fast32_t guid = db_->GetCount<Character>() + 1;
-
-        std::shared_ptr<CharacterImpl> impl = std::make_shared<CharacterImpl>(db_, guid);
-
-        db_->AddData(impl);
-
-        return std::make_shared<Character>(impl);
     }
 
     ApiImpl& ApiImpl::instance()

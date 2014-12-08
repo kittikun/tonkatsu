@@ -27,8 +27,8 @@
 
 namespace Dominion
 {
-    Attributes::Attributes(AttributeArray a) :
-        impl_(new AttributesImpl(a))
+    Attributes::Attributes(const std::shared_ptr<AttributesImpl>& a) :
+        impl_(a)
     {}
 
     Attributes::~Attributes()

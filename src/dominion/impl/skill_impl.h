@@ -39,7 +39,7 @@ namespace Dominion
         SkillImpl& operator=(SkillImpl&&) = delete;
 
     public:
-        SkillImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id);
+        SkillImpl(const uint_fast32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

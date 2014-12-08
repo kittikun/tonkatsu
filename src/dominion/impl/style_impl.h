@@ -40,7 +40,7 @@ namespace Dominion
     public:
         using Data::guid;
 
-        StyleImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id);
+        StyleImpl(const uint_fast32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

@@ -40,7 +40,7 @@ namespace Dominion
         PerkImpl& operator=(const PerkImpl&) = delete;
 
     public:
-        PerkImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id);
+        PerkImpl(const uint_fast32_t id);
 
         static int LoadFromDB(void*, int, char**, char**);
 

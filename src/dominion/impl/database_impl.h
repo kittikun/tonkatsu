@@ -26,6 +26,7 @@
 
 #include <memory>
 #include <tuple>
+#include <map>
 #include <unordered_map>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -34,7 +35,7 @@
 #include <sqlite/sqlite3.h>
 
 #include "data.h"
-#include "utility.h"
+#include "classid_utility.h"
 
 namespace Dominion
 {
@@ -53,7 +54,15 @@ namespace Dominion
 
         void ConnectDatabase(boost::filesystem::path path);
 
-        void AddData(std::shared_ptr<Data>);
+        template <typename T>
+        void AddData(std::shared_ptr<typename ClassIDUtility<T>::ImplType> data)
+        {
+            std::shared_ptr<Data> tmp = std::static_pointer_cast<Data>(data);
+
+            tmp->db_ = shared_from_this();
+            ClassIDUtility<T>::set_next(tmp->guid());
+            database_.insert(std::make_pair(tmp->guid(), tmp));
+        }
 
         template <typename T>
         std::shared_ptr<T> Get(uint_fast32_t guid) const
@@ -64,7 +73,7 @@ namespace Dominion
         template <typename T>
         const uint_fast32_t GetCount() const
         {
-            boost::format fmt = boost::format("select count(id) from %1%") % Utility<T>::SQLColumnName();
+            boost::format fmt = boost::format("select count(id) from %1%") % ClassIDUtility<T>::SQLColumnName();
             std::string query = boost::str(fmt);
 
             return GetIntValue(query);
@@ -92,8 +101,8 @@ namespace Dominion
                 TupleType* tuple = static_cast<TupleType*>(data);
 
                 for (int i = 0; i < argc; ++i) {
-                    int index = Utility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
-                    std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename Utility<T>::ImplType>(std::get<0>(*tuple).at(index))));
+                    int index = ClassIDUtility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
+                    std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename ClassIDUtility<T>::ImplType>(std::get<0>(*tuple).at(index))));
                 }
 
                 return 0;

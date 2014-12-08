@@ -24,6 +24,7 @@
 #ifndef ATTRIBUTE_IMPL_H
 #define ATTRIBUTE_IMPL_H
 
+#include "../definitions.h"
 #include "../character/attributes.h"
 
 namespace Dominion
@@ -31,7 +32,7 @@ namespace Dominion
     class AttributesImpl
     {
     public:
-        AttributesImpl(AttributeArray a) :
+        AttributesImpl(const AttributeArray& a) :
             attributes_(a)
         {}
 

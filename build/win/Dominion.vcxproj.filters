@@ -72,6 +72,12 @@
     <ClCompile Include="..\..\src\dominion\impl\dice_impl.cpp">
       <Filter>source\impl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dominion\impl\character_utility_impl.cpp">
+      <Filter>source\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion\character\character_utility.cpp">
+      <Filter>source\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\definitions.h">
@@ -140,10 +146,16 @@
     <ClInclude Include="..\..\src\dominion\character\style.h">
       <Filter>source\character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dominion\impl\utility.h">
+    <ClInclude Include="..\..\src\dominion\impl\data.h">
       <Filter>source\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dominion\impl\data.h">
+    <ClInclude Include="..\..\src\dominion\character\character_utility.h">
+      <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\character_utility_impl.h">
+      <Filter>source\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion\impl\classid_utility.h">
       <Filter>source\impl</Filter>
     </ClInclude>
   </ItemGroup>

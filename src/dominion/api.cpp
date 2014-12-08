@@ -23,48 +23,18 @@
 
 #include "api.h"
 
-#include <numeric>
-
 #include "database.h"
-#include "dice.h"
 #include "impl/api_impl.h"
-#include "impl/dice_impl.h"
 
 namespace Dominion
 {
-	std::shared_ptr<Character> CreateCharacter()
-	{
-		return ApiImpl::instance().CreateCharacter();
-	}
+    void Initialise(const std::string& dataPath)
+    {
+        ApiImpl::instance().LoadDatabase(dataPath);
+    }
 
-	void Initialise(const std::string& dataPath)
-	{
-		ApiImpl::instance().LoadDatabase(dataPath);
-	}
-
-	std::shared_ptr<DataBase> GetDatabase()
-	{
-		return ApiImpl::instance().database();
-	}
-
-	AttributeArray GetBaseAttributes()
-	{
-		AttributeArray attributes;
-
-		attributes.fill(1);
-
-		return attributes;
-	}
-
-	AttributePointsRemainder GetAttributeRoll(const std::shared_ptr<Dice>& dice)
-	{
-		std::array < uint_fast8_t, 3 >  res;
-
-		for (size_t i = 0; i < res.size(); ++i)
-			res[i] = dice->Roll();
-
-		const uint_fast8_t sum = std::accumulate(std::begin(res), std::end(res), uint_fast8_t(0));
-
-		return std::make_tuple(sum / 3, sum % 3);
-	}
+    std::shared_ptr<DataBase> GetDatabase()
+    {
+        return ApiImpl::instance().database();
+    }
 } // namespace Dominion

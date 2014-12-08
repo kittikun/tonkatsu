@@ -91,8 +91,8 @@ namespace Dominion
     };
 
     // Number of points / Remainder
-    typedef std::tuple<uint_fast8_t, uint_fast8_t> AttributePointsRemainder;
-    typedef std::array<uint_fast8_t, EAttribute::AttributeCount> AttributeArray;
+    typedef std::tuple<const uint_fast8_t, const uint_fast8_t> AttributePointsRemainder;
+    typedef std::array<uint_fast8_t, AttributeCount> AttributeArray;
 } // namespace Dominion
 
 #endif // DEFINITION_H

@@ -28,66 +28,59 @@
 
 namespace Dominion
 {
-	CharacterImpl::CharacterImpl(std::weak_ptr<DatabaseImpl> db, uint_fast32_t id) :
-		Data{ db, id },
-		race_{ RaceCount },
-		// (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
-		// All starting characters are given 45 Advancement
-		// Points(APs) to spend as you see fit.Some characters
-		// start with more that 45 APs.
-		ap_{ 45 }
-	{}
+    CharacterImpl::CharacterImpl(const uint_fast32_t id) :
+        Data{id},
+        race_{RaceCount},
+        // (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
+        // All starting characters are given 45 Advancement
+        // Points(APs) to spend as you see fit.Some characters
+        // start with more that 45 APs.
+        ap_{45}
+    {}
 
-	std::vector<std::shared_ptr<PerkImpl>> CharacterImpl::perks() const
-	{
-		std::vector<std::shared_ptr<PerkImpl>> res;
+    const std::vector<std::shared_ptr<PerkImpl>>& CharacterImpl::perks() const
+    {
+        return perks_;
+    }
 
-		res.reserve(perks_.size());
+    //void CharacterImpl::perk(uint_fast8_t roll)
+    //{
+    //    boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)roll;
+    //    std::string query = boost::str(fmt);
+    //    std::shared_ptr<DatabaseImpl> db = db_.lock();
+    //    uint_fast32_t id = ClassID_Perk + db->GetIntValue(query);
 
-		for (size_t i = 0; i < perks_.size(); ++i)
-			res.push_back(db_.lock()->Get<PerkImpl>(perks_[i]));
+    //    if (perks_.size() > 0)
+    //        perks_[0] = id;
+    //    else
+    //        perks_.push_back(id);
+    //}
 
-		return res;
-	}
+    std::string CharacterImpl::RaceToPerkQuery()
+    {
+        switch (race_) {
+        case RaceBeast:
+            return "isBeast";
 
-	void CharacterImpl::perk(uint_fast8_t roll)
-	{
-		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)roll;
-		std::string query = boost::str(fmt);
-		std::shared_ptr<DatabaseImpl> db = db_.lock();
-		uint_fast32_t id = ClassID_Perk + db->GetIntValue(query);
+        case RaceDwarf:
+            return "isDwarf";
 
-		if (perks_.size() > 0)
-			perks_[0] = id;
-		else
-			perks_.push_back(id);
-	}
+        case RaceElf:
+            return "isElf";
 
-	std::string CharacterImpl::RaceToPerkQuery()
-	{
-		switch (race_) {
-		case RaceBeast:
-			return "isBeast";
+        case RaceHalfling:
+            return "isHalfling";
 
-		case RaceDwarf:
-			return "isDwarf";
+        case RaceHuman:
+            return "isHuman";
 
-		case RaceElf:
-			return "isElf";
+        case RaceHumanoid:
+            return "isHumanoid";
 
-		case RaceHalfling:
-			return "isHalfling";
+        default:
+            throw std::out_of_range("race value");
+        }
 
-		case RaceHuman:
-			return "isHuman";
-
-		case RaceHumanoid:
-			return "isHumanoid";
-
-		default:
-			throw std::out_of_range("race value");
-		}
-
-		//return std::string();
-	}
+        //return std::string();
+    }
 } // namespace Dominion
