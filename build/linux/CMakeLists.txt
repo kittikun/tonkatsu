@@ -26,11 +26,13 @@ if (Boost_FOUND)
                     ${DOMINION_PATH}/dice.cpp
                     ${DOMINION_PATH}/character/attributes.cpp
                     ${DOMINION_PATH}/character/character.cpp
+					${DOMINION_PATH}/character/character_utility.cpp
                     ${DOMINION_PATH}/character/perk.cpp
 		            ${DOMINION_PATH}/character/skill.cpp
                     ${DOMINION_PATH}/character/style.cpp
 		            ${DOMINION_PATH}/impl/api_impl.cpp
                     ${DOMINION_PATH}/impl/character_impl.cpp
+					${DOMINION_PATH}/impl/character_utility_impl.cpp
 		            ${DOMINION_PATH}/impl/database_impl.cpp
 		            ${DOMINION_PATH}/impl/dice_impl.cpp
                     ${DOMINION_PATH}/impl/perk_impl.cpp
