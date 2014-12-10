@@ -54,12 +54,11 @@ namespace Dominion
         void perk(uint_fast8_t roll);
 
         std::shared_ptr<CharacterImpl> MakeCharacter() const;
+        CharacterValidationResult Validate() const;
 
     private:
         void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
         std::string RaceToPerkQuery() const;
-
-        CharacterValidationResult Validate() const;
 
     public:
         AttributeArray attributes_;
