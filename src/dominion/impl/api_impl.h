@@ -29,7 +29,7 @@
 
 namespace Dominion
 {
-    class Character;
+    class CharacterUtilityImpl;
     class DataBase;
     class DatabaseImpl;
     class Dice;
@@ -47,7 +47,9 @@ namespace Dominion
         static ApiImpl& instance();
 
         void LoadDatabase(const std::string& dataPath);
-        std::shared_ptr<DataBase> database();
+        std::unique_ptr<CharacterUtilityImpl> MakeCharacterTool() const;
+
+        std::shared_ptr<DataBase> database() const;
 
     private:
         std::shared_ptr<DatabaseImpl> db_;

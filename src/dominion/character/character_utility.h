@@ -39,6 +39,7 @@ namespace Dominion
         MissingAttributes,
         MissingStyle,
         // (DR3.1.1 p30, 4-6 STEP FOUR: DETERMINE COMPOSITE STATS
+        // If you had only 5 Attribute Points or less to divide between your six Attributes (...)
         // (If you are automatically entitled to Favourable Rounding, but your character already
         // got Favourable Rounding from the Character Generation Table, go back and reroll on that table.
         RerollPerk,
@@ -46,12 +47,13 @@ namespace Dominion
     };
 
     class Character;
+    class DatabaseImpl;
     class Dice;
     class Style;
     class CharacterUtilityImpl;
 
 #ifdef _WIN32
-    template class DOMINION_API std::shared_ptr < CharacterUtilityImpl > ;
+    template class DOMINION_API std::unique_ptr < CharacterUtilityImpl > ;
 #endif
 
     // Utility to create characters
@@ -63,11 +65,20 @@ namespace Dominion
         CharacterUtility& operator=(CharacterUtility&&) = delete;
 
     public:
-        CharacterUtility();
+        CharacterUtility(std::unique_ptr<CharacterUtilityImpl>);
         ~CharacterUtility();
 
         void attributes(const AttributeArray&);
+
+        // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
+        // 1. Assign a minimum score of 1 to each of your character six Attributes.
         AttributeArray attributesBase() const;
+
+        // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
+        // 2. Roll the twelve - sided die three times and record your results.
+        // 3. Calculate the average of your three rolls. This is done by adding the three rolls together and
+        // dividing the sum by three.The result is the number of Attribute Points you have to distribute between
+        // your six Attributes. Make note of the remainder, if you get one
         std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice) const;
 
         void race(const ERace race);
@@ -78,7 +89,7 @@ namespace Dominion
         CharacterValidationResult Validate() const;
 
     private:
-        std::shared_ptr<CharacterUtilityImpl> impl_;
+        std::unique_ptr<CharacterUtilityImpl> impl_;
     };
 } // namespace Dominion
 

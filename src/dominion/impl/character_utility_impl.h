@@ -33,6 +33,8 @@ namespace Dominion
 {
     class Style;
     class CharacterImpl;
+    class DatabaseImpl;
+    class PerkImpl;
     class StyleImpl;
 
     class CharacterUtilityImpl
@@ -43,7 +45,7 @@ namespace Dominion
         CharacterUtilityImpl& operator=(CharacterUtilityImpl&&) = delete;
 
     public:
-        CharacterUtilityImpl();
+        CharacterUtilityImpl(std::shared_ptr<DatabaseImpl>);
         ~CharacterUtilityImpl();
 
         std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice);
@@ -52,11 +54,17 @@ namespace Dominion
         void perk(uint_fast8_t roll);
 
         std::shared_ptr<CharacterImpl> MakeCharacter() const;
+
+    private:
+        void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
+        std::string CharacterUtilityImpl::RaceToPerkQuery() const;
+
         CharacterValidationResult Validate() const;
 
     public:
         AttributeArray attributes_;
         std::shared_ptr<const AttributePointsRemainder> aPtRemain_;
+        std::shared_ptr<DatabaseImpl> db_;
         ERace race_;
         uint_fast8_t perkRoll_;
         std::shared_ptr<StyleImpl> style_;

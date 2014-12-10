@@ -26,20 +26,21 @@
 #include <numeric>
 #include <boost/filesystem.hpp>
 
-#include "character_impl.h"
+#include "character_utility_impl.h"
 #include "database_impl.h"
 #include "perk_impl.h"
 #include "skill_impl.h"
 #include "style_impl.h"
 #include "../database.h"
+#include "../character/character_utility.h"
 
 namespace Dominion
 {
     ApiImpl::ApiImpl() :
-        db_(std::make_shared<DatabaseImpl>())
+        db_{std::make_shared<DatabaseImpl>()}
     {}
 
-    std::shared_ptr<DataBase> ApiImpl::database()
+    std::shared_ptr<DataBase> ApiImpl::database() const
     {
         return std::make_shared<DataBase>(db_);
     }
@@ -69,5 +70,10 @@ namespace Dominion
         } else {
             throw std::invalid_argument("Invalid path to database");
         }
+    }
+
+    std::unique_ptr<CharacterUtilityImpl> ApiImpl::MakeCharacterTool() const
+    {
+        return std::unique_ptr<CharacterUtilityImpl>(new CharacterUtilityImpl{db_});
     }
 } // namespace Dominion

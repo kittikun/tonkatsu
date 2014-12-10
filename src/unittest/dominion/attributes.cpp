@@ -26,7 +26,7 @@
 struct AttributeFixture : public BaseFixture < AttributeFixture, std::chrono::microseconds > {
     AttributeFixture() :
         BaseFixture{"Dominion_Attributes.csv", {"GetBaseAttributes", "GetAttributeRoll"}},
-        cTool{std::unique_ptr<Dominion::CharacterUtility>(new Dominion::CharacterUtility())}
+        cTool{Dominion::GetCharacterCreationTool()}
     {}
 
     std::unique_ptr<Dominion::CharacterUtility> cTool;

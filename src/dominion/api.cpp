@@ -24,13 +24,20 @@
 #include "api.h"
 
 #include "database.h"
+#include "character/character_utility.h"
 #include "impl/api_impl.h"
+#include "impl/character_utility_impl.h"
 
 namespace Dominion
 {
     void Initialise(const std::string& dataPath)
     {
         ApiImpl::instance().LoadDatabase(dataPath);
+    }
+
+    std::unique_ptr<CharacterUtility> DOMINION_API GetCharacterCreationTool()
+    {
+        return std::unique_ptr < CharacterUtility > {new CharacterUtility{ApiImpl::instance().MakeCharacterTool()}};
     }
 
     std::shared_ptr<DataBase> GetDatabase()

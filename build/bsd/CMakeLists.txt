@@ -9,7 +9,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ROOT_PATH}/bin)
 
-find_package(Boost COMPONENTS chrono system filesystem log thread unit_test_framework REQUIRED)
+find_package(Boost COMPONENTS chrono system filesystem log thread unit_test_fra\
+mework REQUIRED)
 
 if (Boost_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK -DDOMINION_DATAGEN -DSQLITE_THREADSAFE)
@@ -26,20 +27,20 @@ if (Boost_FOUND)
                     ${DOMINION_PATH}/dice.cpp
                     ${DOMINION_PATH}/character/attributes.cpp
                     ${DOMINION_PATH}/character/character.cpp
-					${DOMINION_PATH}/character/character_utility.cpp
+                    ${DOMINION_PATH}/character/character_utility.cpp
                     ${DOMINION_PATH}/character/perk.cpp
-		            ${DOMINION_PATH}/character/skill.cpp
+                    ${DOMINION_PATH}/character/skill.cpp
                     ${DOMINION_PATH}/character/style.cpp
-		            ${DOMINION_PATH}/impl/api_impl.cpp
+                    ${DOMINION_PATH}/impl/api_impl.cpp
                     ${DOMINION_PATH}/impl/character_impl.cpp
-					${DOMINION_PATH}/impl/character_utility_impl.cpp
-		            ${DOMINION_PATH}/impl/database_impl.cpp
-		            ${DOMINION_PATH}/impl/dice_impl.cpp
+                    ${DOMINION_PATH}/impl/character_utility_impl.cpp
+                    ${DOMINION_PATH}/impl/database_impl.cpp
+                    ${DOMINION_PATH}/impl/dice_impl.cpp
                     ${DOMINION_PATH}/impl/perk_impl.cpp
                     ${DOMINION_PATH}/impl/skill_impl.cpp
                     ${DOMINION_PATH}/impl/style_impl.cpp
-		            ${DOMINION_PATH}/lib/sqlite/shell.c
-		            ${DOMINION_PATH}/lib/sqlite/sqlite3.c)
+                    ${DOMINION_PATH}/lib/sqlite/shell.c
+                    ${DOMINION_PATH}/lib/sqlite/sqlite3.c)
   add_library(dominion SHARED ${DOMINION_SRC})
 
   set(TEST_SRC  ${TEST_PATH}/main.cpp
@@ -48,16 +49,17 @@ if (Boost_FOUND)
                 ${TEST_PATH}/dominion/character.cpp
                 ${TEST_PATH}/dominion/database.cpp
                 ${TEST_PATH}/dominion/dice.cpp
-	            ${TEST_PATH}/dominion/perk.cpp
-		        ${TEST_PATH}/dominion/skill.cpp
+                    ${TEST_PATH}/dominion/perk.cpp
+                        ${TEST_PATH}/dominion/skill.cpp
                 ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
-  target_link_libraries(unittest dominion ${Boost_LIBRARIES} dl)
+  target_link_libraries(unittest dominion ${Boost_LIBRARIES})
 
   set(EXE_SRC ${EXE_PATH}/main.cpp
               ${EXE_PATH}/dominion.cpp
               ${EXE_PATH}/utility/log.cpp)
   add_executable(server ${EXE_SRC})
-  target_link_libraries(server ${Boost_LIBRARIES} dominion dl)
+  target_link_libraries(server dominion ${Boost_LIBRARIES})
 
 endif(Boost_FOUND)
+

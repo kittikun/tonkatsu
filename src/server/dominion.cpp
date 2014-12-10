@@ -46,11 +46,16 @@ namespace Tonkatsu
 
         // create character
         auto dice = std::make_shared<Dominion::Dice>();
-        auto cTool = std::unique_ptr<Dominion::CharacterUtility>(new Dominion::CharacterUtility());
+        auto cTool = Dominion::GetCharacterCreationTool();
 
         auto styles = db_->GetStyles();
         auto attributes = cTool->attributesBase();
         auto apr = cTool->attributesRoll(dice);
+
+        for (int i = 0; i < std::get<0>(*apr); ++i)
+            attributes[i] += 1;
+
+        cTool->attributes(attributes);
 
         for (auto style : styles)
             LOGD << style->name();
@@ -59,21 +64,23 @@ namespace Tonkatsu
         cTool->style(styles[0]);
         cTool->perk(dice->Roll());
 
-        auto npc = cTool->MakeCharacter();
+        if (cTool->Validate() == Dominion::CharacterValidationResult::Valid) {
+            auto npc = cTool->MakeCharacter();
 
-        // show result
-        LOGD << npc->race();
-        LOGD << npc->style()->name();
+            // show result
+            LOGD << npc->race();
+            LOGD << npc->style()->name();
 
-        auto perks = npc->perks();
+            auto perks = npc->perks();
 
-        for (auto perk : perks)
-            LOGD << perk->name();
+            for (auto perk : perks)
+                LOGD << perk->name();
 
-        for (auto a : attributes)
-            LOGD << (int)a;
+            for (auto a : attributes)
+                LOGD << (int)a;
 
-        LOGD << "Attribute Points " << (int)std::get<0>(*apr);
-        LOGD << "Remainder " << (int)std::get<1>(*apr);
+            LOGD << "Attribute Points " << (int)std::get<0>(*apr);
+            LOGD << "Remainder " << (int)std::get<1>(*apr);
+        }
     }
 } // namespace Tonkatsu

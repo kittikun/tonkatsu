@@ -22,33 +22,33 @@
 
 namespace cereal
 {
-	template <class Archive> inline
-		void save(Archive& ar, boost::uuids::uuid const& uuid)
-	{
-		std::string val = boost::lexical_cast<std::string>(uuid);
+    template <class Archive> inline
+        void save(Archive& ar, boost::uuids::uuid const& uuid)
+    {
+        std::string val = boost::lexical_cast<std::string>(uuid);
 
-		ar(val);
-		//ar(make_size_tag(static_cast<size_type>(uuid.size())));
-		//for (auto it = uuid.begin(), end = uuid.end(); it != end; ++it)
-		//	ar(*it);
-	}
+        ar(val);
+        //ar(make_size_tag(static_cast<size_type>(uuid.size())));
+        //for (auto it = uuid.begin(), end = uuid.end(); it != end; ++it)
+        //	ar(*it);
+    }
 
-	template <class Archive> inline
-		void load(Archive& ar, boost::uuids::uuid& uuid)
-	{
-		std::string val;
+    template <class Archive> inline
+        void load(Archive& ar, boost::uuids::uuid& uuid)
+    {
+        std::string val;
 
-		ar(val);
-		uuid = boost::lexical_cast<boost::uuids::uuid>(val);
-		//size_type size;
-		//ar(make_size_tag(size));
+        ar(val);
+        uuid = boost::lexical_cast<boost::uuids::uuid>(val);
+        //size_type size;
+        //ar(make_size_tag(size));
 
-		//for (auto it = uuid.begin(), end = uuid.end(); it != end; ++it) {
-		//	uint_fast8_t val;
-		//	ar(val);
-		//	*it = val;
-		//}
-	}
+        //for (auto it = uuid.begin(), end = uuid.end(); it != end; ++it) {
+        //	uint_fast8_t val;
+        //	ar(val);
+        //	*it = val;
+        //}
+    }
 } // namespace cereal
 
 #endif // CEREAL_TYPES_BOOST_UUID_

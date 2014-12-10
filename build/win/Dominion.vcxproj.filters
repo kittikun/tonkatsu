@@ -78,9 +78,6 @@
     <ClCompile Include="..\..\src\dominion\character\character_utility.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dominion\impl\classid_utility.cpp">
-      <Filter>source\impl</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\dominion\definitions.h">

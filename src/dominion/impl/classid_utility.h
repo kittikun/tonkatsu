@@ -101,6 +101,8 @@ namespace Dominion
         static int ClassIDFromType() { return ClassID_Style; }
         static std::string SQLColumnName() { return std::string("style"); }
     };
+
+    template<typename T> uint_fast32_t NextID<T>::next_;
 } // namespace Dominion
 
 #endif // CLASS_ID_UTILITY_H

@@ -3,6 +3,7 @@
 *.suo
 build/win/out/
 *.user
+build/bsd/
 build/linux/
 *.*~
 *.csv

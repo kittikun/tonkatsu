@@ -31,8 +31,8 @@
 
 namespace Dominion
 {
-    CharacterUtility::CharacterUtility() :
-        impl_{std::make_shared<CharacterUtilityImpl>()}
+    CharacterUtility::CharacterUtility(std::unique_ptr<CharacterUtilityImpl> impl) :
+        impl_{std::move(impl)}
     {}
 
     CharacterUtility::~CharacterUtility()

@@ -48,8 +48,6 @@ namespace Dominion
     public:
         CharacterImpl(const uint_fast32_t id);
 
-        const std::vector<std::shared_ptr<PerkImpl>>& perks() const;
-
     private:
         std::string RaceToPerkQuery();
 

@@ -32,24 +32,13 @@
 
 namespace Dominion
 {
-    class Character;
+    class CharacterUtility;
     class DataBase;
     class Dice;
 
-    std::shared_ptr<Character> DOMINION_API CreateCharacter();
+    std::unique_ptr<CharacterUtility> DOMINION_API GetCharacterCreationTool();
     std::shared_ptr<DataBase> DOMINION_API GetDatabase();
     void DOMINION_API Initialise(const std::string&);
-
-    // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
-    // 1. Assign a minimum score of 1 to each of your character six Attributes.
-    AttributeArray DOMINION_API GetBaseAttributes();
-
-    // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
-    // 2. Roll the twelve - sided die three times and record your results.
-    // 3. Calculate the average of your three rolls. This is done by adding the three rolls together and
-    // dividing the sum by three.The result is the number of Attribute Points you have to distribute between
-    // your six Attributes.Make note of the remainder, if you get one
-    AttributePointsRemainder DOMINION_API GetAttributeRoll(const std::shared_ptr<Dice>& dice);
 } // namespace Dominion
 
 #endif // API_H

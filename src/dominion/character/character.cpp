@@ -51,12 +51,11 @@ namespace Dominion
     std::vector<std::shared_ptr<Perk>> Character::perks() const
     {
         std::vector<std::shared_ptr<Perk>> res;
-        std::vector<std::shared_ptr<PerkImpl>> perks = impl_->perks();
 
-        res.reserve(perks.size());
+        res.reserve(impl_->perks_.size());
 
-        for (size_t i = 0; i < perks.size(); ++i)
-            res.push_back(std::make_shared<Perk>(perks[i]));
+        for (size_t i = 0; i < impl_->perks_.size(); ++i)
+            res.push_back(std::make_shared<Perk>(impl_->perks_[i]));
 
         return res;
     }

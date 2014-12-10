@@ -26,6 +26,7 @@
 #include <numeric>
 
 #include "character_impl.h"
+#include "database_impl.h"
 #include "dice_impl.h"
 #include "style_impl.h"
 #include "classid_utility.h"
@@ -34,8 +35,9 @@
 
 namespace Dominion
 {
-    CharacterUtilityImpl::CharacterUtilityImpl() :
-        race_(RaceCount)
+    CharacterUtilityImpl::CharacterUtilityImpl(std::shared_ptr<DatabaseImpl> db) :
+        db_{db},
+        race_{RaceCount}
     {}
 
     CharacterUtilityImpl::~CharacterUtilityImpl()
@@ -61,10 +63,30 @@ namespace Dominion
             uint_fast32_t id = ClassIDUtility<CharacterImpl>::next();
             std::shared_ptr<CharacterImpl> character = std::make_shared<CharacterImpl>(id);
 
+            character->race_ = race_;
+            character->style_ = style_;
+            SetPerks(character);
+
             return character;
         }
 
         return std::shared_ptr<CharacterImpl>();
+    }
+
+    void CharacterUtilityImpl::SetPerks(const std::shared_ptr<CharacterImpl>& character) const
+    {
+        boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)perkRoll_;
+        std::string query = boost::str(fmt);
+        character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
+
+        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // If you had only 5 Attribute Points or less to divide between your six Attributes
+        // in Step Three, your character is automatically entitled to Favourable Rounding.
+        if (std::get<0>(*aPtRemain_) <= 5) {
+            fmt = boost::format("select id from perk where %1% and roll=1") % RaceToPerkQuery();
+            query = boost::str(fmt);
+            character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
+        }
     }
 
     CharacterValidationResult CharacterUtilityImpl::Validate() const
@@ -78,10 +100,15 @@ namespace Dominion
         if ((perkRoll_ == 0) || (perkRoll_ > 12))
             return CharacterValidationResult::InvalidPerk;
 
-        // Check attributes
-
-        if (aPtRemain_)
+        if (!aPtRemain_)
             return CharacterValidationResult::MissingAttributes;
+
+        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // If you had only 5 Attribute Points or less to divide between your six Attributes (...)
+        // If you are automatically entitled to Favourable Rounding, but your character already
+        // got Favourable Rounding from the Character Generation Table, go back and reroll on that table.
+        if ((perkRoll_ == 1) && (std::get<0>(*aPtRemain_) <= 5))
+            return CharacterValidationResult::RerollPerk;
 
         uint_fast8_t sum = std::accumulate(attributes_.begin(), attributes_.end(), (uint_fast8_t)0);
         uint_fast8_t expected = 6 + std::get<0>(*aPtRemain_);
@@ -92,5 +119,33 @@ namespace Dominion
         }
 
         return CharacterValidationResult::Valid;
+    }
+
+    std::string CharacterUtilityImpl::RaceToPerkQuery() const
+    {
+        switch (race_) {
+        case RaceBeast:
+            return "isBeast";
+
+        case RaceDwarf:
+            return "isDwarf";
+
+        case RaceElf:
+            return "isElf";
+
+        case RaceHalfling:
+            return "isHalfling";
+
+        case RaceHuman:
+            return "isHuman";
+
+        case RaceHumanoid:
+            return "isHumanoid";
+
+        default:
+            throw std::out_of_range("race value");
+        }
+
+        //return std::string();
     }
 } // namespace Dominion
