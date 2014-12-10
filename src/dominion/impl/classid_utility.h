@@ -21,8 +21,8 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef CLASS_ID_UTILITY_H
+#define CLASS_ID_UTILITY_H
 
 #include <string>
 
@@ -38,6 +38,7 @@
 
 namespace Dominion
 {
+    template <typename T>
     class NextID
     {
     public:
@@ -62,40 +63,44 @@ namespace Dominion
     {};
 
     template <>
-    class ClassIDUtility < Character > : public NextID
+    class ClassIDUtility<CharacterImpl> : public NextID < CharacterImpl >
     {
     public:
         typedef CharacterImpl ImplType;
+        typedef Character Type;
         static int ClassIDFromType() { return ClassID_Character; }
         static std::string SQLColumnName() { return std::string("character"); }
     };
 
     template <>
-    struct ClassIDUtility < Perk > : public NextID
+    struct ClassIDUtility<PerkImpl> : public NextID < PerkImpl >
     {
     public:
         typedef PerkImpl ImplType;
+        typedef Perk Type;
         static int ClassIDFromType() { return ClassID_Perk; }
         static std::string SQLColumnName() { return std::string("perk"); }
     };
 
     template <>
-    struct ClassIDUtility < Skill > : public NextID
+    struct ClassIDUtility<SkillImpl> : public NextID < SkillImpl >
     {
     public:
         typedef SkillImpl ImplType;
+        typedef Skill Type;
         static int ClassIDFromType() { return ClassID_Skill; }
         static std::string SQLColumnName() { return std::string("skill"); }
     };
 
     template <>
-    struct ClassIDUtility < Style > : public NextID
+    struct ClassIDUtility<StyleImpl> : public NextID < StyleImpl >
     {
     public:
         typedef StyleImpl ImplType;
+        typedef Style Type;
         static int ClassIDFromType() { return ClassID_Style; }
         static std::string SQLColumnName() { return std::string("style"); }
     };
 } // namespace Dominion
 
-#endif // UTILITY_H
+#endif // CLASS_ID_UTILITY_H

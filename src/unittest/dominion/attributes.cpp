@@ -18,14 +18,18 @@
 
 #include <dominion/api.h>
 #include <dominion/character/attributes.h>
+#include <dominion/character/character_utility.h>
 #include <dominion/dice.h>
 
 #include "../testFramework.h"
 
 struct AttributeFixture : public BaseFixture < AttributeFixture, std::chrono::microseconds > {
     AttributeFixture() :
-        BaseFixture("Dominion_Attributes.csv", {"GetBaseAttributes", "GetAttributeRoll"})
+        BaseFixture{"Dominion_Attributes.csv", {"GetBaseAttributes", "GetAttributeRoll"}},
+        cTool{std::unique_ptr<Dominion::CharacterUtility>(new Dominion::CharacterUtility())}
     {}
+
+    std::unique_ptr<Dominion::CharacterUtility> cTool;
 };
 
 BOOST_FIXTURE_TEST_SUITE(Dominion_Ability, AttributeFixture)
@@ -33,7 +37,7 @@ BOOST_FIXTURE_TEST_SUITE(Dominion_Ability, AttributeFixture)
 BOOST_AUTO_TEST_CASE(GetBaseAttributes)
 {
     TestFunc(1000, [&] {
-        auto attribs = Dominion::GetBaseAttributes();
+        auto attribs = cTool->attributesBase();
 
         BOOST_CHECK(std::accumulate(std::begin(attribs), std::end(attribs), 0) == Dominion::EAttribute::AttributeCount);
     });
@@ -44,10 +48,10 @@ BOOST_AUTO_TEST_CASE(GetAttributeRoll)
     std::shared_ptr<Dominion::Dice> dice = std::make_shared<Dominion::Dice>();
 
     TestFunc(1000, [&] {
-        auto aRoll = Dominion::GetAttributeRoll(dice);
+        auto aRoll = cTool->attributesRoll(dice);
 
-        BOOST_CHECK(std::get<0>(aRoll) > 0);
-        BOOST_CHECK(std::get<1>(aRoll) >= 0);
+        BOOST_CHECK(std::get<0>(*aRoll) > 0);
+        BOOST_CHECK(std::get<1>(*aRoll) >= 0);
     });
 }
 

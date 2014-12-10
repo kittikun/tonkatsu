@@ -69,7 +69,7 @@ namespace Dominion
             }
         }
 
-        db->AddData<Skill>(skill);
+        db->AddData<SkillImpl>(skill);
 
         return 0;
     }

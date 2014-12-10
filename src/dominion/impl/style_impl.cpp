@@ -58,7 +58,7 @@ namespace Dominion
             }
         }
 
-        db->AddData<Style>(style);
+        db->AddData<StyleImpl>(style);
 
         return 0;
     }

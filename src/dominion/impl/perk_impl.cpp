@@ -91,7 +91,7 @@ namespace Dominion
             }
         }
 
-        db->AddData<Perk>(perk);
+        db->AddData<PerkImpl>(perk);
 
         return 0;
     }

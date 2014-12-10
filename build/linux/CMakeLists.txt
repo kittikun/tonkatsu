@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 project(server)
 set(ROOT_PATH           ${PROJECT_SOURCE_DIR}/../../)
 set(SRC_PATH            ${ROOT_PATH}/src)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++14")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
@@ -33,6 +33,7 @@ if (Boost_FOUND)
 		            ${DOMINION_PATH}/impl/api_impl.cpp
                     ${DOMINION_PATH}/impl/character_impl.cpp
 					${DOMINION_PATH}/impl/character_utility_impl.cpp
+                    ${DOMINION_PATH}/impl/classid_utility.cpp
 		            ${DOMINION_PATH}/impl/database_impl.cpp
 		            ${DOMINION_PATH}/impl/dice_impl.cpp
                     ${DOMINION_PATH}/impl/perk_impl.cpp

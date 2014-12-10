@@ -33,7 +33,7 @@ namespace Dominion
     class AttributesImpl;
 
 #ifdef _WIN32
-    template class DOMINION_API std::unique_ptr < AttributesImpl > ;
+    template class DOMINION_API std::shared_ptr < AttributesImpl > ;
 #endif
 
     class DOMINION_API Attributes

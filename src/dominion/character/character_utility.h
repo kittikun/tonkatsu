@@ -45,6 +45,7 @@ namespace Dominion
         Valid
     };
 
+    class Character;
     class Dice;
     class Style;
     class CharacterUtilityImpl;
@@ -73,7 +74,8 @@ namespace Dominion
         void perk(uint_fast8_t roll);
         void style(const std::shared_ptr<Style>& style);
 
-        void Validate() const;
+        std::shared_ptr<Character> MakeCharacter() const;
+        CharacterValidationResult Validate() const;
 
     private:
         std::shared_ptr<CharacterUtilityImpl> impl_;

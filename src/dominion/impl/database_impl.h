@@ -80,10 +80,11 @@ namespace Dominion
         }
 
         template <typename T>
-        std::vector<std::shared_ptr<T>> GetListAsOpaque(const std::string& query) const
+        std::vector<std::shared_ptr<typename ClassIDUtility<T>::Type>> GetListAsOpaque(const std::string& query) const
         {
+            typedef ClassIDUtility<T>::Type OpaqueType;
             typedef std::unordered_map<uint_fast32_t, std::shared_ptr<Data>> DictionaryType;
-            typedef std::vector<std::shared_ptr<T>> ResultType;
+            typedef std::vector <std::shared_ptr<OpaqueType>> ResultType;
             typedef std::tuple<const DictionaryType&, ResultType&> TupleType;
 
             int rc;
@@ -102,7 +103,7 @@ namespace Dominion
 
                 for (int i = 0; i < argc; ++i) {
                     int index = ClassIDUtility<T>::ClassIDFromType() + boost::lexical_cast<int>(argv[i]);
-                    std::get<1>(*tuple).push_back(std::make_shared<T>(std::static_pointer_cast<typename ClassIDUtility<T>::ImplType>(std::get<0>(*tuple).at(index))));
+                    std::get<1>(*tuple).push_back(std::make_shared <OpaqueType>(std::static_pointer_cast<T>(std::get<0>(*tuple).at(index))));
                 }
 
                 return 0;

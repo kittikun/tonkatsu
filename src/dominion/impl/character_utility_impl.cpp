@@ -58,7 +58,7 @@ namespace Dominion
     std::shared_ptr<CharacterImpl> CharacterUtilityImpl::MakeCharacter() const
     {
         if (Validate() == CharacterValidationResult::Valid) {
-            uint_fast32_t id = ClassIDUtility<Character>::next();
+            uint_fast32_t id = ClassIDUtility<CharacterImpl>::next();
             std::shared_ptr<CharacterImpl> character = std::make_shared<CharacterImpl>(id);
 
             return character;

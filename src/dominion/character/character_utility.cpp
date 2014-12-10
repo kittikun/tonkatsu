@@ -23,9 +23,9 @@
 
 #include "character_utility.h"
 
+#include "character.h"
 #include "style.h"
 #include "../dice.h"
-
 #include "../impl/character_utility_impl.h"
 #include "../impl/dice_impl.h"
 
@@ -70,5 +70,15 @@ namespace Dominion
     void CharacterUtility::style(const std::shared_ptr<Style>& style)
     {
         impl_->style_ = style->impl_;
+    }
+
+    std::shared_ptr<Character> CharacterUtility::MakeCharacter() const
+    {
+        return std::make_shared<Character>(impl_->MakeCharacter());
+    }
+
+    CharacterValidationResult CharacterUtility::Validate() const
+    {
+        return impl_->Validate();
     }
 } // namespace Dominion
