@@ -22,6 +22,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dominion", "Dominion.vcxproj", "{4495B5E4-117B-43C3-B60B-426A1D8A5E17}"
+	ProjectSection(ProjectDependencies) = postProject
+		{895347C9-DE9A-4377-89A9-6A25027E47E0} = {895347C9-DE9A-4377-89A9-6A25027E47E0}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{6141BBE3-9CA8-4108-813D-E1A66E792BE3}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bsd", "bsd", "{A1CECDF8-528
 	ProjectSection(SolutionItems) = preProject
 		..\bsd\CMakeLists.txt = ..\bsd\CMakeLists.txt
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "External", "External.vcxproj", "{895347C9-DE9A-4377-89A9-6A25027E47E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +69,13 @@ Global
 		{4495B5E4-117B-43C3-B60B-426A1D8A5E17}.Release|x64.Build.0 = Release|x64
 		{4495B5E4-117B-43C3-B60B-426A1D8A5E17}.Release|x86.ActiveCfg = Release|Win32
 		{4495B5E4-117B-43C3-B60B-426A1D8A5E17}.Release|x86.Build.0 = Release|Win32
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Debug|x64.ActiveCfg = Debug|x64
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Debug|x64.Build.0 = Debug|x64
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Debug|x86.ActiveCfg = Debug|Win32
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Debug|x86.Build.0 = Debug|Win32
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Release|x64.ActiveCfg = Release|Win32
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Release|x86.ActiveCfg = Release|Win32
+		{895347C9-DE9A-4377-89A9-6A25027E47E0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

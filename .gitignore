@@ -1,12 +1,13 @@
 *.opensdf
 *.sdf
 *.suo
-build/win/out/
 *.user
+build/win/out/
 build/bsd/
 build/linux/
 *.*~
 *.csv
 *.exp
 bin/
+lib/
 build/
