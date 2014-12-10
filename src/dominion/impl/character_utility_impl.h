@@ -57,7 +57,7 @@ namespace Dominion
 
     private:
         void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
-        std::string CharacterUtilityImpl::RaceToPerkQuery() const;
+        std::string RaceToPerkQuery() const;
 
         CharacterValidationResult Validate() const;
 

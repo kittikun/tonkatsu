@@ -9,8 +9,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ROOT_PATH}/bin)
 
-find_package(Boost COMPONENTS chrono system filesystem log thread unit_test_fra\
-mework REQUIRED)
+find_package(Boost COMPONENTS chrono system filesystem log thread unit_test_framework REQUIRED)
 
 if (Boost_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK -DDOMINION_DATAGEN -DSQLITE_THREADSAFE)
