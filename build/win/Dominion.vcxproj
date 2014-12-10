@@ -64,8 +64,6 @@
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\skill_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\style_impl.h" />
-    <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3.h" />
-    <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3ext.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -137,7 +135,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -151,7 +149,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -167,7 +165,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -185,7 +183,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\dominion\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(SolutionDir)\..\..\src;$(SolutionDir)\..\..\src\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>EXPORT_DOMINION_API;SQLITE_THREADSAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

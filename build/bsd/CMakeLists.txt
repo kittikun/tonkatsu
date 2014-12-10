@@ -22,7 +22,7 @@ if (Boost_FOUND AND SQLITE3_FOUND)
   include_directories(${Boost_INCLUDE_DIRS}
 	              ${SQLITE3_INCLUDE_DIR}
                       ${SRC_PATH}
-                      ${SRC_PATH}/dominion/lib)
+                      ${SRC_PATH}/lib)
 
   set(DOMINION_SRC  ${DOMINION_PATH}/api.cpp
                     ${DOMINION_PATH}/database.cpp

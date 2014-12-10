@@ -13,12 +13,6 @@
     <Filter Include="source\extra">
       <UniqueIdentifier>{a849064a-5179-4bd2-8479-1e18276b7192}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\lib">
-      <UniqueIdentifier>{a1859d4e-e27b-4861-b303-1caa8241717a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\lib\sqlite">
-      <UniqueIdentifier>{26fc20e1-cc42-42e6-bd5c-e5693b4aec96}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\dominion\dice.cpp">
@@ -109,12 +103,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h">
       <Filter>source\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3.h">
-      <Filter>source\lib\sqlite</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\dominion\lib\sqlite\sqlite3ext.h">
-      <Filter>source\lib\sqlite</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dominion\impl\api_impl.h">
       <Filter>source\impl</Filter>
