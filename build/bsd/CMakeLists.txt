@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(server)
+set(CMAKE_MODULE_PATH   ${PROJECT_SOURCE_DIR})
 set(ROOT_PATH           ${PROJECT_SOURCE_DIR}/../../)
 set(SRC_PATH            ${ROOT_PATH}/src)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
@@ -10,14 +11,16 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ROOT_PATH}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ROOT_PATH}/bin)
 
 find_package(Boost COMPONENTS chrono system filesystem log thread unit_test_framework REQUIRED)
+find_package(SQLite3 REQUIRED)
 
-if (Boost_FOUND)
+if (Boost_FOUND AND SQLITE3_FOUND)
   add_definitions(-DBOOST_ALL_DYN_LINK -DDOMINION_DATAGEN -DSQLITE_THREADSAFE)
 
   set(DOMINION_PATH       ${SRC_PATH}/dominion)
   set(TEST_PATH           ${SRC_PATH}/unittest)
   set(EXE_PATH            ${SRC_PATH}/server)
   include_directories(${Boost_INCLUDE_DIRS}
+	              ${SQLITE3_INCLUDE_DIR}
                       ${SRC_PATH}
                       ${SRC_PATH}/dominion/lib)
 
@@ -37,9 +40,7 @@ if (Boost_FOUND)
                     ${DOMINION_PATH}/impl/dice_impl.cpp
                     ${DOMINION_PATH}/impl/perk_impl.cpp
                     ${DOMINION_PATH}/impl/skill_impl.cpp
-                    ${DOMINION_PATH}/impl/style_impl.cpp
-                    ${DOMINION_PATH}/lib/sqlite/shell.c
-                    ${DOMINION_PATH}/lib/sqlite/sqlite3.c)
+                    ${DOMINION_PATH}/impl/style_impl.cpp)
   add_library(dominion SHARED ${DOMINION_SRC})
 
   set(TEST_SRC  ${TEST_PATH}/main.cpp
@@ -48,17 +49,17 @@ if (Boost_FOUND)
                 ${TEST_PATH}/dominion/character.cpp
                 ${TEST_PATH}/dominion/database.cpp
                 ${TEST_PATH}/dominion/dice.cpp
-                    ${TEST_PATH}/dominion/perk.cpp
-                        ${TEST_PATH}/dominion/skill.cpp
+                ${TEST_PATH}/dominion/perk.cpp
+                ${TEST_PATH}/dominion/skill.cpp
                 ${TEST_PATH}/lib/minicsv.cpp)
   add_executable(unittest ${TEST_SRC})
-  target_link_libraries(unittest dominion ${Boost_LIBRARIES})
+  target_link_libraries(unittest dominion ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
 
   set(EXE_SRC ${EXE_PATH}/main.cpp
               ${EXE_PATH}/dominion.cpp
               ${EXE_PATH}/utility/log.cpp)
   add_executable(server ${EXE_SRC})
-  target_link_libraries(server dominion ${Boost_LIBRARIES})
+  target_link_libraries(server dominion ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
 
-endif(Boost_FOUND)
+endif(Boost_FOUND AND SQLITE3_FOUND)
 
