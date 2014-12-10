@@ -82,7 +82,7 @@ namespace Dominion
         template <typename T>
         std::vector<std::shared_ptr<typename ClassIDUtility<T>::Type>> GetListAsOpaque(const std::string& query) const
         {
-            typedef ClassIDUtility<T>::Type OpaqueType;
+            typedef typename ClassIDUtility<T>::Type OpaqueType;
             typedef std::unordered_map<uint_fast32_t, std::shared_ptr<Data>> DictionaryType;
             typedef std::vector <std::shared_ptr<OpaqueType>> ResultType;
             typedef std::tuple<const DictionaryType&, ResultType&> TupleType;
