@@ -23,7 +23,7 @@
 
 struct DatabaseFixture : public BaseFixture < DatabaseFixture, std::chrono::milliseconds > {
     DatabaseFixture() :
-        BaseFixture("Dominion_Database.csv", {"GetSkills", "GetStyles"}),
+        BaseFixture("Dominion_Database.csv", {"GetStyles"}),
         db_(Dominion::GetDatabase())
     {}
 
@@ -32,12 +32,6 @@ struct DatabaseFixture : public BaseFixture < DatabaseFixture, std::chrono::mill
 
 BOOST_FIXTURE_TEST_SUITE(Dominion_Database, DatabaseFixture)
 
-BOOST_AUTO_TEST_CASE(GetSkills)
-{
-    TestFunc(1000, [&] {
-        db_->GetSkills();
-    });
-}
 BOOST_AUTO_TEST_CASE(GetStyles)
 {
     TestFunc(1000, [&] {

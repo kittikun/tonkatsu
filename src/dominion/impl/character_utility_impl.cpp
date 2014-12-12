@@ -66,6 +66,7 @@ namespace Dominion
             character->race_ = race_;
             character->style_ = style_;
             SetPerks(character);
+            SetSkills(character);
 
             return character;
         }
@@ -87,6 +88,10 @@ namespace Dominion
             query = boost::str(fmt);
             character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
         }
+    }
+
+    void CharacterUtilityImpl::SetSkills(const std::shared_ptr<CharacterImpl>&) const
+    {
     }
 
     CharacterValidationResult CharacterUtilityImpl::Validate() const

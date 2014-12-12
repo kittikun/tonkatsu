@@ -28,6 +28,7 @@
 #include "character/style.h"
 
 #include "impl/database_impl.h"
+#include "impl/style_impl.h"
 
 namespace Dominion
 {
@@ -38,13 +39,18 @@ namespace Dominion
     DataBase::~DataBase()
     {}
 
-    std::vector<std::shared_ptr<Skill>> DataBase::GetSkills() const
-    {
-        return impl_->GetListAsOpaque<SkillImpl>("select id from skill");
-    }
-
     std::vector<std::shared_ptr<Style>> DataBase::GetStyles() const
     {
-        return impl_->GetListAsOpaque<StyleImpl>("select id from style");
+        auto results = impl_->GetList<StyleImpl>("select id from style");
+
+        std::vector<std::shared_ptr<Style>> res;
+
+        res.reserve(results.size());
+
+        for (auto item : results) {
+            res.push_back(std::make_shared<Style>(item));
+        }
+
+        return res;
     }
 } // namespace Dominion
