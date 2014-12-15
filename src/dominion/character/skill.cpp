@@ -33,4 +33,9 @@ namespace Dominion
 
     Skill::~Skill()
     {}
+
+    const std::string& Skill::name() const
+    {
+        return impl_->name_;
+    }
 } // namespace Dominion

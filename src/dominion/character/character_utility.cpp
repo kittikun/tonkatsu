@@ -26,6 +26,7 @@
 #include "character.h"
 #include "style.h"
 #include "../dice.h"
+#include "../impl/attribute_impl.h"
 #include "../impl/character_utility_impl.h"
 #include "../impl/dice_impl.h"
 
@@ -40,7 +41,7 @@ namespace Dominion
 
     void CharacterUtility::attributes(const AttributeArray& attributes)
     {
-        impl_->attributes_ = attributes;
+        impl_->attributes_ = std::make_shared<AttributesImpl>(attributes);
     }
 
     AttributeArray CharacterUtility::attributesBase() const

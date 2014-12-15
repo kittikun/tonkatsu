@@ -27,63 +27,73 @@
 #include <dominion/character/character.h>
 #include <dominion/character/character_utility.h>
 #include <dominion/character/perk.h>
+#include <dominion/character/skill.h>
 #include <dominion/character/style.h>
 
 #include "utility/log.h"
 
 namespace Tonkatsu
 {
-	void DominionLib::Initialise()
-	{
+    void DominionLib::Initialise()
+    {
 #if defined(_WIN32)
-		if (IsDebuggerPresent())
-			Dominion::Initialise("../../data/dominion");
+        if (IsDebuggerPresent())
+            Dominion::Initialise("../../data/dominion");
 #else
-		Dominion::Initialise("./data/dominion");
+        Dominion::Initialise("./data/dominion");
 #endif
 
-		db_ = Dominion::GetDatabase();
+        db_ = Dominion::GetDatabase();
 
-		// create character
-		auto dice = std::make_shared<Dominion::Dice>();
-		auto cTool = Dominion::GetCharacterCreationTool();
+        // create character
+        auto dice = std::make_shared<Dominion::Dice>();
+        auto cTool = Dominion::GetCharacterCreationTool();
 
-		auto styles = db_->GetStyles();
-		auto attributes = cTool->attributesBase();
-		auto apr = cTool->attributesRoll(dice);
+        auto styles = db_->GetStyles();
+        auto attributes = cTool->attributesBase();
+        auto apr = cTool->attributesRoll(dice);
 
-		for (int i = 0; i < std::get<0>(*apr); ++i)
-			attributes[i % Dominion::AttributeCount] += 1;
+        int i, j;
+        for (i = 0, j = 0; i < std::get<0>(*apr); ++j) {
+            if (dice->Roll() % 2 == 1) {
+                attributes[j % Dominion::AttributeCount] += 1;
+                ++i;
+            }
+        }
 
-		cTool->attributes(attributes);
+        cTool->attributes(attributes);
 
-		for (auto style : styles)
-			LOGD << style->name();
+        for (auto style : styles)
+            LOGD << style->name();
 
-		cTool->race(Dominion::RaceHuman);
-		cTool->style(styles[0]);
-		cTool->perk(dice->Roll());
+        cTool->race(Dominion::RaceHuman);
+        cTool->style(styles[0]);
+        cTool->perk(dice->Roll());
 
-		if (cTool->Validate() == Dominion::CharacterValidationResult::Valid) {
-			auto npc = cTool->MakeCharacter();
+        if (cTool->Validate() == Dominion::CharacterValidationResult::Valid) {
+            auto npc = cTool->MakeCharacter();
 
-			// show result
-			LOGD << npc->race();
-			LOGD << npc->style()->name();
+            // show result
+            LOGD << npc->race();
+            LOGD << npc->style()->name();
 
-			auto perks = npc->perks();
+            auto perks = npc->perks();
 
-			for (auto perk : npc->perks())
-				LOGD << perk->name();
+            for (auto perk : npc->perks())
+                LOGD << perk->name();
 
-			for (auto a : npc->attributes()->asArray())
-				LOGD << (int)a;
+            LOGD << "Agility : " << (int)npc->attributes()->agility();
+            LOGD << "Intuition : " << (int)npc->attributes()->intuition();
+            LOGD << "Intellect : " << (int)npc->attributes()->intellect();
+            LOGD << "Luck : " << (int)npc->attributes()->luck();
+            LOGD << "Stamina : " << (int)npc->attributes()->stamina();
+            LOGD << "Vigour : " << (int)npc->attributes()->vigour();
 
-			LOGD << "Attribute Points " << (int)std::get<0>(*apr);
-			LOGD << "Remainder " << (int)std::get<1>(*apr);
+            LOGD << "Attribute Points " << (int)std::get<0>(*apr);
+            LOGD << "Remainder " << (int)std::get<1>(*apr);
 
-			for (auto skill : npc->skills())
-				LOGD << skill;
-		}
-	}
+            for (auto skill : npc->skills())
+                LOGD << skill->name();
+        }
+    }
 } // namespace Tonkatsu

@@ -71,15 +71,6 @@ namespace Dominion
         }
 
         template <typename T>
-        const uint_fast32_t GetCount() const
-        {
-            boost::format fmt = boost::format("select count(id) from %1%") % ClassIDUtility<T>::SQLColumnName();
-            std::string query = boost::str(fmt);
-
-            return GetIntValue(query);
-        }
-
-        template <typename T>
         std::vector<std::shared_ptr<T>> GetList(const std::string& query) const
         {
             typedef typename ClassIDUtility<T>::Type OpaqueType;
@@ -88,12 +79,9 @@ namespace Dominion
             typedef std::tuple<const DictionaryType&, ResultType&> TupleType;
 
             int rc;
-            size_t count = GetCount<T>();
             char *err = nullptr;
 
             ResultType res;
-
-            res.reserve(count);
 
             // lambda with capture cannot be passed as __cdecl so we have to resort to tuple usage
             TupleType tuple = std::tie(database_, res);

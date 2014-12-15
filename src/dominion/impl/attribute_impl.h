@@ -29,21 +29,21 @@
 
 namespace Dominion
 {
-	class AttributesImpl
-	{
-	public:
-		AttributesImpl(const AttributeArray& a) :
-			attributes_(a)
-		{}
+    class AttributesImpl
+    {
+    public:
+        AttributesImpl(const AttributeArray& a) :
+            array_(a)
+        {}
 
-		AttributesImpl(const AttributesImpl&) = delete;
-		AttributesImpl& operator=(const AttributesImpl&) = delete;
-		AttributesImpl(AttributesImpl&&) = delete;
-		AttributesImpl& operator=(AttributesImpl&&) = delete;
+        AttributesImpl(const AttributesImpl&) = delete;
+        AttributesImpl& operator=(const AttributesImpl&) = delete;
+        AttributesImpl(AttributesImpl&&) = delete;
+        AttributesImpl& operator=(AttributesImpl&&) = delete;
 
-	public:
-		AttributeArray attributes_;
-	};
+    public:
+        AttributeArray array_;
+    };
 } // namespace Dominion
 
 #endif // ATTRIBUTE_IMPL_H

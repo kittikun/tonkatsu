@@ -36,168 +36,205 @@
 
 namespace Dominion
 {
-	CharacterUtilityImpl::CharacterUtilityImpl(std::shared_ptr<DatabaseImpl> db) :
-		db_{ db },
-		race_{ RaceCount }
-	{}
+    CharacterUtilityImpl::CharacterUtilityImpl(std::shared_ptr<DatabaseImpl> db) :
+        db_{db},
+        race_{RaceCount}
+    {}
 
-	CharacterUtilityImpl::~CharacterUtilityImpl()
-	{}
+    CharacterUtilityImpl::~CharacterUtilityImpl()
+    {}
 
-	std::shared_ptr<const AttributePointsRemainder> CharacterUtilityImpl::attributesRoll(const std::shared_ptr<Dice>& dice)
-	{
-		std::array < uint_fast8_t, 3 >  res;
+    std::shared_ptr<const AttributePointsRemainder> CharacterUtilityImpl::attributesRoll(const std::shared_ptr<Dice>& dice)
+    {
+        std::array < uint_fast8_t, 3 >  res;
 
-		for (size_t i = 0; i < res.size(); ++i)
-			res[i] = dice->Roll();
+        for (size_t i = 0; i < res.size(); ++i)
+            res[i] = dice->Roll();
 
-		const uint_fast8_t sum = std::accumulate(std::begin(res), std::end(res), uint_fast8_t(0));
+        const uint_fast8_t sum = std::accumulate(std::begin(res), std::end(res), uint_fast8_t(0));
 
-		aPtRemain_ = std::make_shared<const AttributePointsRemainder>(std::make_tuple(sum / 3, sum % 3));
+        aPtRemain_ = std::make_shared<const AttributePointsRemainder>(std::make_tuple(sum / 3, sum % 3));
 
-		return aPtRemain_;
-	}
+        return aPtRemain_;
+    }
 
-	std::shared_ptr<CharacterImpl> CharacterUtilityImpl::MakeCharacter() const
-	{
-		if (Validate() == CharacterValidationResult::Valid) {
-			uint_fast32_t id = ClassIDUtility<CharacterImpl>::next();
-			std::shared_ptr<CharacterImpl> character = std::make_shared<CharacterImpl>(id);
+    std::string CharacterUtilityImpl::GetSkillQuery(const std::shared_ptr<CharacterImpl>& character) const
+    {
+        std::string res;
 
-			character->race_ = race_;
-			character->style_ = style_;
-			SetPerks(character);
-			SetSkills(character);
+        switch (character->race_) {
+        case RaceBeast:
+        case RaceHumanoid:
+            res = "select id from skill where id > 0 and %1%";
+            break;
 
-			return character;
-		}
+        case RaceHuman:
+        case RaceElf:
+        case RaceDwarf:
+        case RaceHalfling:
+            res = "select id from skill where id > 0 and %1% and dependency <= 3";
+            break;
 
-		return std::shared_ptr<CharacterImpl>();
-	}
+        default:
+            throw std::out_of_range("race value");
+        }
 
-	void CharacterUtilityImpl::SetPerks(const std::shared_ptr<CharacterImpl>& character) const
-	{
-		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)perkRoll_;
-		std::string query = boost::str(fmt);
-		character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
+        if (character->style_->archetypes_[ArchetypePriest])
+            res += " or dependency = 4 and target = 1";
+        else if (character->style_->archetypes_[ArchetypeWitch])
+            res += " or dependency = 4 and target = 2";
 
-		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-		// If you had only 5 Attribute Points or less to divide between your six Attributes
-		// in Step Three, your character is automatically entitled to Favourable Rounding.
-		if (std::get<0>(*aPtRemain_) <= 5) {
-			fmt = boost::format("select id from perk where %1% and roll=1") % RaceToPerkQuery();
-			query = boost::str(fmt);
-			character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
-		}
-	}
+        res = boost::str(boost::format(res) % RaceToSkillQuery());
 
-	void CharacterUtilityImpl::SetSkills(const std::shared_ptr<CharacterImpl>& character) const
-	{
-		boost::format fmt;
+        return res;
+    }
 
-		switch (character->race_)
-		{
-		case RaceBeast:
-		case RaceHumanoid:
-			fmt = boost::format("select id from skill where id > 0 and %1%") % RaceToSkillQuery();
-			break;
+    std::shared_ptr<CharacterImpl> CharacterUtilityImpl::MakeCharacter() const
+    {
+        if (Validate() == CharacterValidationResult::Valid) {
+            uint_fast32_t id = ClassIDUtility<CharacterImpl>::next();
+            std::shared_ptr<CharacterImpl> character = std::make_shared<CharacterImpl>(id);
 
-		case RaceHuman:
-		case RaceElf:
-		case RaceDwarf:
-		case RaceHalfling:
-			fmt = boost::format("select id from skill where id > 0 and %1% and dependency <= 3") % RaceToSkillQuery();
-			break;
+            character->attributes_ = attributes_;
+            character->race_ = race_;
+            character->style_ = style_;
+            SetPerks(character);
+            SetSkills(character);
 
-		default:
-			throw std::out_of_range("race value");
-		}
+            return character;
+        }
 
-		std::string query = boost::str(fmt);
-		auto attribSkills = db_->GetList<SkillImpl>(query.c_str());
+        return std::shared_ptr<CharacterImpl>();
+    }
 
-		character->skills_.reserve(attribSkills.size());
+    void CharacterUtilityImpl::SetPerks(const std::shared_ptr<CharacterImpl>& character) const
+    {
+        boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)perkRoll_;
+        std::string query = boost::str(fmt);
 
-		for (auto skill : attribSkills) {
-			character->skills_.push_back(skill);
-		}
-	}
+        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // If you had only 5 Attribute Points or less to divide between your six Attributes
+        // in Step Three, your character is automatically entitled to Favourable Rounding.
+        if (std::get<0>(*aPtRemain_) <= 5) {
+            fmt = boost::format("select id from perk where %1% and roll=1") % RaceToPerkQuery();
+            query = boost::str(fmt);
+            character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
+        }
 
-	CharacterValidationResult CharacterUtilityImpl::Validate() const
-	{
-		if ((race_ < 0) || (race_ >= RaceCount))
-			return CharacterValidationResult::InvalidRace;
+        character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
+    }
 
-		if (!style_)
-			return CharacterValidationResult::MissingStyle;
+    void CharacterUtilityImpl::SetSkills(const std::shared_ptr<CharacterImpl>& character) const
+    {
+        character->skills_.swap(db_->GetList<SkillImpl>(GetSkillQuery(character)));
 
-		if ((perkRoll_ == 0) || (perkRoll_ > 12))
-			return CharacterValidationResult::InvalidPerk;
+        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // For the Combat Composite, take your Vigour and Agility stats
+        float composite = (character->attributes_->array_[AttributeAgility] + character->attributes_->array_[AttributeVigour]) / 2.f;
 
-		if (!aPtRemain_)
-			return CharacterValidationResult::MissingAttributes;
+        if (character->hasFavourableRounding())
+            composite = ceil(composite);
+        else
+            composite = floor(composite);
 
-		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-		// If you had only 5 Attribute Points or less to divide between your six Attributes (...)
-		// If you are automatically entitled to Favourable Rounding, but your character already
-		// got Favourable Rounding from the Character Generation Table, go back and reroll on that table.
-		if ((perkRoll_ == 1) && (std::get<0>(*aPtRemain_) <= 5))
-			return CharacterValidationResult::RerollPerk;
+        if (character->style_->archetypes_[ArchetypePriest]) {
+            // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+            // For the Priestcraft Composite, take your Stamina and Intuition stats
+            composite = (character->attributes_->array_[AttributeStamina] + character->attributes_->array_[AttributeIntuition]) / 2.f;
 
-		uint_fast8_t sum = std::accumulate(attributes_.attributes_.begin(), attributes_.attributes_.end(), (uint_fast8_t)0);
-		uint_fast8_t expected = 6 + std::get<0>(*aPtRemain_);
-		uint_fast8_t max = 6 + 12;
+            if (character->hasFavourableRounding())
+                composite = ceil(composite);
+            else
+                composite = floor(composite);
+        }
 
-		if ((sum > max) || (sum < expected) || (sum > expected)) {
-			return CharacterValidationResult::InvalidAttributes;
-		}
+        if (character->style_->archetypes_[ArchetypeWitch]) {
+            // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+            // For the Witchcraft Composite, take your Intellect and Luck stats
+            composite = (character->attributes_->array_[AttributeIntellect] + character->attributes_->array_[AttributeLuck]) / 2.f;
 
-		return CharacterValidationResult::Valid;
-	}
+            if (character->hasFavourableRounding())
+                composite = ceil(composite);
+            else
+                composite = floor(composite);
+        }
+    }
 
-	std::string CharacterUtilityImpl::RaceToPerkQuery() const
-	{
-		switch (race_) {
-		case RaceBeast:
-			return "isBeast";
+    CharacterValidationResult CharacterUtilityImpl::Validate() const
+    {
+        if ((race_ < 0) || (race_ >= RaceCount))
+            return CharacterValidationResult::InvalidRace;
 
-		case RaceDwarf:
-			return "isDwarf";
+        if (!style_)
+            return CharacterValidationResult::MissingStyle;
 
-		case RaceElf:
-			return "isElf";
+        if ((perkRoll_ == 0) || (perkRoll_ > 12))
+            return CharacterValidationResult::InvalidPerk;
 
-		case RaceHalfling:
-			return "isHalfling";
+        if (!aPtRemain_)
+            return CharacterValidationResult::MissingAttributes;
 
-		case RaceHuman:
-			return "isHuman";
+        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // If you had only 5 Attribute Points or less to divide between your six Attributes (...)
+        // If you are automatically entitled to Favourable Rounding, but your character already
+        // got Favourable Rounding from the Character Generation Table, go back and reroll on that table.
+        if ((perkRoll_ == 1) && (std::get<0>(*aPtRemain_) <= 5))
+            return CharacterValidationResult::RerollPerk;
 
-		case RaceHumanoid:
-			return "isHumanoid";
+        uint_fast8_t sum = std::accumulate(attributes_->array_.begin(), attributes_->array_.end(), (uint_fast8_t)0);
+        uint_fast8_t expected = 6 + std::get<0>(*aPtRemain_);
+        uint_fast8_t max = 6 + 12;
 
-		default:
-			throw std::out_of_range("race value");
-		}
-	}
+        if ((sum > max) || (sum < expected) || (sum > expected)) {
+            return CharacterValidationResult::InvalidAttributes;
+        }
 
-	std::string CharacterUtilityImpl::RaceToSkillQuery() const
-	{
-		switch (race_) {
-		case RaceHuman:
-		case RaceElf:
-		case RaceHalfling:
-		case RaceDwarf:
-			return "bySentient";
+        return CharacterValidationResult::Valid;
+    }
 
-		case RaceBeast:
-			return "byBeast";
+    std::string CharacterUtilityImpl::RaceToPerkQuery() const
+    {
+        switch (race_) {
+        case RaceBeast:
+            return "isBeast";
 
-		case RaceHumanoid:
-			return "byHumanoid";
+        case RaceDwarf:
+            return "isDwarf";
 
-		default:
-			throw std::out_of_range("race value");
-		}
-	}
+        case RaceElf:
+            return "isElf";
+
+        case RaceHalfling:
+            return "isHalfling";
+
+        case RaceHuman:
+            return "isHuman";
+
+        case RaceHumanoid:
+            return "isHumanoid";
+
+        default:
+            throw std::out_of_range("race value");
+        }
+    }
+
+    std::string CharacterUtilityImpl::RaceToSkillQuery() const
+    {
+        switch (race_) {
+        case RaceHuman:
+        case RaceElf:
+        case RaceHalfling:
+        case RaceDwarf:
+            return "bySentient";
+
+        case RaceBeast:
+            return "byBeast";
+
+        case RaceHumanoid:
+            return "byHumanoid";
+
+        default:
+            throw std::out_of_range("race value");
+        }
+    }
 } // namespace Dominion

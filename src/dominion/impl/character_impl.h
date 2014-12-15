@@ -32,32 +32,34 @@
 
 namespace Dominion
 {
-	class AttributesImpl;
-	class PerkImpl;
-	class SkillImpl;
-	class StyleImpl;
+    class AttributesImpl;
+    class PerkImpl;
+    class SkillImpl;
+    class StyleImpl;
 
-	class CharacterImpl : public Data
-	{
-		CharacterImpl(const CharacterImpl&) = delete;
-		CharacterImpl& operator=(const CharacterImpl&) = delete;
-		CharacterImpl(CharacterImpl&&) = delete;
-		CharacterImpl& operator=(CharacterImpl&&) = delete;
+    class CharacterImpl : public Data
+    {
+        CharacterImpl(const CharacterImpl&) = delete;
+        CharacterImpl& operator=(const CharacterImpl&) = delete;
+        CharacterImpl(CharacterImpl&&) = delete;
+        CharacterImpl& operator=(CharacterImpl&&) = delete;
 
-	public:
-		CharacterImpl(const uint_fast32_t id);
+    public:
+        CharacterImpl(const uint_fast32_t id);
 
-	private:
-		std::string RaceToPerkQuery();
+        const bool hasFavourableRounding() const;
 
-	public:
-		std::shared_ptr<AttributesImpl> attributes_;
-		std::vector<std::shared_ptr<PerkImpl>> perks_;
-		std::shared_ptr<StyleImpl> style_;
-		std::vector<std::shared_ptr<SkillImpl>> skills_;
-		ERace race_;
-		uint_fast16_t ap_;
-	};
+    private:
+        std::string RaceToPerkQuery();
+
+    public:
+        std::shared_ptr<AttributesImpl> attributes_;
+        std::vector<std::shared_ptr<PerkImpl>> perks_;
+        std::shared_ptr<StyleImpl> style_;
+        std::vector<std::shared_ptr<SkillImpl>> skills_;
+        ERace race_;
+        uint_fast16_t ap_;
+    };
 } // namespace Dominion
 
 #endif // CHARACTER_IMPL_H

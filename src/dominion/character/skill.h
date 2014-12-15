@@ -48,6 +48,8 @@ namespace Dominion
         Skill(const std::shared_ptr<SkillImpl>& impl);
         ~Skill();
 
+        const std::string& name() const;
+
     private:
         std::shared_ptr<SkillImpl> impl_;
     };
