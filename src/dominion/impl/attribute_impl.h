@@ -29,28 +29,21 @@
 
 namespace Dominion
 {
-    class AttributesImpl
-    {
-    public:
-        AttributesImpl(const AttributeArray& a) :
-            attributes_(a)
-        {}
+	class AttributesImpl
+	{
+	public:
+		AttributesImpl(const AttributeArray& a) :
+			attributes_(a)
+		{}
 
-        AttributesImpl(const AttributesImpl&) = delete;
-        AttributesImpl& operator=(const AttributesImpl&) = delete;
-        AttributesImpl(AttributesImpl&&) = delete;
-        AttributesImpl& operator=(AttributesImpl&&) = delete;
+		AttributesImpl(const AttributesImpl&) = delete;
+		AttributesImpl& operator=(const AttributesImpl&) = delete;
+		AttributesImpl(AttributesImpl&&) = delete;
+		AttributesImpl& operator=(AttributesImpl&&) = delete;
 
-        const uint_fast8_t Agility() const { return attributes_[EAttribute::AttributeAgility]; }
-        const uint_fast8_t Intuition() const { return attributes_[EAttribute::AttributeIntuition]; }
-        const uint_fast8_t Intellect() const { return attributes_[EAttribute::AttributeIntellect]; }
-        const uint_fast8_t Luck() const { return attributes_[EAttribute::AttributeLuck]; }
-        const uint_fast8_t Stamina() const { return attributes_[EAttribute::AttributeStamina]; }
-        const uint_fast8_t Vigour() const { return attributes_[EAttribute::AttributeVigour]; }
-
-    private:
-        AttributeArray attributes_;
-    };
+	public:
+		AttributeArray attributes_;
+	};
 } // namespace Dominion
 
 #endif // ATTRIBUTE_IMPL_H

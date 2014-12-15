@@ -33,54 +33,57 @@
 
 namespace Tonkatsu
 {
-    void DominionLib::Initialise()
-    {
+	void DominionLib::Initialise()
+	{
 #if defined(_WIN32)
-        if (IsDebuggerPresent())
-            Dominion::Initialise("../../data/dominion");
+		if (IsDebuggerPresent())
+			Dominion::Initialise("../../data/dominion");
 #else
-        Dominion::Initialise("./data/dominion");
+		Dominion::Initialise("./data/dominion");
 #endif
 
-        db_ = Dominion::GetDatabase();
+		db_ = Dominion::GetDatabase();
 
-        // create character
-        auto dice = std::make_shared<Dominion::Dice>();
-        auto cTool = Dominion::GetCharacterCreationTool();
+		// create character
+		auto dice = std::make_shared<Dominion::Dice>();
+		auto cTool = Dominion::GetCharacterCreationTool();
 
-        auto styles = db_->GetStyles();
-        auto attributes = cTool->attributesBase();
-        auto apr = cTool->attributesRoll(dice);
+		auto styles = db_->GetStyles();
+		auto attributes = cTool->attributesBase();
+		auto apr = cTool->attributesRoll(dice);
 
-        for (int i = 0; i < std::get<0>(*apr); ++i)
-            attributes[i] += 1;
+		for (int i = 0; i < std::get<0>(*apr); ++i)
+			attributes[i % Dominion::AttributeCount] += 1;
 
-        cTool->attributes(attributes);
+		cTool->attributes(attributes);
 
-        for (auto style : styles)
-            LOGD << style->name();
+		for (auto style : styles)
+			LOGD << style->name();
 
-        cTool->race(Dominion::RaceHuman);
-        cTool->style(styles[0]);
-        cTool->perk(dice->Roll());
+		cTool->race(Dominion::RaceHuman);
+		cTool->style(styles[0]);
+		cTool->perk(dice->Roll());
 
-        if (cTool->Validate() == Dominion::CharacterValidationResult::Valid) {
-            auto npc = cTool->MakeCharacter();
+		if (cTool->Validate() == Dominion::CharacterValidationResult::Valid) {
+			auto npc = cTool->MakeCharacter();
 
-            // show result
-            LOGD << npc->race();
-            LOGD << npc->style()->name();
+			// show result
+			LOGD << npc->race();
+			LOGD << npc->style()->name();
 
-            auto perks = npc->perks();
+			auto perks = npc->perks();
 
-            for (auto perk : perks)
-                LOGD << perk->name();
+			for (auto perk : npc->perks())
+				LOGD << perk->name();
 
-            for (auto a : attributes)
-                LOGD << (int)a;
+			for (auto a : npc->attributes()->asArray())
+				LOGD << (int)a;
 
-            LOGD << "Attribute Points " << (int)std::get<0>(*apr);
-            LOGD << "Remainder " << (int)std::get<1>(*apr);
-        }
-    }
+			LOGD << "Attribute Points " << (int)std::get<0>(*apr);
+			LOGD << "Remainder " << (int)std::get<1>(*apr);
+
+			for (auto skill : npc->skills())
+				LOGD << skill;
+		}
+	}
 } // namespace Tonkatsu

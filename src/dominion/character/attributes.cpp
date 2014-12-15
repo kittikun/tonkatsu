@@ -27,10 +27,41 @@
 
 namespace Dominion
 {
-    Attributes::Attributes(const std::shared_ptr<AttributesImpl>& a) :
-        impl_(a)
-    {}
+	Attributes::Attributes(const std::shared_ptr<AttributesImpl>& a) :
+		impl_(a)
+	{}
 
-    Attributes::~Attributes()
-    {}
+	Attributes::~Attributes()
+	{}
+
+	const AttributeArray Attributes::asArray() const
+	{
+		return impl_->attributes_;
+	}
+
+	const uint_fast8_t Attributes::agility() const
+	{
+		return impl_->attributes_[EAttribute::AttributeAgility];
+	}
+
+	const uint_fast8_t Attributes::intuition() const
+	{
+		return impl_->attributes_[EAttribute::AttributeIntuition];
+	}
+
+	const uint_fast8_t Attributes::intellect() const {
+		return impl_->attributes_[EAttribute::AttributeIntellect];
+	}
+
+	const uint_fast8_t Attributes::luck() const {
+		return impl_->attributes_[EAttribute::AttributeLuck];
+	}
+
+	const uint_fast8_t Attributes::stamina() const {
+		return impl_->attributes_[EAttribute::AttributeStamina];
+	}
+
+	const uint_fast8_t Attributes::vigour() const {
+		return impl_->attributes_[EAttribute::AttributeVigour];
+	}
 } // namespace Dominion

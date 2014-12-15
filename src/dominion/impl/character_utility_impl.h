@@ -31,44 +31,46 @@
 
 namespace Dominion
 {
-    class Style;
-    class CharacterImpl;
-    class DatabaseImpl;
-    class PerkImpl;
-    class StyleImpl;
+	class AttributesImpl;
+	class Style;
+	class CharacterImpl;
+	class DatabaseImpl;
+	class PerkImpl;
+	class StyleImpl;
 
-    class CharacterUtilityImpl
-    {
-        CharacterUtilityImpl(const CharacterUtilityImpl&) = delete;
-        CharacterUtilityImpl& operator=(const CharacterUtilityImpl&) = delete;
-        CharacterUtilityImpl(CharacterUtilityImpl&&) = delete;
-        CharacterUtilityImpl& operator=(CharacterUtilityImpl&&) = delete;
+	class CharacterUtilityImpl
+	{
+		CharacterUtilityImpl(const CharacterUtilityImpl&) = delete;
+		CharacterUtilityImpl& operator=(const CharacterUtilityImpl&) = delete;
+		CharacterUtilityImpl(CharacterUtilityImpl&&) = delete;
+		CharacterUtilityImpl& operator=(CharacterUtilityImpl&&) = delete;
 
-    public:
-        CharacterUtilityImpl(std::shared_ptr<DatabaseImpl>);
-        ~CharacterUtilityImpl();
+	public:
+		CharacterUtilityImpl(std::shared_ptr<DatabaseImpl>);
+		~CharacterUtilityImpl();
 
-        std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice);
+		std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice);
 
-        void race(const ERace race);
-        void perk(uint_fast8_t roll);
+		void race(const ERace race);
+		void perk(uint_fast8_t roll);
 
-        std::shared_ptr<CharacterImpl> MakeCharacter() const;
-        CharacterValidationResult Validate() const;
+		std::shared_ptr<CharacterImpl> MakeCharacter() const;
+		CharacterValidationResult Validate() const;
 
-    private:
-        void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
-        void SetSkills(const std::shared_ptr<CharacterImpl>&) const;
-        std::string RaceToPerkQuery() const;
+	private:
+		void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
+		void SetSkills(const std::shared_ptr<CharacterImpl>&) const;
+		std::string RaceToSkillQuery() const;
+		std::string RaceToPerkQuery() const;
 
-    public:
-        AttributeArray attributes_;
-        std::shared_ptr<const AttributePointsRemainder> aPtRemain_;
-        std::shared_ptr<DatabaseImpl> db_;
-        ERace race_;
-        uint_fast8_t perkRoll_;
-        std::shared_ptr<StyleImpl> style_;
-    };
+	public:
+		AttributesImpl attributes_;
+		std::shared_ptr<const AttributePointsRemainder> aPtRemain_;
+		std::shared_ptr<DatabaseImpl> db_;
+		ERace race_;
+		uint_fast8_t perkRoll_;
+		std::shared_ptr<StyleImpl> style_;
+	};
 } // namespace Dominion
 
 #endif // CHARACTER_UTILITY_IMPL_H

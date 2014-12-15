@@ -26,28 +26,37 @@
 
 #include <memory>
 
+#include "../definitions.h"
 #include "../platform.h"
 
 namespace Dominion
 {
-    class AttributesImpl;
+	class AttributesImpl;
 
 #ifdef _WIN32
-    template class DOMINION_API std::shared_ptr < AttributesImpl > ;
+	template class DOMINION_API std::shared_ptr < AttributesImpl > ;
 #endif
 
-    class DOMINION_API Attributes
-    {
-    public:
-        Attributes(const std::shared_ptr<AttributesImpl>&);
-        ~Attributes();
+	class DOMINION_API Attributes
+	{
+	public:
+		Attributes(const std::shared_ptr<AttributesImpl>&);
+		~Attributes();
 
-        Attributes(const Attributes&) = delete;
-        Attributes& operator=(const Attributes&) = delete;
+		Attributes(const Attributes&) = delete;
+		Attributes& operator=(const Attributes&) = delete;
 
-    private:
-        std::shared_ptr<AttributesImpl> impl_;
-    };
+		const AttributeArray asArray() const;
+		const uint_fast8_t agility() const;
+		const uint_fast8_t intuition() const;
+		const uint_fast8_t intellect() const;
+		const uint_fast8_t luck() const;
+		const uint_fast8_t stamina() const;
+		const uint_fast8_t vigour() const;
+
+	private:
+		std::shared_ptr<AttributesImpl> impl_;
+	};
 }
 
 #endif

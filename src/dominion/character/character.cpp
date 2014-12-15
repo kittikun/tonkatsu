@@ -28,45 +28,59 @@
 
 #include "attributes.h"
 #include "perk.h"
+#include "skill.h"
 #include "style.h"
 #include "../impl/attribute_impl.h"
 #include "../impl/character_impl.h"
 #include "../impl/perk_impl.h"
+#include "../impl/skill_impl.h"
 #include "../impl/style_impl.h"
 
 namespace Dominion
 {
-    Character::Character(const std::shared_ptr<CharacterImpl>& impl) :
-        impl_(impl)
-    {}
+	Character::Character(const std::shared_ptr<CharacterImpl>& impl) :
+		impl_(impl)
+	{}
 
-    Character::~Character()
-    {}
+	Character::~Character()
+	{}
 
-    std::shared_ptr<Attributes> Character::attributes() const
-    {
-        return std::make_shared<Attributes>(impl_->attributes_);
-    }
+	std::shared_ptr<Attributes> Character::attributes() const
+	{
+		return std::make_shared<Attributes>(impl_->attributes_);
+	}
 
-    std::vector<std::shared_ptr<Perk>> Character::perks() const
-    {
-        std::vector<std::shared_ptr<Perk>> res;
+	std::vector<std::shared_ptr<Perk>> Character::perks() const
+	{
+		std::vector<std::shared_ptr<Perk>> res;
 
-        res.reserve(impl_->perks_.size());
+		res.reserve(impl_->perks_.size());
 
-        for (size_t i = 0; i < impl_->perks_.size(); ++i)
-            res.push_back(std::make_shared<Perk>(impl_->perks_[i]));
+		for (auto perk : impl_->perks_)
+			res.push_back(std::make_shared<Perk>(perk));
 
-        return res;
-    }
+		return res;
+	}
 
-    const ERace Character::race() const
-    {
-        return impl_->race_;
-    }
+	const ERace Character::race() const
+	{
+		return impl_->race_;
+	}
 
-    std::shared_ptr<Style> Character::style() const
-    {
-        return std::make_shared<Style>(impl_->style_);
-    }
+	std::vector<std::shared_ptr<Skill>> Character::skills() const
+	{
+		std::vector<std::shared_ptr<Skill>> res;
+
+		res.reserve(impl_->skills_.size());
+
+		for (auto skill : impl_->skills_)
+			res.push_back(std::make_shared<Skill>(skill));
+
+		return res;
+	}
+
+	std::shared_ptr<Style> Character::style() const
+	{
+		return std::make_shared<Style>(impl_->style_);
+	}
 } // namespace Dominion

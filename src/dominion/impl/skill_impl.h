@@ -31,29 +31,29 @@
 
 namespace Dominion
 {
-    class SkillImpl : public Data
-    {
-        SkillImpl(const SkillImpl&) = delete;
-        SkillImpl& operator=(const SkillImpl&) = delete;
-        SkillImpl(SkillImpl&&) = delete;
-        SkillImpl& operator=(SkillImpl&&) = delete;
+	class SkillImpl : public Data
+	{
+		SkillImpl(const SkillImpl&) = delete;
+		SkillImpl& operator=(const SkillImpl&) = delete;
+		SkillImpl(SkillImpl&&) = delete;
+		SkillImpl& operator=(SkillImpl&&) = delete;
 
-    public:
-        SkillImpl(const uint_fast32_t id);
+	public:
+		SkillImpl(const uint_fast32_t id);
 
-        static int LoadFromDB(void*, int, char**, char**);
+		static int LoadFromDB(void*, int, char**, char**);
 
-        uint_fast32_t CostToRaise(uint_fast8_t toLevel);
+		uint_fast32_t CostToRaise(uint_fast8_t toLevel);
 
-    public:
-        // Main attribute governing the skill
-        ESkillDependency dependency_;
-        uint_fast8_t level_;
-        std::string name_;
-        ESkillType type_;
-        int32_t target_;
-        std::bitset<ERace::RaceCount> usableRace_;
-    };
+	public:
+		// Main attribute governing the skill
+		ESkillDependency dependency_;
+		uint_fast8_t level_;
+		std::string name_;
+		ESkillType type_;
+		int32_t target_;
+		std::bitset<ERace::RaceCount> usableRace_;
+	};
 } // namespace Dominion
 
 #endif // SKILL_IMPL_H
