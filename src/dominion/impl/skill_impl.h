@@ -24,36 +24,30 @@
 #ifndef SKILL_IMPL_H
 #define SKILL_IMPL_H
 
-#include <bitset>
-
-#include "data.h"
-#include "../definitions.h"
+#include <memory>
 
 namespace Dominion
 {
-	class SkillImpl : public Data
-	{
-		SkillImpl(const SkillImpl&) = delete;
-		SkillImpl& operator=(const SkillImpl&) = delete;
-		SkillImpl(SkillImpl&&) = delete;
-		SkillImpl& operator=(SkillImpl&&) = delete;
+    class SkillTemplate;
 
-	public:
-		SkillImpl(const uint_fast32_t id);
+    class SkillImpl
+    {
+        SkillImpl(const SkillImpl&) = delete;
+        SkillImpl& operator=(const SkillImpl&) = delete;
+        SkillImpl(SkillImpl&&) = delete;
+        SkillImpl& operator=(SkillImpl&&) = delete;
 
-		static int LoadFromDB(void*, int, char**, char**);
+    public:
+        SkillImpl(const uint_fast32_t id);
 
-		uint_fast32_t CostToRaise(uint_fast8_t toLevel);
+        const std::string& name() const;
 
-	public:
-		// Main attribute governing the skill
-		ESkillDependency dependency_;
-		uint_fast8_t level_;
-		std::string name_;
-		ESkillType type_;
-		int32_t target_;
-		std::bitset<ERace::RaceCount> usableRace_;
-	};
+        uint_fast32_t CostToRaise(uint_fast8_t toLevel);
+
+    public:
+        std::shared_ptr<SkillTemplate> template_;
+        uint_fast8_t level;
+    };
 } // namespace Dominion
 
 #endif // SKILL_IMPL_H

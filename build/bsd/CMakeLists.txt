@@ -40,6 +40,7 @@ if (Boost_FOUND AND SQLITE3_FOUND)
                     ${DOMINION_PATH}/impl/dice_impl.cpp
                     ${DOMINION_PATH}/impl/perk_impl.cpp
                     ${DOMINION_PATH}/impl/skill_impl.cpp
+                    ${DOMINION_PATH}/impl/skill_template.cpp
                     ${DOMINION_PATH}/impl/style_impl.cpp)
   add_library(dominion SHARED ${DOMINION_SRC})
 

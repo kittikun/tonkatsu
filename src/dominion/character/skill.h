@@ -45,7 +45,7 @@ namespace Dominion
         Skill& operator=(const Skill&) = delete;
 
     public:
-        Skill(const std::shared_ptr<SkillImpl>& impl);
+        Skill(const std::tuple<std::shared_ptr<SkillImpl>, uint_fast8_t>&);
         ~Skill();
 
         const std::string& name() const;

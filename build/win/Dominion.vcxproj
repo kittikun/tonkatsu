@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\src\dominion\impl\dice_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\perk_impl.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\skill_impl.cpp" />
+    <ClCompile Include="..\..\src\dominion\impl\skill_template.cpp" />
     <ClCompile Include="..\..\src\dominion\impl\style_impl.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,7 @@
     <ClInclude Include="..\..\src\dominion\impl\dice_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\perk_impl.h" />
     <ClInclude Include="..\..\src\dominion\impl\skill_impl.h" />
+    <ClInclude Include="..\..\src\dominion\impl\skill_template.h" />
     <ClInclude Include="..\..\src\dominion\impl\style_impl.h" />
     <ClInclude Include="..\..\src\dominion\platform.h" />
   </ItemGroup>

@@ -27,7 +27,7 @@
 
 namespace Dominion
 {
-    Skill::Skill(const std::shared_ptr<SkillImpl>& impl) :
+    Skill::Skill(const std::tuple<std::shared_ptr<SkillImpl>, uint_fast8_t>& impl) :
         impl_(impl)
     {}
 
@@ -36,6 +36,6 @@ namespace Dominion
 
     const std::string& Skill::name() const
     {
-        return impl_->name_;
+        return std::get<0>(impl_)->name_;
     }
 } // namespace Dominion

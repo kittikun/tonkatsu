@@ -21,45 +21,36 @@
 // This work is compatible with the Dominion Rules role-playing system.To learn more about
 // Dominion Rules, visit the Dominion Rules web site at <http://www.dominionrules.org>
 
-#ifndef CHARACTER_IMPL_H
-#define CHARACTER_IMPL_H
+#ifndef SKILL_TEMPLATE_H
+#define SKILL_TEMPLATE_H
 
-#include <memory>
-#include <vector>
+#include <bitset>
 
 #include "data.h"
 #include "../definitions.h"
 
 namespace Dominion
 {
-    class AttributesImpl;
-    class PerkImpl;
-    class SkillImpl;
-    class StyleImpl;
-
-    class CharacterImpl : public Data
+    class SkillTemplate : public Data
     {
-        CharacterImpl(const CharacterImpl&) = delete;
-        CharacterImpl& operator=(const CharacterImpl&) = delete;
-        CharacterImpl(CharacterImpl&&) = delete;
-        CharacterImpl& operator=(CharacterImpl&&) = delete;
+        SkillTemplate(const SkillTemplate&) = delete;
+        SkillTemplate& operator=(const SkillTemplate&) = delete;
+        SkillTemplate(SkillTemplate&&) = delete;
+        SkillTemplate& operator=(SkillTemplate&&) = delete;
 
     public:
-        CharacterImpl(const uint_fast32_t id);
+        SkillTemplate(const uint_fast32_t id);
 
-        const bool hasFavourableRounding() const;
-
-    private:
-        std::string RaceToPerkQuery();
+        static int LoadFromDB(void*, int, char**, char**);
 
     public:
-        std::shared_ptr<AttributesImpl> attributes_;
-        std::vector<std::shared_ptr<PerkImpl>> perks_;
-        std::shared_ptr<StyleImpl> style_;
-        std::vector<std::tuple<std::shared_ptr<SkillImpl>, uint_fast8_t>> skills_;
-        ERace race_;
-        uint_fast16_t ap_;
+        // Main attribute governing the skill
+        ESkillDependency dependency_;
+        std::string name_;
+        ESkillType type_;
+        int32_t target_;
+        std::bitset<ERace::RaceCount> usableRace_;
     };
 } // namespace Dominion
 
-#endif // CHARACTER_IMPL_H
+#endif // SKILL_TEMPLATE_H

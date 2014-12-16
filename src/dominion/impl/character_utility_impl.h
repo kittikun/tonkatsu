@@ -60,6 +60,7 @@ namespace Dominion
     private:
         void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
         void SetSkills(const std::shared_ptr<CharacterImpl>&) const;
+        void SetCombatComposite(const std::shared_ptr<CharacterImpl>&) const;
         std::string GetSkillQuery(const std::shared_ptr<CharacterImpl>&) const;
         std::string RaceToSkillQuery() const;
         std::string RaceToPerkQuery() const;

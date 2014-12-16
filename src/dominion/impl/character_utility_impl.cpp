@@ -107,6 +107,23 @@ namespace Dominion
         return std::shared_ptr<CharacterImpl>();
     }
 
+    void CharacterUtilityImpl::SetCombatComposite(const std::shared_ptr<CharacterImpl>& character) const
+    {
+        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+        // For the Combat Composite, take your Vigour and Agility stats
+        float composite = (character->attributes_->array_[AttributeAgility] + character->attributes_->array_[AttributeVigour]) / 2.f;
+
+        if (character->hasFavourableRounding())
+            composite = ceil(composite);
+        else
+            composite = floor(composite);
+
+        for (auto skill : character->skills_) {
+            if ((skill->dependency_ == ESkillType::Usable_Combat) || (skill->dependency_ == ESkillType::Usable_Defensive))
+                skill->level_ = composite;
+        }
+    }
+
     void CharacterUtilityImpl::SetPerks(const std::shared_ptr<CharacterImpl>& character) const
     {
         boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)perkRoll_;
@@ -126,21 +143,15 @@ namespace Dominion
 
     void CharacterUtilityImpl::SetSkills(const std::shared_ptr<CharacterImpl>& character) const
     {
-        character->skills_.swap(db_->GetList<SkillImpl>(GetSkillQuery(character)));
+        auto skills = db_->GetList<SkillImpl>(GetSkillQuery(character));
+        character->skills_.swap(skills);
 
-        // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-        // For the Combat Composite, take your Vigour and Agility stats
-        float composite = (character->attributes_->array_[AttributeAgility] + character->attributes_->array_[AttributeVigour]) / 2.f;
-
-        if (character->hasFavourableRounding())
-            composite = ceil(composite);
-        else
-            composite = floor(composite);
+        SetCombatComposite(character);
 
         if (character->style_->archetypes_[ArchetypePriest]) {
             // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
             // For the Priestcraft Composite, take your Stamina and Intuition stats
-            composite = (character->attributes_->array_[AttributeStamina] + character->attributes_->array_[AttributeIntuition]) / 2.f;
+            float composite = (character->attributes_->array_[AttributeStamina] + character->attributes_->array_[AttributeIntuition]) / 2.f;
 
             if (character->hasFavourableRounding())
                 composite = ceil(composite);
@@ -151,7 +162,7 @@ namespace Dominion
         if (character->style_->archetypes_[ArchetypeWitch]) {
             // (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
             // For the Witchcraft Composite, take your Intellect and Luck stats
-            composite = (character->attributes_->array_[AttributeIntellect] + character->attributes_->array_[AttributeLuck]) / 2.f;
+            float composite = (character->attributes_->array_[AttributeIntellect] + character->attributes_->array_[AttributeLuck]) / 2.f;
 
             if (character->hasFavourableRounding())
                 composite = ceil(composite);

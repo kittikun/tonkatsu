@@ -16,6 +16,7 @@
 #include "dominion.h"
 
 #include <memory>
+#include <boost/format.hpp>
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -92,8 +93,10 @@ namespace Tonkatsu
             LOGD << "Attribute Points " << (int)std::get<0>(*apr);
             LOGD << "Remainder " << (int)std::get<1>(*apr);
 
-            for (auto skill : npc->skills())
-                LOGD << skill->name();
+            for (auto skill : npc->skills()) {
+                boost::format fmt("%1% %2%") % skill->name() % skill->level();
+                LOGD << boost::str(fmt);
+            }
         }
     }
 } // namespace Tonkatsu
