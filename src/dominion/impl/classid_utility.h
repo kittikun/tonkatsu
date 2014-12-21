@@ -38,71 +38,67 @@
 
 namespace Dominion
 {
-    template <typename T>
-    class NextID
-    {
-    public:
-        static void set_next(uint_fast32_t value)
-        {
-            if (value > next_)
-                next_ = value;
-        }
+	template <typename T>
+	class NextID
+	{
+	public:
+		static void set_next(uint_fast32_t value)
+		{
+			if (value > next_)
+				next_ = value;
+		}
 
-        static uint_fast32_t next()
-        {
-            ++next_;
-            return next_;
-        }
+		static uint_fast32_t next()
+		{
+			++next_;
+			return next_;
+		}
 
-    private:
-        static uint_fast32_t next_;
-    };
+	private:
+		static uint_fast32_t next_;
+	};
 
-    template <typename T>
-    struct ClassIDUtility
-    {};
+	template <typename T>
+	struct ClassIDUtility
+	{};
 
-    template <>
-    class ClassIDUtility<CharacterImpl> : public NextID < CharacterImpl >
-    {
-    public:
-        typedef CharacterImpl ImplType;
-        typedef Character Type;
-        static int ClassIDFromType() { return ClassID_Character; }
-        static std::string SQLColumnName() { return std::string("character"); }
-    };
+	template <>
+	class ClassIDUtility<CharacterImpl> : public NextID < CharacterImpl >
+	{
+	public:
+		typedef CharacterImpl ImplType;
+		static int ClassIDFromType() { return ClassID_Character; }
+		static std::string SQLColumnName() { return std::string("character"); }
+	};
 
-    template <>
-    struct ClassIDUtility<PerkImpl> : public NextID < PerkImpl >
-    {
-    public:
-        typedef PerkImpl ImplType;
-        typedef Perk Type;
-        static int ClassIDFromType() { return ClassID_Perk; }
-        static std::string SQLColumnName() { return std::string("perk"); }
-    };
+	template <>
+	struct ClassIDUtility<PerkImpl> : public NextID < PerkImpl >
+	{
+	public:
+		typedef PerkImpl ImplType;
+		static int ClassIDFromType() { return ClassID_Perk; }
+		static std::string SQLColumnName() { return std::string("perk"); }
+	};
 
-    template <>
-    struct ClassIDUtility<SkillImpl> : public NextID < SkillImpl >
-    {
-    public:
-        typedef SkillImpl ImplType;
-        typedef Skill Type;
-        static int ClassIDFromType() { return ClassID_Skill; }
-        static std::string SQLColumnName() { return std::string("skill"); }
-    };
+	template <>
+	struct ClassIDUtility<SkillTemplate> : public NextID < SkillTemplate >
+	{
+	public:
+		typedef SkillTemplate ImplType;
+		static int ClassIDFromType() { return ClassID_Skill_Template; }
+		static std::string SQLColumnName() { return std::string("skill"); }
+	};
 
-    template <>
-    struct ClassIDUtility<StyleImpl> : public NextID < StyleImpl >
-    {
-    public:
-        typedef StyleImpl ImplType;
-        typedef Style Type;
-        static int ClassIDFromType() { return ClassID_Style; }
-        static std::string SQLColumnName() { return std::string("style"); }
-    };
+	template <>
+	struct ClassIDUtility<StyleImpl> : public NextID < StyleImpl >
+	{
+	public:
+		typedef StyleImpl ImplType;
+		static int ClassIDFromType() { return ClassID_Style; }
+		static std::string SQLColumnName() { return std::string("style"); }
+	};
 
-    template<typename T> uint_fast32_t NextID<T>::next_;
+	template<typename T> uint_fast32_t NextID<T>::next_;
 } // namespace Dominion
 
 #endif // CLASS_ID_UTILITY_H

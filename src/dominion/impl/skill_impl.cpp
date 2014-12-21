@@ -24,27 +24,33 @@
 #include "skill_impl.h"
 #include "skill_template.h"
 
-const std::string& SkillTemplate::name() const
+namespace Dominion
 {
-    return template_.name_;
-}
+	SkillImpl::SkillImpl(const std::shared_ptr<SkillTemplate>& tplt) :
+		template_(tplt),
+		level_(0)
+	{
+	}
 
-int_fast32_t SkillTemplate::CostToRaise(uint_fast8_t toLevel)
-{
-    // Triangular numbers: a(n) = C(n+1,2) = n(n+1)/2 = 0+1+2+...+n.
-    // https://oeis.org/A000217
-    static std::array<uint_fast32_t, 54> costPerLevel = {
-        0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105,
-        120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325, 351,
-        378, 406, 435, 465, 496, 528, 561, 595, 630, 666, 703, 741,
-        780, 820, 861, 903, 946, 990, 1035, 1081, 1128, 1176, 1225,
-        1275, 1326, 1378, 1431};
+	const std::string& SkillImpl::name() const
+	{
+		return template_->name_;
+	}
 
-    if (toLevel >= costPerLevel.size())
-        throw std::out_of_range("Requested level is too high");
+	const uint_fast16_t SkillImpl::CostToRaise() const
+	{
+		// Triangular numbers: a(n) = C(n+1,2) = n(n+1)/2 = 0+1+2+...+n.
+		// https://oeis.org/A000217
+		static std::array<uint_fast16_t, 54> costPerLevel = {
+			0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105,
+			120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325, 351,
+			378, 406, 435, 465, 496, 528, 561, 595, 630, 666, 703, 741,
+			780, 820, 861, 903, 946, 990, 1035, 1081, 1128, 1176, 1225,
+			1275, 1326, 1378, 1431 };
 
-    uint_fast32_t current = costPerLevel[level_];
-    uint_fast32_t wanted = costPerLevel[level_];
+		if (level_ + 1 >= costPerLevel.size())
+			throw std::out_of_range("Requested level is too high");
 
-    return wanted - current;
-}
+		return costPerLevel[level_ + 1] - costPerLevel[level_];
+	}
+} // namespace Dominion

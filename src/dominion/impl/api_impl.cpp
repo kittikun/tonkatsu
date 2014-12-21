@@ -29,51 +29,52 @@
 #include "character_utility_impl.h"
 #include "database_impl.h"
 #include "perk_impl.h"
-#include "skill_impl.h"
+#include "skill_template.h"
 #include "style_impl.h"
 #include "../database.h"
 #include "../character/character_utility.h"
 
 namespace Dominion
 {
-    ApiImpl::ApiImpl() :
-        db_{std::make_shared<DatabaseImpl>()}
-    {}
+	ApiImpl::ApiImpl() :
+		db_{ std::make_shared<DatabaseImpl>() }
+	{}
 
-    std::shared_ptr<DataBase> ApiImpl::database() const
-    {
-        return std::make_shared<DataBase>(db_);
-    }
+	std::shared_ptr<DataBase> ApiImpl::database() const
+	{
+		return std::make_shared<DataBase>(db_);
+	}
 
-    ApiImpl& ApiImpl::instance()
-    {
-        static ApiImpl instance;
+	ApiImpl& ApiImpl::instance()
+	{
+		static ApiImpl instance;
 
-        return instance;
-    }
+		return instance;
+	}
 
-    void ApiImpl::LoadDatabase(const std::string& dataPath)
-    {
-        boost::filesystem::path path(dataPath);
-        boost::filesystem::path file("dominion.db");
-        boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
+	void ApiImpl::LoadDatabase(const std::string& dataPath)
+	{
+		boost::filesystem::path path(dataPath);
+		boost::filesystem::path file("dominion.db");
+		boost::filesystem::path canonical = boost::filesystem::canonical(dataPath / file);
 
-        canonical = canonical.make_preferred();
+		canonical = canonical.make_preferred();
 
-        if (boost::filesystem::exists(canonical)) {
-            db_->ConnectDatabase(canonical);
+		if (boost::filesystem::exists(canonical)) {
+			db_->ConnectDatabase(canonical);
 
-            // create data structure from db_ info
-            db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
-            db_->ExecuteQuery("select * from skill", SkillImpl::LoadFromDB);
-            db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
-        } else {
-            throw std::invalid_argument("Invalid path to database");
-        }
-    }
+			// create data structure from db_ info
+			db_->ExecuteQuery("select * from perk", PerkImpl::LoadFromDB);
+			db_->ExecuteQuery("select * from skill", SkillTemplate::LoadFromDB);
+			db_->ExecuteQuery("select * from style", StyleImpl::LoadFromDB);
+		}
+		else {
+			throw std::invalid_argument("Invalid path to database");
+		}
+	}
 
-    std::unique_ptr<CharacterUtilityImpl> ApiImpl::MakeCharacterTool() const
-    {
-        return std::unique_ptr<CharacterUtilityImpl>(new CharacterUtilityImpl{db_});
-    }
+	std::unique_ptr<CharacterUtilityImpl> ApiImpl::MakeCharacterTool() const
+	{
+		return std::unique_ptr<CharacterUtilityImpl>(new CharacterUtilityImpl{ db_ });
+	}
 } // namespace Dominion

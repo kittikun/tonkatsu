@@ -25,29 +25,30 @@
 #define SKILL_IMPL_H
 
 #include <memory>
+#include <string>
 
 namespace Dominion
 {
-    class SkillTemplate;
+	class SkillTemplate;
 
-    class SkillImpl
-    {
-        SkillImpl(const SkillImpl&) = delete;
-        SkillImpl& operator=(const SkillImpl&) = delete;
-        SkillImpl(SkillImpl&&) = delete;
-        SkillImpl& operator=(SkillImpl&&) = delete;
+	class SkillImpl
+	{
+		SkillImpl(const SkillImpl&) = delete;
+		SkillImpl& operator=(const SkillImpl&) = delete;
+		SkillImpl(SkillImpl&&) = delete;
+		SkillImpl& operator=(SkillImpl&&) = delete;
 
-    public:
-        SkillImpl(const uint_fast32_t id);
+	public:
+		SkillImpl(const std::shared_ptr<SkillTemplate>&);
 
-        const std::string& name() const;
+		const std::string& name() const;
 
-        uint_fast32_t CostToRaise(uint_fast8_t toLevel);
+		const uint_fast16_t CostToRaise() const;
 
-    public:
-        std::shared_ptr<SkillTemplate> template_;
-        uint_fast8_t level;
-    };
+	public:
+		std::shared_ptr<SkillTemplate> template_;
+		uint_fast8_t level_;
+	};
 } // namespace Dominion
 
 #endif // SKILL_IMPL_H

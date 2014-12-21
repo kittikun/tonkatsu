@@ -24,18 +24,24 @@
 #include "skill.h"
 
 #include "../impl/skill_impl.h"
+#include "../impl/skill_template.h"
 
 namespace Dominion
 {
-    Skill::Skill(const std::tuple<std::shared_ptr<SkillImpl>, uint_fast8_t>& impl) :
-        impl_(impl)
-    {}
+	Skill::Skill(const std::shared_ptr<SkillImpl>& impl) :
+		impl_(impl)
+	{}
 
-    Skill::~Skill()
-    {}
+	Skill::~Skill()
+	{}
 
-    const std::string& Skill::name() const
-    {
-        return std::get<0>(impl_)->name_;
-    }
+	const std::string& Skill::name() const
+	{
+		return impl_->template_->name_;
+	}
+
+	const uint_fast8_t Skill::level() const
+	{
+		return impl_->level_;
+	}
 } // namespace Dominion

@@ -28,22 +28,22 @@
 
 namespace Dominion
 {
-    CharacterImpl::CharacterImpl(const uint_fast32_t id) :
-        Data{id},
-        race_{RaceCount},
-        // (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
-        // All starting characters are given 45 Advancement
-        // Points(APs) to spend as you see fit.Some characters
-        // start with more that 45 APs.
-        ap_{45}
-    {}
+	CharacterImpl::CharacterImpl(const uint_fast32_t id) :
+		Data{ id },
+		race_{ RaceCount },
+		// (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
+		// All starting characters are given 45 Advancement
+		// Points(APs) to spend as you see fit.Some characters
+		// start with more that 45 APs.
+		ap_{ 45 }
+	{}
 
-    const bool CharacterImpl::hasFavourableRounding() const
-    {
-        // intentionally left Favourable Rounding perk as first item so we can quickly check
-        if (perks_[0]->roll_ == 1)
-            return true;
+	const bool CharacterImpl::hasFavourableRounding() const
+	{
+		// intentionally left Favorable Rounding perk as first item so we can quickly check
+		if (perks_[0]->roll_ == 1)
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 } // namespace Dominion
