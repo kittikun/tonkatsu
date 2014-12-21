@@ -45,6 +45,11 @@ namespace Dominion
 	Character::~Character()
 	{}
 
+	const uint_fast16_t Character::ap() const
+	{
+		return impl_->ap_;
+	}
+
 	std::shared_ptr<Attributes> Character::attributes() const
 	{
 		return std::make_shared<Attributes>(impl_->attributes_);

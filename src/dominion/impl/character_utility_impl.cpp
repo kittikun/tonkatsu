@@ -103,16 +103,39 @@ namespace Dominion
 			SetPerks(character);
 			SetSkills(character);
 
+			// (DR3.1.1 p31, 4-7 STEP FIVE: DETERMINE YOUR ADVANCEMENT POINTS)
+			// If you had a remainder when you determined your Attribute stats, that remainder is converted into an
+			// equivalent number of starting Advancement Points	(APs)
+			character->ap_ = 45 + std::get<1>(*aPtRemain_);
+
 			return character;
 		}
 
 		return std::shared_ptr<CharacterImpl>();
 	}
 
-	void CharacterUtilityImpl::SetCombatComposite(const std::shared_ptr<CharacterImpl>& character) const
+	void CharacterUtilityImpl::SetAttributesSkills(const std::shared_ptr<CharacterImpl>& character) const
+	{
+		for (auto skill : character->skills_) {
+			if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeAgility))
+				skill->level_ = character->attributes_->array_[AttributeAgility];
+			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeIntellect))
+				skill->level_ = character->attributes_->array_[AttributeIntellect];
+			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeIntuition))
+				skill->level_ = character->attributes_->array_[AttributeIntuition];
+			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeLuck))
+				skill->level_ = character->attributes_->array_[AttributeLuck];
+			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeStamina))
+				skill->level_ = character->attributes_->array_[AttributeStamina];
+			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeVigour))
+				skill->level_ = character->attributes_->array_[AttributeVigour];
+		}
+	}
+
+	void CharacterUtilityImpl::SetCombatSkills(const std::shared_ptr<CharacterImpl>& character) const
 	{
 		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-		// For the Combat Composite, take your Vigour and Agility stats
+		// For the Combat Composite, take your Vigor and Agility stats
 		float composite = (character->attributes_->array_[AttributeAgility] + character->attributes_->array_[AttributeVigour]) / 2.f;
 
 		if (character->hasFavourableRounding())
@@ -142,6 +165,23 @@ namespace Dominion
 		character->perks_.push_back(db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(query)));
 	}
 
+	void CharacterUtilityImpl::SetPriestcraftSkills(const std::shared_ptr<CharacterImpl>& character) const
+	{
+		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+		// For the Priest-craft Composite, take your Stamina and Intuition stats
+		float composite = (character->attributes_->array_[AttributeStamina] + character->attributes_->array_[AttributeIntuition]) / 2.f;
+
+		if (character->hasFavourableRounding())
+			composite = ceil(composite);
+		else
+			composite = floor(composite);
+
+		for (auto skill : character->skills_) {
+			if ((skill->template_->type_ == ESkillType::Priestcraft))
+				skill->level_ = static_cast<int_fast8_t>(composite);
+		}
+	}
+
 	void CharacterUtilityImpl::SetSkills(const std::shared_ptr<CharacterImpl>& character) const
 	{
 		auto templates = db_->GetList<SkillTemplate>(GetSkillQuery(character));
@@ -152,28 +192,32 @@ namespace Dominion
 			character->skills_.push_back(std::make_shared<SkillImpl>(tplt));
 		}
 
-		SetCombatComposite(character);
+		SetAttributesSkills(character);
+		SetCombatSkills(character);
 
 		if (character->style_->archetypes_[ArchetypePriest]) {
-			// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-			// For the Priestcraft Composite, take your Stamina and Intuition stats
-			float composite = (character->attributes_->array_[AttributeStamina] + character->attributes_->array_[AttributeIntuition]) / 2.f;
-
-			if (character->hasFavourableRounding())
-				composite = ceil(composite);
-			else
-				composite = floor(composite);
+			SetPriestcraftSkills(character);
 		}
 
 		if (character->style_->archetypes_[ArchetypeWitch]) {
-			// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-			// For the Witchcraft Composite, take your Intellect and Luck stats
-			float composite = (character->attributes_->array_[AttributeIntellect] + character->attributes_->array_[AttributeLuck]) / 2.f;
+			SetWitchcraftSkills(character);
+		}
+	}
 
-			if (character->hasFavourableRounding())
-				composite = ceil(composite);
-			else
-				composite = floor(composite);
+	void CharacterUtilityImpl::SetWitchcraftSkills(const std::shared_ptr<CharacterImpl>& character) const
+	{
+		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+		// For the Witchcraft Composite, take your Intellect and Luck stats
+		float composite = (character->attributes_->array_[AttributeIntellect] + character->attributes_->array_[AttributeLuck]) / 2.f;
+
+		if (character->hasFavourableRounding())
+			composite = ceil(composite);
+		else
+			composite = floor(composite);
+
+		for (auto skill : character->skills_) {
+			if ((skill->template_->type_ == ESkillType::Witchcraft))
+				skill->level_ = static_cast<int_fast8_t>(composite);
 		}
 	}
 

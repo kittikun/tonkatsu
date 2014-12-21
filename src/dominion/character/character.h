@@ -54,6 +54,8 @@ namespace Dominion
 		Character(const std::shared_ptr<CharacterImpl>&);
 		~Character();
 
+		const uint_fast16_t ap() const;
+
 		std::shared_ptr<Attributes> attributes() const;
 
 		// (DR3.1.1 p26, 4-2 STEP ONE: THINK ABOUT YOUR CHARACTER)

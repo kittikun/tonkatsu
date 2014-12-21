@@ -93,6 +93,8 @@ namespace Tonkatsu
 				boost::format fmt = boost::format("%1% %2%") % skill->name() % (int)skill->level();
 				LOGD << boost::str(fmt);
 			}
+
+			LOGD << "Advancement Points " << npc->ap();
 		}
 	}
 } // namespace Tonkatsu
