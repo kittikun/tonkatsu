@@ -49,13 +49,14 @@ namespace Dominion
 		CharacterUtilityImpl(std::shared_ptr<DatabaseImpl>);
 		~CharacterUtilityImpl();
 
+		AttributeArray attributesBase() const;
 		std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice);
 
 		void race(const ERace race);
 		void perk(uint_fast8_t roll);
 
 		std::shared_ptr<CharacterImpl> MakeCharacter() const;
-		CharacterValidationResult Validate() const;
+		ECharacterValidationResult Validate() const;
 
 	private:
 		void SetPerks(const std::shared_ptr<CharacterImpl>&) const;

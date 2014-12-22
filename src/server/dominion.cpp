@@ -67,7 +67,7 @@ namespace Tonkatsu
 		cTool->style(styles[0]);
 		cTool->perk(dice->Roll());
 
-		if (cTool->Validate() == Dominion::CharacterValidationResult::Valid) {
+		if (cTool->Validate() == Dominion::ECharacterValidationResult::Valid) {
 			auto npc = cTool->MakeCharacter();
 
 			// show result

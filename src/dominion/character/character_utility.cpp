@@ -32,54 +32,50 @@
 
 namespace Dominion
 {
-    CharacterUtility::CharacterUtility(std::unique_ptr<CharacterUtilityImpl> impl) :
-        impl_{std::move(impl)}
-    {}
+	CharacterUtility::CharacterUtility(std::unique_ptr<CharacterUtilityImpl> impl) :
+		impl_{ std::move(impl) }
+	{}
 
-    CharacterUtility::~CharacterUtility()
-    {}
+	CharacterUtility::~CharacterUtility()
+	{}
 
-    void CharacterUtility::attributes(const AttributeArray& attributes)
-    {
-        impl_->attributes_ = std::make_shared<AttributesImpl>(attributes);
-    }
+	void CharacterUtility::attributes(const AttributeArray& attributes)
+	{
+		impl_->attributes_ = std::make_shared<AttributesImpl>(attributes);
+	}
 
-    AttributeArray CharacterUtility::attributesBase() const
-    {
-        AttributeArray attributes;
+	AttributeArray CharacterUtility::attributesBase() const
+	{
+		return impl_->attributesBase();
+	}
 
-        attributes.fill(1);
+	std::shared_ptr<const AttributePointsRemainder> CharacterUtility::attributesRoll(const std::shared_ptr<Dice>& dice) const
+	{
+		return impl_->attributesRoll(dice);
+	}
 
-        return attributes;
-    }
+	void CharacterUtility::race(const ERace race)
+	{
+		impl_->race_ = race;
+	}
 
-    std::shared_ptr<const AttributePointsRemainder> CharacterUtility::attributesRoll(const std::shared_ptr<Dice>& dice) const
-    {
-        return impl_->attributesRoll(dice);
-    }
+	void CharacterUtility::perk(uint_fast8_t roll)
+	{
+		impl_->perkRoll_ = roll;
+	}
 
-    void CharacterUtility::race(const ERace race)
-    {
-        impl_->race_ = race;
-    }
+	void CharacterUtility::style(const std::shared_ptr<Style>& style)
+	{
+		impl_->style_ = style->impl_;
+	}
 
-    void CharacterUtility::perk(uint_fast8_t roll)
-    {
-        impl_->perkRoll_ = roll;
-    }
+	std::shared_ptr<Character> CharacterUtility::MakeCharacter() const
+	{
+		return std::make_shared<Character>(impl_->MakeCharacter());
+	}
 
-    void CharacterUtility::style(const std::shared_ptr<Style>& style)
-    {
-        impl_->style_ = style->impl_;
-    }
-
-    std::shared_ptr<Character> CharacterUtility::MakeCharacter() const
-    {
-        return std::make_shared<Character>(impl_->MakeCharacter());
-    }
-
-    CharacterValidationResult CharacterUtility::Validate() const
-    {
-        return impl_->Validate();
-    }
+	ECharacterValidationResult CharacterUtility::Validate() const
+	{
+		return impl_->Validate();
+	}
 } // namespace Dominion

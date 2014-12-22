@@ -3,7 +3,7 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+// to use, copy, modify, merge, publish, distribute, sub-license, and / or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions :
 //
@@ -45,6 +45,15 @@ namespace Dominion
 
 	CharacterUtilityImpl::~CharacterUtilityImpl()
 	{}
+
+	AttributeArray CharacterUtilityImpl::attributesBase() const
+	{
+		AttributeArray attributes;
+
+		attributes.fill(1);
+
+		return attributes;
+	}
 
 	std::shared_ptr<const AttributePointsRemainder> CharacterUtilityImpl::attributesRoll(const std::shared_ptr<Dice>& dice)
 	{
@@ -93,7 +102,7 @@ namespace Dominion
 
 	std::shared_ptr<CharacterImpl> CharacterUtilityImpl::MakeCharacter() const
 	{
-		if (Validate() == CharacterValidationResult::Valid) {
+		if (Validate() == ECharacterValidationResult::Valid) {
 			uint_fast32_t id = ClassIDUtility<CharacterImpl>::next();
 			std::shared_ptr<CharacterImpl> character = std::make_shared<CharacterImpl>(id);
 
@@ -177,7 +186,7 @@ namespace Dominion
 			composite = floor(composite);
 
 		for (auto skill : character->skills_) {
-			if ((skill->template_->type_ == ESkillType::Priestcraft))
+			if (skill->template_->type_ == ESkillType::Priestcraft)
 				skill->level_ = static_cast<int_fast8_t>(composite);
 		}
 	}
@@ -216,41 +225,44 @@ namespace Dominion
 			composite = floor(composite);
 
 		for (auto skill : character->skills_) {
-			if ((skill->template_->type_ == ESkillType::Witchcraft))
+			if (skill->template_->type_ == ESkillType::Witchcraft)
 				skill->level_ = static_cast<int_fast8_t>(composite);
 		}
 	}
 
-	CharacterValidationResult CharacterUtilityImpl::Validate() const
+	ECharacterValidationResult CharacterUtilityImpl::Validate() const
 	{
 		if ((race_ < 0) || (race_ >= RaceCount))
-			return CharacterValidationResult::InvalidRace;
+			return ECharacterValidationResult::InvalidRace;
 
 		if (!style_)
-			return CharacterValidationResult::MissingStyle;
+			return ECharacterValidationResult::MissingStyle;
 
 		if ((perkRoll_ == 0) || (perkRoll_ > 12))
-			return CharacterValidationResult::InvalidPerk;
+			return ECharacterValidationResult::InvalidPerk;
 
 		if (!aPtRemain_)
-			return CharacterValidationResult::MissingAttributes;
+			return ECharacterValidationResult::MissingAttributeRoll;
 
-		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
-		// If you had only 5 Attribute Points or less to divide between your six Attributes (...)
-		// If you are automatically entitled to Favorable Rounding, but your character already
-		// got Favorable Rounding from the Character Generation Table, go back and re-roll on that table.
-		if ((perkRoll_ == 1) && (std::get<0>(*aPtRemain_) <= 5))
-			return CharacterValidationResult::RerollPerk;
+		if (!attributes_)
+			return ECharacterValidationResult::MissingAttributes;
 
 		uint_fast8_t sum = std::accumulate(attributes_->array_.begin(), attributes_->array_.end(), (uint_fast8_t)0);
 		uint_fast8_t expected = 6 + std::get<0>(*aPtRemain_);
 		uint_fast8_t max = 6 + 12;
 
 		if ((sum > max) || (sum < expected) || (sum > expected)) {
-			return CharacterValidationResult::InvalidAttributes;
+			return ECharacterValidationResult::InvalidAttributes;
 		}
 
-		return CharacterValidationResult::Valid;
+		// (DR3.1.1 p30, 4-6 STEP TWO: THE CHARACTER GENERATION TABLE)
+		// If you had only 5 Attribute Points or less to divide between your six Attributes (...)
+		// If you are automatically entitled to Favorable Rounding, but your character already
+		// got Favorable Rounding from the Character Generation Table, go back and re-roll on that table.
+		if ((perkRoll_ == 1) && (std::get<0>(*aPtRemain_) <= 5))
+			return ECharacterValidationResult::RerollPerk;
+
+		return ECharacterValidationResult::Valid;
 	}
 
 	std::string CharacterUtilityImpl::RaceToPerkQuery() const

@@ -31,66 +31,67 @@
 
 namespace Dominion
 {
-    enum class CharacterValidationResult : uint_fast8_t
-    {
-        InvalidAttributes,
-        InvalidPerk,
-        InvalidRace,
-        MissingAttributes,
-        MissingStyle,
-        // (DR3.1.1 p30, 4-6 STEP FOUR: DETERMINE COMPOSITE STATS
-        // If you had only 5 Attribute Points or less to divide between your six Attributes (...)
-        // (If you are automatically entitled to Favourable Rounding, but your character already
-        // got Favourable Rounding from the Character Generation Table, go back and reroll on that table.
-        RerollPerk,
-        Valid
-    };
+	enum class ECharacterValidationResult : uint_fast8_t
+	{
+		InvalidAttributes,
+		InvalidPerk,
+		InvalidRace,
+		MissingAttributes,
+		MissingAttributeRoll,
+		MissingStyle,
+		// (DR3.1.1 p30, 4-6 STEP FOUR: DETERMINE COMPOSITE STATS
+		// If you had only 5 Attribute Points or less to divide between your six Attributes (...)
+		// (If you are automatically entitled to Favorable Rounding, but your character already
+		// got Favorable Rounding from the Character Generation Table, go back and re-roll on that table.
+		RerollPerk,
+		Valid
+	};
 
-    class Character;
-    class DatabaseImpl;
-    class Dice;
-    class Style;
-    class CharacterUtilityImpl;
+	class Character;
+	class DatabaseImpl;
+	class Dice;
+	class Style;
+	class CharacterUtilityImpl;
 
 #ifdef _WIN32
-    template class DOMINION_API std::unique_ptr < CharacterUtilityImpl > ;
+	template class DOMINION_API std::unique_ptr < CharacterUtilityImpl > ;
 #endif
 
-    // Utility to create characters
-    class DOMINION_API CharacterUtility
-    {
-        CharacterUtility(const CharacterUtility&) = delete;
-        CharacterUtility& operator=(const CharacterUtility&) = delete;
-        CharacterUtility(CharacterUtility&&) = delete;
-        CharacterUtility& operator=(CharacterUtility&&) = delete;
+	// Utility to create characters
+	class DOMINION_API CharacterUtility
+	{
+		CharacterUtility(const CharacterUtility&) = delete;
+		CharacterUtility& operator=(const CharacterUtility&) = delete;
+		CharacterUtility(CharacterUtility&&) = delete;
+		CharacterUtility& operator=(CharacterUtility&&) = delete;
 
-    public:
-        CharacterUtility(std::unique_ptr<CharacterUtilityImpl>);
-        ~CharacterUtility();
+	public:
+		CharacterUtility(std::unique_ptr<CharacterUtilityImpl>);
+		~CharacterUtility();
 
-        void attributes(const AttributeArray&);
+		void attributes(const AttributeArray&);
 
-        // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
-        // 1. Assign a minimum score of 1 to each of your character six Attributes.
-        AttributeArray attributesBase() const;
+		// (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
+		// 1. Assign a minimum score of 1 to each of your character six Attributes.
+		AttributeArray attributesBase() const;
 
-        // (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
-        // 2. Roll the twelve - sided die three times and record your results.
-        // 3. Calculate the average of your three rolls. This is done by adding the three rolls together and
-        // dividing the sum by three.The result is the number of Attribute Points you have to distribute between
-        // your six Attributes. Make note of the remainder, if you get one
-        std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice) const;
+		// (DR3.1.1 p30, 4-6 STEP THREE: DETERMINE ATTRIBUTE STATS)
+		// 2. Roll the twelve - sided die three times and record your results.
+		// 3. Calculate the average of your three rolls. This is done by adding the three rolls together and
+		// dividing the sum by three.The result is the number of Attribute Points you have to distribute between
+		// your six Attributes. Make note of the remainder, if you get one
+		std::shared_ptr<const AttributePointsRemainder> attributesRoll(const std::shared_ptr<Dice>& dice) const;
 
-        void race(const ERace race);
-        void perk(uint_fast8_t roll);
-        void style(const std::shared_ptr<Style>& style);
+		void race(const ERace race);
+		void perk(uint_fast8_t roll);
+		void style(const std::shared_ptr<Style>& style);
 
-        std::shared_ptr<Character> MakeCharacter() const;
-        CharacterValidationResult Validate() const;
+		std::shared_ptr<Character> MakeCharacter() const;
+		ECharacterValidationResult Validate() const;
 
-    private:
-        std::unique_ptr<CharacterUtilityImpl> impl_;
-    };
+	private:
+		std::unique_ptr<CharacterUtilityImpl> impl_;
+	};
 } // namespace Dominion
 
 #endif // CHARACTER_UTILITY_H
