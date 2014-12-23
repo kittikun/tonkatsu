@@ -46,6 +46,42 @@ namespace Dominion
 	CharacterUtilityImpl::~CharacterUtilityImpl()
 	{}
 
+	void CharacterUtilityImpl::ApplyPerks(const std::shared_ptr<CharacterImpl>& character) const
+	{
+		for (auto perk : character->perks_) {
+			switch (perk->type_) {
+				case EPerkType::Advancement_Points: {
+					character->ap_ += perk->bonus_;
+					break;
+				}
+
+				case EPerkType::Attribute: {
+					if (perk->target_ == AttributeCount) {
+						for (int i = 0; i < AttributeCount; ++i)
+							character->attributes_->array_[i] += perk->bonus_;
+					} else {
+						character->attributes_->array_[perk->target_] += perk->bonus_;
+					}
+					break;
+				}
+
+				case EPerkType::Skill: {
+					if (perk->target_ == ClassID_Skill_Template) {
+						for (auto skill : character->skills_)
+							skill.second->level_ += perk->bonus_;
+					} else {
+						character->skills_[perk->target_]->level_ += perk->bonus_;
+					}
+					break;
+				}
+
+				default: {
+					break;
+				}
+			}
+		}
+	}
+
 	AttributeArray CharacterUtilityImpl::attributesBase() const
 	{
 		AttributeArray attributes;
@@ -74,20 +110,22 @@ namespace Dominion
 		std::string res;
 
 		switch (character->race_) {
-		case RaceBeast:
-		case RaceHumanoid:
-			res = "select id from skill where id > 0 and %1%";
-			break;
+			case RaceBeast:
+			case RaceHumanoid: {
+				res = "select id from skill where id > 0 and %1%";
+				break;
+			}
 
-		case RaceHuman:
-		case RaceElf:
-		case RaceDwarf:
-		case RaceHalfling:
-			res = "select id from skill where id > 0 and %1% and dependency <= 3";
-			break;
+			case RaceHuman:
+			case RaceElf:
+			case RaceDwarf:
+			case RaceHalfling: {
+				res = "select id from skill where id > 0 and %1% and dependency <= 3";
+				break;
+			}
 
-		default:
-			throw std::out_of_range("race value");
+			default:
+				throw std::out_of_range("race value");
 		}
 
 		if (character->style_->archetypes_[ArchetypePriest])
@@ -117,6 +155,8 @@ namespace Dominion
 			// equivalent number of starting Advancement Points	(APs)
 			character->ap_ = 45 + std::get<1>(*aPtRemain_);
 
+			ApplyPerks(character);
+
 			return character;
 		}
 
@@ -126,18 +166,18 @@ namespace Dominion
 	void CharacterUtilityImpl::SetAttributesSkills(const std::shared_ptr<CharacterImpl>& character) const
 	{
 		for (auto skill : character->skills_) {
-			if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeAgility))
-				skill->level_ = character->attributes_->array_[AttributeAgility];
-			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeIntellect))
-				skill->level_ = character->attributes_->array_[AttributeIntellect];
-			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeIntuition))
-				skill->level_ = character->attributes_->array_[AttributeIntuition];
-			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeLuck))
-				skill->level_ = character->attributes_->array_[AttributeLuck];
-			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeStamina))
-				skill->level_ = character->attributes_->array_[AttributeStamina];
-			else if ((skill->template_->dependency_ == ESkillDependency::Attribute) && (skill->template_->target_ == AttributeVigour))
-				skill->level_ = character->attributes_->array_[AttributeVigour];
+			if ((skill.second->template_->dependency_ == ESkillDependency::Attribute) && (skill.second->template_->target_ == AttributeAgility))
+				skill.second->level_ = character->attributes_->array_[AttributeAgility];
+			else if ((skill.second->template_->dependency_ == ESkillDependency::Attribute) && (skill.second->template_->target_ == AttributeIntellect))
+				skill.second->level_ = character->attributes_->array_[AttributeIntellect];
+			else if ((skill.second->template_->dependency_ == ESkillDependency::Attribute) && (skill.second->template_->target_ == AttributeIntuition))
+				skill.second->level_ = character->attributes_->array_[AttributeIntuition];
+			else if ((skill.second->template_->dependency_ == ESkillDependency::Attribute) && (skill.second->template_->target_ == AttributeLuck))
+				skill.second->level_ = character->attributes_->array_[AttributeLuck];
+			else if ((skill.second->template_->dependency_ == ESkillDependency::Attribute) && (skill.second->template_->target_ == AttributeStamina))
+				skill.second->level_ = character->attributes_->array_[AttributeStamina];
+			else if ((skill.second->template_->dependency_ == ESkillDependency::Attribute) && (skill.second->template_->target_ == AttributeVigour))
+				skill.second->level_ = character->attributes_->array_[AttributeVigour];
 		}
 	}
 
@@ -153,8 +193,8 @@ namespace Dominion
 			composite = floor(composite);
 
 		for (auto skill : character->skills_) {
-			if ((skill->template_->type_ == ESkillType::Usable_Combat) || (skill->template_->type_ == ESkillType::Usable_Defensive))
-				skill->level_ = static_cast<int_fast8_t>(composite);
+			if ((skill.second->template_->type_ == ESkillType::Usable_Combat) || (skill.second->template_->type_ == ESkillType::Usable_Defensive))
+				skill.second->level_ = static_cast<int_fast8_t>(composite);
 		}
 	}
 
@@ -186,8 +226,8 @@ namespace Dominion
 			composite = floor(composite);
 
 		for (auto skill : character->skills_) {
-			if (skill->template_->type_ == ESkillType::Priestcraft)
-				skill->level_ = static_cast<int_fast8_t>(composite);
+			if (skill.second->template_->type_ == ESkillType::Priestcraft)
+				skill.second->level_ = static_cast<int_fast8_t>(composite);
 		}
 	}
 
@@ -198,7 +238,7 @@ namespace Dominion
 		character->skills_.reserve(templates.size());
 
 		for (auto tplt : templates) {
-			character->skills_.push_back(std::make_shared<SkillImpl>(tplt));
+			character->skills_.insert(std::make_pair(tplt->guid(), std::make_shared<SkillImpl>(tplt)));
 		}
 
 		SetAttributesSkills(character);
@@ -225,8 +265,8 @@ namespace Dominion
 			composite = floor(composite);
 
 		for (auto skill : character->skills_) {
-			if (skill->template_->type_ == ESkillType::Witchcraft)
-				skill->level_ = static_cast<int_fast8_t>(composite);
+			if (skill.second->template_->type_ == ESkillType::Witchcraft)
+				skill.second->level_ = static_cast<int_fast8_t>(composite);
 		}
 	}
 
@@ -240,6 +280,10 @@ namespace Dominion
 
 		if ((perkRoll_ == 0) || (perkRoll_ > 12))
 			return ECharacterValidationResult::InvalidPerk;
+
+		// Gifted perk specific
+		boost::format fmt = boost::format("select id from perk where %1% and roll=%2%") % RaceToPerkQuery() % (uint_fast32_t)perkRoll_;
+		auto perk = db_->Get<PerkImpl>(ClassID_Perk + db_->GetIntValue(boost::str(fmt)));
 
 		if (!aPtRemain_)
 			return ECharacterValidationResult::MissingAttributeRoll;
@@ -268,46 +312,46 @@ namespace Dominion
 	std::string CharacterUtilityImpl::RaceToPerkQuery() const
 	{
 		switch (race_) {
-		case RaceBeast:
-			return "isBeast";
+			case RaceBeast:
+				return "isBeast";
 
-		case RaceDwarf:
-			return "isDwarf";
+			case RaceDwarf:
+				return "isDwarf";
 
-		case RaceElf:
-			return "isElf";
+			case RaceElf:
+				return "isElf";
 
-		case RaceHalfling:
-			return "isHalfling";
+			case RaceHalfling:
+				return "isHalfling";
 
-		case RaceHuman:
-			return "isHuman";
+			case RaceHuman:
+				return "isHuman";
 
-		case RaceHumanoid:
-			return "isHumanoid";
+			case RaceHumanoid:
+				return "isHumanoid";
 
-		default:
-			throw std::out_of_range("race value");
+			default:
+				throw std::out_of_range("race value");
 		}
 	}
 
 	std::string CharacterUtilityImpl::RaceToSkillQuery() const
 	{
 		switch (race_) {
-		case RaceHuman:
-		case RaceElf:
-		case RaceHalfling:
-		case RaceDwarf:
-			return "bySentient";
+			case RaceHuman:
+			case RaceElf:
+			case RaceHalfling:
+			case RaceDwarf:
+				return "bySentient";
 
-		case RaceBeast:
-			return "byBeast";
+			case RaceBeast:
+				return "byBeast";
 
-		case RaceHumanoid:
-			return "byHumanoid";
+			case RaceHumanoid:
+				return "byHumanoid";
 
-		default:
-			throw std::out_of_range("race value");
+			default:
+				throw std::out_of_range("race value");
 		}
 	}
 } // namespace Dominion

@@ -25,6 +25,7 @@
 #define CHARACTER_IMPL_H
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "data.h"
@@ -55,8 +56,8 @@ namespace Dominion
 	public:
 		std::shared_ptr<AttributesImpl> attributes_;
 		std::vector<std::shared_ptr<PerkImpl>> perks_;
+		std::unordered_map<uint_fast32_t, std::shared_ptr<SkillImpl>> skills_;
 		std::shared_ptr<StyleImpl> style_;
-		std::vector<std::shared_ptr<SkillImpl>> skills_;
 		ERace race_;
 		uint_fast16_t ap_;
 	};

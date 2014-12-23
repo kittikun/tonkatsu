@@ -59,6 +59,7 @@ namespace Dominion
 		ECharacterValidationResult Validate() const;
 
 	private:
+		void ApplyPerks(const std::shared_ptr<CharacterImpl>&) const;
 		void SetPerks(const std::shared_ptr<CharacterImpl>&) const;
 		void SetSkills(const std::shared_ptr<CharacterImpl>&) const;
 		void SetAttributesSkills(const std::shared_ptr<CharacterImpl>&) const;

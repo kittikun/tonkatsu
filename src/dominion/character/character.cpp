@@ -79,7 +79,7 @@ namespace Dominion
 		res.reserve(impl_->skills_.size());
 
 		for (auto skill : impl_->skills_)
-			res.push_back(std::make_shared<Skill>(skill));
+			res.push_back(std::make_shared<Skill>(skill.second));
 
 		return res;
 	}
