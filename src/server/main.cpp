@@ -14,22 +14,45 @@
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
+#include <boost/asio.hpp>
 
 #include "dominion.h"
 #include "utility/log.h"
 
 int main(int, char**)
 {
-    Tonkatsu::DominionLib dom;
+	Tonkatsu::DominionLib dom;
 
-    Tonkatsu::Utility::Log::Initialize();
-    dom.Initialise();
+	Tonkatsu::Utility::Log::Initialize();
+	dom.Initialise();
 
-    LOGC << "Hello World!";
+	try
+	{
+		boost::asio::io_service io_service;
+
+		boost::asio::ip::tcp::acceptor acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242));
+
+		for (;;)
+		{
+			boost::asio::ip::tcp::socket socket(io_service);
+			acceptor.accept(socket);
+
+			std::string message = "hello world";
+
+			boost::system::error_code ignored_error;
+			boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
+		}
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+
+	LOGC << "Hello World!";
 
 #if defined(_WIN32)
-    std::cin.get();
+	std::cin.get();
 #endif
 
-    return 0;
+	return 0;
 }

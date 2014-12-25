@@ -11,3 +11,8 @@ build/linux/
 bin/
 lib/
 build/
+unity3d/Library/metadata/
+unity3d/Library/
+unity3d/Temp/
+unity3d/Assets/UnityVS/
+*UnityVS*
