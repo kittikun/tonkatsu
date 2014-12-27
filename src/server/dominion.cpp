@@ -23,7 +23,7 @@
 #endif
 
 #include <dominion/api.h>
-#include <dominion/dice.h>
+#include <dominion/core/dice.h>
 #include <dominion/character/attributes.h>
 #include <dominion/character/character.h>
 #include <dominion/character/character_utility.h>

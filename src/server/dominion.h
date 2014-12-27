@@ -18,23 +18,23 @@
 
 #include <memory>
 
-#include <dominion/database.h>
+#include <dominion/core/database.h>
 
 namespace Tonkatsu
 {
-    class DominionLib
-    {
-        DominionLib(const DominionLib&) = delete;
-        DominionLib& operator=(const DominionLib&) = delete;
+	class DominionLib
+	{
+		DominionLib(const DominionLib&) = delete;
+		DominionLib& operator=(const DominionLib&) = delete;
 
-    public:
-        DominionLib() {};
+	public:
+		DominionLib() {};
 
-        void Initialise();
+		void Initialise();
 
-    private:
-        std::shared_ptr<Dominion::DataBase> db_;
-    };
+	private:
+		std::shared_ptr<Dominion::DataBase> db_;
+	};
 } // namespace Tonkatsu
 
 #endif // DOMINION_H
