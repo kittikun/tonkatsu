@@ -13,30 +13,37 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMINION_H
-#define DOMINION_H
+#ifndef SERVER_H
+#define SERVER_H
 
 #include <memory>
-
-#include <dominion/core/database.h>
+#include <thread>
+#include <atomic>
 
 namespace Tonkatsu
 {
-	class DominionLib
+	namespace Network
 	{
-		DominionLib(const DominionLib&) = delete;
-		DominionLib& operator=(const DominionLib&) = delete;
-		DominionLib(DominionLib&&) = delete;
-		DominionLib& operator=(DominionLib&&) = delete;
+		class Server
+		{
+			Server(const Server&) = delete;
+			Server& operator=(const Server&) = delete;
+			Server(Server&&) = delete;
+			Server& operator=(Server&&) = delete;
+		public:
+			Server();
 
-	public:
-		DominionLib() {};
+			void Start();
+			void Stop();
 
-		void Initialise();
+		private:
+			void Main();
 
-	private:
-		std::shared_ptr<Dominion::DataBase> db_;
-	};
+		private:
+			std::unique_ptr<std::thread> thread_;
+			std::atomic<bool> running_;
+		};
+	} // namespace Network
 } // namespace Tonkatsu
 
-#endif // DOMINION_H
+#endif // SERVER_H

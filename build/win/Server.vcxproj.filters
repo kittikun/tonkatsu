@@ -7,6 +7,9 @@
     <Filter Include="source\utility">
       <UniqueIdentifier>{14183751-ff83-4e0e-a23a-3202f519f78e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\network">
+      <UniqueIdentifier>{e774a63d-8eaa-4abc-8f27-ee6cb1754fc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\server\main.cpp">
@@ -18,6 +21,12 @@
     <ClCompile Include="..\..\src\server\dominion.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\network\packet.cpp">
+      <Filter>source\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\network\server.cpp">
+      <Filter>source\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\server\utility\log.h">
@@ -25,6 +34,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\server\dominion.h">
       <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\network\packet.h">
+      <Filter>source\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\network\server.h">
+      <Filter>source\network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

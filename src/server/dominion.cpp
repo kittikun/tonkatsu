@@ -96,5 +96,7 @@ namespace Tonkatsu
 
 			LOGD << "Advancement Points " << npc->ap();
 		}
+
+		LOGD << Dominion::test();
 	}
 } // namespace Tonkatsu

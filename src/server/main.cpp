@@ -14,45 +14,52 @@
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/asio.hpp>
+#include <memory>
 
 #include "dominion.h"
+#include "network/server.h"
 #include "utility/log.h"
 
 int main(int, char**)
 {
-	Tonkatsu::DominionLib dom;
+	std::shared_ptr<Tonkatsu::DominionLib> dominion{ new Tonkatsu::DominionLib() };
+	std::shared_ptr<Tonkatsu::Network::Server> server{ new Tonkatsu::Network::Server() };
 
 	Tonkatsu::Utility::Log::Initialize();
-	dom.Initialise();
+	dominion->Initialise();
+	server->Start();
 
-	try
-	{
-		boost::asio::io_service io_service;
+	//try
+	//{
+	//	boost::asio::io_service io_service;
 
-		boost::asio::ip::tcp::acceptor acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242));
+	//	boost::asio::ip::tcp::acceptor acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242));
 
-		for (;;)
-		{
-			boost::asio::ip::tcp::socket socket(io_service);
-			acceptor.accept(socket);
+	//	for (;;)
+	//	{
+	//		boost::asio::ip::tcp::socket socket(io_service);
+	//		acceptor.accept(socket);
 
-			std::string message = "hello world";
+	//		std::string message = "hello world";
 
-			boost::system::error_code ignored_error;
-			boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
-		}
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	//		boost::system::error_code ignored_error;
+	//		boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
+
+	//		boost::asio::async_read(socket, )
+	//	}
+	//}
+	//catch (std::exception& e)
+	//{
+	//	std::cerr << e.what() << std::endl;
+	//}
 
 	LOGC << "Hello World!";
 
 #if defined(_WIN32)
 	std::cin.get();
 #endif
+
+	server->Stop();
 
 	return 0;
 }

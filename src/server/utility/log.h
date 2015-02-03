@@ -26,28 +26,30 @@
 
 #define LOGC BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Core)
 #define LOGD BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Dominion)
+#define LOGN BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Network)
 #define LOGW BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Warning)
 #define LOGE BOOST_LOG_SEV(Tonkatsu::Utility::Log::boost_log::get(), Tonkatsu::Utility::Log::Log_Error)
 
 namespace Tonkatsu
 {
-    namespace Utility
-    {
-        namespace Log
-        {
-            enum ELogLevel
-            {
-                Log_Core,
-                Log_Dominion,
-                Log_Warning,
-                Log_Error
-            };
+	namespace Utility
+	{
+		namespace Log
+		{
+			enum ELogLevel
+			{
+				Log_Core,
+				Log_Dominion,
+				Log_Network,
+				Log_Warning,
+				Log_Error
+			};
 
-            BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(boost_log, boost::log::sources::severity_logger_mt<ELogLevel>);
+			BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(boost_log, boost::log::sources::severity_logger_mt<ELogLevel>);
 
-            void Initialize();
-        } // namespace Log
-    } // namespace Utility
+			void Initialize();
+		} // namespace Log
+	} // namespace Utility
 } // namespace Tonkatsu
 
 #endif // LOG_H

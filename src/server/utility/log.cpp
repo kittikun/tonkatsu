@@ -47,6 +47,7 @@ namespace Tonkatsu
 				{
 					"Core",
 					"Dominion",
+					"Network",
 					"WARNING",
 					"ERROR",
 				};

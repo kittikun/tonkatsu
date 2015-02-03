@@ -13,30 +13,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DOMINION_H
-#define DOMINION_H
+#ifndef PACKET_H
+#define PACKET_H
 
-#include <memory>
-
-#include <dominion/core/database.h>
+#include <array>
 
 namespace Tonkatsu
 {
-	class DominionLib
+	namespace Network
 	{
-		DominionLib(const DominionLib&) = delete;
-		DominionLib& operator=(const DominionLib&) = delete;
-		DominionLib(DominionLib&&) = delete;
-		DominionLib& operator=(DominionLib&&) = delete;
+		const std::size_t PacketSize = 32;
 
-	public:
-		DominionLib() {};
+		class Packet
+		{
+		public:
 
-		void Initialise();
-
-	private:
-		std::shared_ptr<Dominion::DataBase> db_;
-	};
+		private:
+			std::array<char, PacketSize> data_;
+			std::size_t size_;
+		};
+	} // namespace Network
 } // namespace Tonkatsu
 
-#endif // DOMINION_H
+#endif // PACKET_H
