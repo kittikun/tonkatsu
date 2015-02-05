@@ -1,4 +1,4 @@
-// Copyright(C) 2014 kittikun
+// Copyright(C) 2015 kittikun
 //
 // This program is free software : you can redistribute it and / or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,41 +13,34 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef CONTEXT_H
+#define CONTEXT_H
 
 #include <memory>
-#include <thread>
-#include <atomic>
-#include <vector>
-
-#include "context.h"
+#include <utility>
+#include <boost/asio.hpp>
+#include <boost/uuid/uuid.hpp>
 
 namespace Tonkatsu
 {
 	namespace Network
 	{
-		class Server
+		class Context
 		{
-			Server(const Server&) = delete;
-			Server& operator=(const Server&) = delete;
-			Server(Server&&) = delete;
-			Server& operator=(Server&&) = delete;
+			Context(const Context&) = delete;
+			Context& operator=(const Context&) = delete;
+			Context& operator=(Context&&) = delete;
+
 		public:
-			Server();
-
-			void Start();
-			void Stop();
-
-		private:
-			void Main();
+			Context(std::unique_ptr<boost::asio::ip::tcp::socket> socket);
+			Context(Context&& other);
+			~Context();
 
 		private:
-			std::unique_ptr<std::thread> thread_;
-			std::atomic<bool> running_;
-			std::vector<Context> contextes_;
+			boost::uuids::uuid guid_;
+			std::unique_ptr<boost::asio::ip::tcp::socket> socket_;
 		};
 	} // namespace Network
 } // namespace Tonkatsu
 
-#endif // SERVER_H
+#endif // CONTEXT_H

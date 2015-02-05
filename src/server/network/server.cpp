@@ -15,7 +15,7 @@
 
 #include "server.h"
 
-#include <functional>
+#include <boost/asio.hpp>
 
 #include "../utility/log.h"
 
@@ -29,11 +29,33 @@ namespace Tonkatsu
 
 		void Server::Main()
 		{
+			boost::asio::io_service io_service;
+			boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), 4242);
+			boost::asio::ip::tcp::acceptor acceptor(io_service, endpoint);
+
 			LOGN << "Server thread started";
 
 			running_.store(true);
 
+			// Loop that accepts connections
 			while (running_.load()) {
+				// Can only connect one client at the time
+				LOGN << "Waiting for connection";
+
+				std::unique_ptr<boost::asio::ip::tcp::socket> socket(new boost::asio::ip::tcp::socket(io_service));
+
+				auto g = [&](const boost::system::error_code &ec) {
+					if (!ec) {
+						LOGN << "Connection accepted";
+
+						contextes_.push_back(std::move(Context(std::move(socket))));
+					} else {
+						LOGE << ec;
+					}
+				};
+
+				acceptor.async_accept(*socket, g);
+				io_service.run();
 			}
 
 			int i = 0;

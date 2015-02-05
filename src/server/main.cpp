@@ -26,6 +26,9 @@ int main(int, char**)
 	std::shared_ptr<Tonkatsu::Network::Server> server{ new Tonkatsu::Network::Server() };
 
 	Tonkatsu::Utility::Log::Initialize();
+
+	LOGC << "Tonkatsu Server v0.0";
+
 	dominion->Initialise();
 	server->Start();
 
@@ -52,8 +55,6 @@ int main(int, char**)
 	//{
 	//	std::cerr << e.what() << std::endl;
 	//}
-
-	LOGC << "Hello World!";
 
 #if defined(_WIN32)
 	std::cin.get();
