@@ -1,4 +1,4 @@
-// Copyright(C) 2014 kittikun
+// Copyright(C) 2015 kittikun
 //
 // This program is free software : you can redistribute it and / or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,8 +13,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include "packet.h"
+#ifndef APP_H
+#define APP_H
+
+#include <atomic>
+#include <memory>
+
+#include "dominion.h"
+#include "network/server.h"
 
 namespace Tonkatsu
 {
+	class Application
+	{
+		Application(const Application&) = delete;
+		Application& operator=(const Application&) = delete;
+		Application(Application&&) = delete;
+		Application& operator=(Application&&) = delete;
+
+	public:
+		Application();
+
+		void Run();
+		void Quit();
+
+	private:
+		std::atomic<bool> running_;
+		std::unique_ptr<DominionLib> dominion_;
+		std::unique_ptr<Network::Server> server_;
+	};
 } // namespace Tonkatsu
+
+#endif // APP_H

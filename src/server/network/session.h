@@ -13,9 +13,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONTEXT_H
-#define CONTEXT_H
+#ifndef SESSION_H
+#define SESSION_H
 
+#include <array>
+#include <cstdint>
 #include <memory>
 #include <utility>
 #include <boost/asio.hpp>
@@ -25,22 +27,33 @@ namespace Tonkatsu
 {
 	namespace Network
 	{
-		class Context
+		class Session
 		{
-			Context(const Context&) = delete;
-			Context& operator=(const Context&) = delete;
-			Context& operator=(Context&&) = delete;
+			static const std::size_t PacketSize = 32;
+
+			Session(const Session&) = delete;
+			//Session(Session&&) = delete;
+			Session& operator=(const Session&) = delete;
+			Session& operator=(Session&&) = delete;
 
 		public:
-			Context(std::unique_ptr<boost::asio::ip::tcp::socket> socket);
-			Context(Context&& other);
-			~Context();
+			Session(boost::asio::io_service& io_service);
+			Session(Session&& other);
+
+			void open();
+			void close();
+
+			void WriteString(const std::string& str);
+			void CallbackWrite(const boost::system::error_code& error);
+
+			boost::asio::ip::tcp::socket& socket() { return socket_; }
 
 		private:
 			boost::uuids::uuid guid_;
-			std::unique_ptr<boost::asio::ip::tcp::socket> socket_;
+			boost::asio::ip::tcp::socket socket_;
+			std::array<uint8_t, PacketSize> data_;
 		};
 	} // namespace Network
 } // namespace Tonkatsu
 
-#endif // CONTEXT_H
+#endif // SESSION_H

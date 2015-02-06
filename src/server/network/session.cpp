@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include "context.h"
+#include "Session.h"
 
 #include <boost/format.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -25,34 +25,51 @@ namespace Tonkatsu
 {
 	namespace Network
 	{
-		Context::Context(std::unique_ptr<boost::asio::ip::tcp::socket> socket)
-			: socket_(std::move(socket))
+		Session::Session(boost::asio::io_service& io_service)
+			: socket_(io_service)
 			, guid_(boost::uuids::random_generator()())
 		{
-			boost::format fmt = boost::format("Connection accepted, id: %1%") % guid_;
-			LOGN << boost::str(fmt);
 		}
 
-		Context::Context(Context&& other)
+		Session::Session(Session&& other)
 			: socket_(std::move(other.socket_))
 			, guid_(std::move(other.guid_))
 		{
 		}
 
-		Context::~Context()
+		void Session::open()
 		{
-			if (socket_) {
-				boost::system::error_code ec;
-				socket_->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+			boost::format fmt = boost::format("Connection accepted, id: %1%") % guid_;
+			LOGN << boost::str(fmt);
 
-				if (ec)
-					LOGE << ec;
+			WriteString("hello world");
+		}
 
-				socket_->close(ec);
+		void Session::close()
+		{
+			boost::system::error_code ec;
+			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
 
-				if (ec)
-					LOGE << ec;
-			}
+			if (ec)
+				LOGE << ec.message();
+
+			socket_.close(ec);
+
+			if (ec)
+				LOGE << ec.message();
+		}
+
+		void Session::WriteString(const std::string& str)
+		{
+			boost::asio::async_write(socket_,
+				boost::asio::buffer(data_, str.size()),
+				boost::bind(&Session::CallbackWrite, this, boost::asio::placeholders::error));
+		}
+
+		void Session::CallbackWrite(const boost::system::error_code& ec)
+		{
+			if (ec)
+				LOGE << ec.message();
 		}
 	} // namespace Network
 } // namespace Tonkatsu

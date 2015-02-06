@@ -15,8 +15,6 @@
 
 #include "server.h"
 
-#include <boost/asio.hpp>
-
 #include "../utility/log.h"
 
 namespace Tonkatsu
@@ -24,15 +22,13 @@ namespace Tonkatsu
 	namespace Network
 	{
 		Server::Server()
+			: io_service_()
+			, acceptor_(io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242))
 		{
 		}
 
 		void Server::Main()
 		{
-			boost::asio::io_service io_service;
-			boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), 4242);
-			boost::asio::ip::tcp::acceptor acceptor(io_service, endpoint);
-
 			LOGN << "Server thread started";
 
 			running_.store(true);
@@ -40,22 +36,28 @@ namespace Tonkatsu
 			// Loop that accepts connections
 			while (running_.load()) {
 				// Can only connect one client at the time
-				LOGN << "Waiting for connection";
+				Session session(io_service_);
+				boost::system::error_code ec;
 
-				std::unique_ptr<boost::asio::ip::tcp::socket> socket(new boost::asio::ip::tcp::socket(io_service));
+				LOGN << "Waiting for connection";
 
 				auto g = [&](const boost::system::error_code &ec) {
 					if (!ec) {
 						LOGN << "Connection accepted";
 
-						contextes_.push_back(std::move(Context(std::move(socket))));
+						session.open();
+						sessions_.push_back(std::move(session));
 					} else {
-						LOGE << ec;
+						LOGE << ec.message();
 					}
 				};
 
-				acceptor.async_accept(*socket, g);
-				io_service.run();
+				acceptor_.async_accept(session.socket(), g);
+				io_service_.reset();
+				io_service_.run(ec);
+
+				if (ec)
+					LOGE << ec.message();
 			}
 
 			int i = 0;
@@ -68,8 +70,16 @@ namespace Tonkatsu
 
 		void Server::Stop()
 		{
-			running_.store(false);
-			thread_->join();
+			if (running_.load()) {
+				running_.store(false);
+				io_service_.stop();
+
+				for (auto& session : sessions_)
+					session.close();
+
+				thread_->join();
+				LOGN << "Server shutdown";
+			}
 		}
 	} // namespace Network
 } // namespace Tonkatsu // namespace Tonkatsu

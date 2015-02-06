@@ -1,4 +1,4 @@
-// Copyright(C) 2014 kittikun
+// Copyright(C) 2015 kittikun
 //
 // This program is free software : you can redistribute it and / or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,24 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
-#include <memory>
-
-#include "dominion.h"
-#include "network/server.h"
-#include "utility/log.h"
+#include "app.h"
 
 int main(int, char**)
 {
-	std::shared_ptr<Tonkatsu::DominionLib> dominion{ new Tonkatsu::DominionLib() };
-	std::shared_ptr<Tonkatsu::Network::Server> server{ new Tonkatsu::Network::Server() };
+	Tonkatsu::Application app;
 
-	Tonkatsu::Utility::Log::Initialize();
-
-	LOGC << "Tonkatsu Server v0.0";
-
-	dominion->Initialise();
-	server->Start();
+	app.Run();
 
 	//try
 	//{
@@ -56,11 +45,7 @@ int main(int, char**)
 	//	std::cerr << e.what() << std::endl;
 	//}
 
-#if defined(_WIN32)
-	std::cin.get();
-#endif
-
-	server->Stop();
+	app.Quit();
 
 	return 0;
 }

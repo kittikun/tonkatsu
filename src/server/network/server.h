@@ -20,8 +20,9 @@
 #include <thread>
 #include <atomic>
 #include <vector>
+#include <boost/asio.hpp>
 
-#include "context.h"
+#include "session.h"
 
 namespace Tonkatsu
 {
@@ -43,9 +44,11 @@ namespace Tonkatsu
 			void Main();
 
 		private:
+			boost::asio::io_service io_service_;
+			boost::asio::ip::tcp::acceptor acceptor_;
 			std::unique_ptr<std::thread> thread_;
 			std::atomic<bool> running_;
-			std::vector<Context> contextes_;
+			std::vector<Session> sessions_;
 		};
 	} // namespace Network
 } // namespace Tonkatsu

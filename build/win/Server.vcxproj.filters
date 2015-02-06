@@ -27,6 +27,12 @@
     <ClCompile Include="..\..\src\server\network\server.cpp">
       <Filter>source\network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\app.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\network\session.cpp">
+      <Filter>source\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\server\utility\log.h">
@@ -39,6 +45,12 @@
       <Filter>source\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\network\server.h">
+      <Filter>source\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\app.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\network\session.h">
       <Filter>source\network</Filter>
     </ClInclude>
   </ItemGroup>
