@@ -70,6 +70,9 @@ public class SocketTest : MonoBehaviour
 
         args.SetBuffer(buffer_, 0, BUFFER_SIZE);
 
+        for (int i = 0; i < buffer_.Length; ++i)
+            buffer_[i] = 0;
+
         args.Completed += ReceiveCompletedCallback;
         socket_.ReceiveAsync(args);
     }
@@ -102,7 +105,8 @@ public class SocketTest : MonoBehaviour
 
                 Guid id = new Guid(guidBytes);
 
-                int i = 0;
+                Debug.Log(string.Format("received {0} bytes", e.BytesTransferred));
+                Debug.Log(id);
             }
         } else
             throw new UnityException("paquet doesn't have magic");

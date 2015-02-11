@@ -64,6 +64,8 @@ namespace Tonkatsu
 		bool CheckMagic();
 		void Handle_Write(const boost::system::error_code&, size_t);
 		void Handle_Read(const boost::system::error_code&, size_t);
+		size_t ReadCompletionCondition(const boost::system::error_code&, size_t);
+		size_t WriteCompletionCondition(const boost::system::error_code&, size_t);
 
 	private:
 		State state_;

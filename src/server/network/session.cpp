@@ -35,6 +35,7 @@ namespace Tonkatsu
 
 	Session::Session(Session&& other)
 		: socket_{ std::move(other.socket_) }
+		, buffer_(std::move(other.buffer_))
 		, guid_(std::move(other.guid_))
 	{
 	}
@@ -104,7 +105,8 @@ namespace Tonkatsu
 					count += sizeof(guid_);
 
 					boost::asio::async_write(socket_,
-						boost::asio::buffer(buffer_.data(), count),
+						boost::asio::buffer(buffer_, buffer_.size()),
+						std::bind(&Session::WriteCompletionCondition, this, std::placeholders::_1, std::placeholders::_2),
 						std::bind(&Session::Handle_Write, this, std::placeholders::_1, std::placeholders::_2));
 				}
 			} else {
@@ -119,7 +121,8 @@ namespace Tonkatsu
 	void Session::Handle_Write(const boost::system::error_code& ec, size_t transferred)
 	{
 		if (!ec) {
-			LOGN << "sent";
+			boost::format fmt = boost::format("Send %1% bytes") % transferred;
+			LOGN << boost::str(fmt);
 		} else {
 			LOGE << ec.message();
 		}
@@ -129,7 +132,38 @@ namespace Tonkatsu
 	{
 		// read magic +  header
 		boost::asio::async_read(socket_,
-			boost::asio::buffer(buffer_.data(), 4 + 1),
+			boost::asio::buffer(buffer_.data(), buffer_.size()),
+			std::bind(&Session::ReadCompletionCondition, this, std::placeholders::_1, std::placeholders::_2),
 			std::bind(&Session::Handle_Read, this, std::placeholders::_1, std::placeholders::_2));
+	}
+
+	size_t Session::ReadCompletionCondition(const boost::system::error_code& ec, size_t transferred)
+	{
+		if (ec) {
+			LOGE << ec.message();
+		}
+
+		if (state_ == State::Header)
+		{
+			if (transferred == 5)
+				return 0;
+		}
+
+		return 1;
+	}
+
+	size_t Session::WriteCompletionCondition(const boost::system::error_code& ec, size_t transferred)
+	{
+		if (ec) {
+			LOGE << ec.message();
+		}
+
+		if (state_ == State::Hanshaking)
+		{
+			if (transferred == 21)
+				return 0;
+		}
+
+		return 1;
 	}
 } // namespace Tonkatsu
