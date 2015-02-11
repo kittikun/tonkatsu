@@ -13,35 +13,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef APP_H
-#define APP_H
-
-#include <atomic>
-#include <memory>
+#include <cstdint>
 
 namespace Tonkatsu
 {
-	class DominionLib;
-	class Server;
+	const uint32_t gMagic = 'P' << 24 | 'U' << 16 | 'T' << 8 | 'E';
 
-	class Application
+	enum class PaquetType : uint8_t
 	{
-		Application(const Application&) = delete;
-		Application& operator=(const Application&) = delete;
-		Application(Application&&) = delete;
-		Application& operator=(Application&&) = delete;
-
-	public:
-		Application();
-
-		void Run();
-		void Quit();
-
-	private:
-		std::atomic<bool> running_;
-		std::unique_ptr<DominionLib> dominion_;
-		std::shared_ptr<Server> server_;
+		Handshake
 	};
 } // namespace Tonkatsu
-
-#endif // APP_H

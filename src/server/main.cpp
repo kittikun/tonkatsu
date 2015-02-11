@@ -15,6 +15,8 @@
 
 #include "app.h"
 
+#include "dominion.h"
+
 int main(int, char**)
 {
 	Tonkatsu::Application app;

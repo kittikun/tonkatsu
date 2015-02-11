@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\src\server\dominion.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\server\network\packet.cpp">
-      <Filter>source\network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\server\network\server.cpp">
       <Filter>source\network</Filter>
     </ClCompile>
@@ -41,9 +38,6 @@
     <ClInclude Include="..\..\src\server\dominion.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\server\network\packet.h">
-      <Filter>source\network</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\server\network\server.h">
       <Filter>source\network</Filter>
     </ClInclude>
@@ -51,6 +45,9 @@
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\network\session.h">
+      <Filter>source\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\network\definitions.h">
       <Filter>source\network</Filter>
     </ClInclude>
   </ItemGroup>

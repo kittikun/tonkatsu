@@ -15,10 +15,14 @@
 
 #include "app.h"
 
+#include <chrono>
 #include <functional>
 #include <thread>
 
+#include "dominion.h"
 #include "utility/log.h"
+#include "network/server.h"
+#include "network/session.h"
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -39,10 +43,10 @@ BOOL WINAPI console_ctrl_handler(DWORD signal)
 namespace Tonkatsu
 {
 	Application::Application()
-		: dominion_{ new DominionLib() }
-		, server_{ new Network::Server() }
+		: dominion_{ std::make_unique<DominionLib>() }
+		, server_{ std::make_shared<Server>() }
 	{
-		Tonkatsu::Utility::Log::Initialize();
+		Tonkatsu::Log::Initialize();
 
 #if defined(_WIN32)
 		func = std::bind(&Application::Quit, this);
@@ -64,7 +68,7 @@ namespace Tonkatsu
 
 		while (running_.load())
 		{
-			std::this_thread::yield();
+			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		}
 	}
 

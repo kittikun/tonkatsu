@@ -18,42 +18,60 @@
 
 #include <array>
 #include <cstdint>
-#include <memory>
-#include <utility>
+#include <deque>
 #include <boost/asio.hpp>
 #include <boost/uuid/uuid.hpp>
 
 namespace Tonkatsu
 {
-	namespace Network
+	enum class PaquetType : uint8_t;
+	class Server;
+
+	struct Paquet
 	{
-		class Session
+		PaquetType type;
+	};
+
+	class Session
+	{
+		static const std::size_t BUFFER_MAX_SIZE = 32;
+
+		Session(const Session&) = delete;
+		Session& operator=(const Session&) = delete;
+		Session& operator=(Session&&) = delete;
+
+	public:
+		Session(boost::asio::io_service&, std::weak_ptr<Server>);
+		Session(Session&& other);
+
+		void Open();
+		void Close();
+
+		void Read();
+		//void WriteString(const std::string& str);
+
+		boost::asio::ip::tcp::socket& socket() { return socket_; }
+		boost::uuids::uuid guid() const { return guid_; }
+
+	private:
+		enum class State : uint8_t
 		{
-			static const std::size_t PacketSize = 32;
-
-			Session(const Session&) = delete;
-			//Session(Session&&) = delete;
-			Session& operator=(const Session&) = delete;
-			Session& operator=(Session&&) = delete;
-
-		public:
-			Session(boost::asio::io_service& io_service);
-			Session(Session&& other);
-
-			void open();
-			void close();
-
-			void WriteString(const std::string& str);
-			void CallbackWrite(const boost::system::error_code& error);
-
-			boost::asio::ip::tcp::socket& socket() { return socket_; }
-
-		private:
-			boost::uuids::uuid guid_;
-			boost::asio::ip::tcp::socket socket_;
-			std::array<uint8_t, PacketSize> data_;
+			Undefined,
+			Hanshaking
 		};
-	} // namespace Network
+
+		bool CheckMagic();
+		void Handle_Write(const boost::system::error_code&, size_t);
+		void Handle_Read(const boost::system::error_code&, size_t);
+
+	private:
+		State state_;
+		boost::uuids::uuid guid_;
+		boost::asio::ip::tcp::socket socket_;
+		std::array<uint8_t, BUFFER_MAX_SIZE> buffer_;
+		std::deque<Paquet> sendQueue_;
+		std::weak_ptr<Server> server_;
+	};
 } // namespace Tonkatsu
 
 #endif // SESSION_H

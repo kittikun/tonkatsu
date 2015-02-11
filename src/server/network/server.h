@@ -1,4 +1,4 @@
-// Copyright(C) 2014 kittikun
+// Copyright(C) 2015 kittikun
 //
 // This program is free software : you can redistribute it and / or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,40 +17,41 @@
 #define SERVER_H
 
 #include <memory>
-#include <thread>
-#include <atomic>
-#include <vector>
+#include <unordered_map>
 #include <boost/asio.hpp>
-
-#include "session.h"
+#include <boost/uuid/uuid.hpp>
+#include <boost/functional/hash.hpp>
 
 namespace Tonkatsu
 {
-	namespace Network
+	class Session;
+
+	class Server : public std::enable_shared_from_this < Server >
 	{
-		class Server
-		{
-			Server(const Server&) = delete;
-			Server& operator=(const Server&) = delete;
-			Server(Server&&) = delete;
-			Server& operator=(Server&&) = delete;
-		public:
-			Server();
+		Server(const Server&) = delete;
+		Server& operator=(const Server&) = delete;
+		Server(Server&&) = delete;
+		Server& operator=(Server&&) = delete;
+	public:
+		Server();
 
-			void Start();
-			void Stop();
+		void Start();
+		void Stop();
 
-		private:
-			void Main();
+		// Sessions will request to be closed on error
+		void RequestCloseSesion(boost::uuids::uuid);
 
-		private:
-			boost::asio::io_service io_service_;
-			boost::asio::ip::tcp::acceptor acceptor_;
-			std::unique_ptr<std::thread> thread_;
-			std::atomic<bool> running_;
-			std::vector<Session> sessions_;
-		};
-	} // namespace Network
+	private:
+		void StartAccept();
+		void Handler_Accept(Session*, const boost::system::error_code&);
+
+	private:
+		using SessionMap = std::unordered_map < boost::uuids::uuid, std::unique_ptr<Session>, boost::hash<boost::uuids::uuid> > ;
+
+		boost::asio::io_service io_service_;
+		boost::asio::ip::tcp::acceptor acceptor_;
+		SessionMap mapSessions_;
+	};
 } // namespace Tonkatsu
 
 #endif // SERVER_H

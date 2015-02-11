@@ -13,63 +13,99 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-#include "Session.h"
+#include "session.h"
 
 #include <boost/format.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include "definitions.h"
+#include "server.h"
 #include "../utility/log.h"
 
 namespace Tonkatsu
 {
-	namespace Network
+	Session::Session(boost::asio::io_service& io_service, std::weak_ptr<Server> server)
+		: socket_(io_service)
+		, state_(State::Undefined)
+		, guid_(boost::uuids::random_generator()())
+		, server_(server)
 	{
-		Session::Session(boost::asio::io_service& io_service)
-			: socket_(io_service)
-			, guid_(boost::uuids::random_generator()())
-		{
-		}
+	}
 
-		Session::Session(Session&& other)
-			: socket_(std::move(other.socket_))
-			, guid_(std::move(other.guid_))
-		{
-		}
+	Session::Session(Session&& other)
+		: socket_(std::move(other.socket_))
+		, guid_(std::move(other.guid_))
+	{
+	}
 
-		void Session::open()
-		{
-			boost::format fmt = boost::format("Connection accepted, id: %1%") % guid_;
+	void Session::Open()
+	{
+		boost::format fmt = boost::format("Session id: %1%") % guid_;
+		LOGN << boost::str(fmt);
+
+		// wait for client handshake
+		Read();
+	}
+
+	void Session::Close()
+	{
+		boost::system::error_code ec;
+		socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+
+		if (ec)
+			LOGE << ec.message();
+
+		socket_.close(ec);
+
+		if (ec)
+			LOGE << ec.message();
+	}
+
+	//void Session::WriteString(const std::string& str)
+	//{
+	//	std::ostream os(&data_);
+	//	os << str;
+
+	//	boost::asio::async_write(socket_,
+	//		data_,
+	//		std::bind(&Session::Handle_Write, this, std::placeholders::_1, std::placeholders::_2));
+	//}
+
+	void Session::Handle_Read(const boost::system::error_code& ec, size_t transferred)
+	{
+		if (!ec) {
+			boost::format fmt = boost::format("Received %1% bytes") % transferred;
 			LOGN << boost::str(fmt);
 
-			WriteString("hello world");
+			// check for magic
+			uint32_t magic = buffer_[2] << 24 | buffer_[2] << 16 | buffer_[1] << 8 | buffer_[0];
+
+			if (magic == gMagic) {
+				int i = 0;
+			} else {
+				LOGE << "Received data doesn't validate magic";
+				server_.lock()->RequestCloseSesion(guid_);
+			}
+		} else {
+			LOGE << ec.message();
 		}
+	}
 
-		void Session::close()
-		{
-			boost::system::error_code ec;
-			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-
-			if (ec)
-				LOGE << ec.message();
-
-			socket_.close(ec);
-
-			if (ec)
-				LOGE << ec.message();
+	void Session::Handle_Write(const boost::system::error_code& ec, size_t transferred)
+	{
+		if (!ec) {
+			LOGN << "sent";
+		} else {
+			LOGE << ec.message();
 		}
+	}
 
-		void Session::WriteString(const std::string& str)
-		{
-			boost::asio::async_write(socket_,
-				boost::asio::buffer(data_, str.size()),
-				boost::bind(&Session::CallbackWrite, this, boost::asio::placeholders::error));
-		}
-
-		void Session::CallbackWrite(const boost::system::error_code& ec)
-		{
-			if (ec)
-				LOGE << ec.message();
-		}
-	} // namespace Network
+	void Session::Read()
+	{
+		// read magic +  header
+		boost::asio::async_read(socket_,
+			boost::asio::buffer(buffer_.data(), 4 + 1),
+			std::bind(&Session::Handle_Read, this, std::placeholders::_1, std::placeholders::_2));
+	}
 } // namespace Tonkatsu

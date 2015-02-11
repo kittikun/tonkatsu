@@ -1,4 +1,4 @@
-// Copyright(C) 2014 kittikun
+// Copyright(C) 2015 kittikun
 //
 // This program is free software : you can redistribute it and / or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,71 +15,71 @@
 
 #include "server.h"
 
+#include "session.h"
 #include "../utility/log.h"
 
 namespace Tonkatsu
 {
-	namespace Network
+	Server::Server()
+		: io_service_()
+		, acceptor_(io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242))
 	{
-		Server::Server()
-			: io_service_()
-			, acceptor_(io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242))
-		{
+	}
+
+	void Server::Handler_Accept(Session* session, const boost::system::error_code& ec)
+	{
+		if (!ec) {
+			LOGN << "Connection accepted";
+
+			session->Open();
+			mapSessions_.insert(std::make_pair(session->guid(), std::unique_ptr < Session > {session}));
+			//sessions_.push_back(session);
+			StartAccept();
+		} else {
+			LOGE << ec.message();
 		}
+	}
 
-		void Server::Main()
-		{
-			LOGN << "Server thread started";
+	void Server::RequestCloseSesion(boost::uuids::uuid guid)
+	{
+		auto item = mapSessions_.find(guid);
 
-			running_.store(true);
-
-			// Loop that accepts connections
-			while (running_.load()) {
-				// Can only connect one client at the time
-				Session session(io_service_);
-				boost::system::error_code ec;
-
-				LOGN << "Waiting for connection";
-
-				auto g = [&](const boost::system::error_code &ec) {
-					if (!ec) {
-						LOGN << "Connection accepted";
-
-						session.open();
-						sessions_.push_back(std::move(session));
-					} else {
-						LOGE << ec.message();
-					}
-				};
-
-				acceptor_.async_accept(session.socket(), g);
-				io_service_.reset();
-				io_service_.run(ec);
-
-				if (ec)
-					LOGE << ec.message();
-			}
-
-			int i = 0;
+		if (item != std::end(mapSessions_)) {
+			item->second->Close();
+			mapSessions_.erase(guid);
 		}
+	}
 
-		void Server::Start()
-		{
-			thread_.reset(new std::thread(std::bind(&Server::Main, this)));
-		}
+	void Server::Start()
+	{
+		StartAccept();
+	}
 
-		void Server::Stop()
-		{
-			if (running_.load()) {
-				running_.store(false);
-				io_service_.stop();
+	void Server::StartAccept()
+	{
+		// Can only connect one client at the time
+		Session* session = new Session(io_service_, shared_from_this());
 
-				for (auto& session : sessions_)
-					session.close();
+		boost::system::error_code ec;
 
-				thread_->join();
-				LOGN << "Server shutdown";
-			}
-		}
-	} // namespace Network
+		LOGN << "Waiting for connection";
+
+		acceptor_.async_accept(session->socket(), std::bind(&Server::Handler_Accept, this, session, std::placeholders::_1));
+		io_service_.run(ec);
+
+		if (ec)
+			LOGE << ec.message();
+	}
+
+	void Server::Stop()
+	{
+		io_service_.stop();
+
+		for (auto& pair : mapSessions_)
+			pair.second->Close();
+
+		mapSessions_.clear();
+
+		LOGN << "Server shutdown";
+	}
 } // namespace Tonkatsu // namespace Tonkatsu
