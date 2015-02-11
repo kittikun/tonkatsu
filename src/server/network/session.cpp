@@ -26,15 +26,15 @@
 namespace Tonkatsu
 {
 	Session::Session(boost::asio::io_service& io_service, std::weak_ptr<Server> server)
-		: socket_(io_service)
-		, state_(State::Undefined)
+		: socket_{ io_service }
+		, state_{ State::Header }
 		, guid_(boost::uuids::random_generator()())
-		, server_(server)
+		, server_{ server }
 	{
 	}
 
 	Session::Session(Session&& other)
-		: socket_(std::move(other.socket_))
+		: socket_{ std::move(other.socket_) }
 		, guid_(std::move(other.guid_))
 	{
 	}
@@ -79,10 +79,34 @@ namespace Tonkatsu
 			LOGN << boost::str(fmt);
 
 			// check for magic
-			uint32_t magic = buffer_[2] << 24 | buffer_[2] << 16 | buffer_[1] << 8 | buffer_[0];
+			uint32_t magic = buffer_[3] << 24 | buffer_[2] << 16 | buffer_[1] << 8 | buffer_[0];
 
 			if (magic == gMagic) {
-				int i = 0;
+				PaquetType type = static_cast<PaquetType>(buffer_[5]);
+
+				if (type == PaquetType::Handshake) {
+					state_ = State::Hanshaking;
+
+					int count = 0;
+
+					// write magic into buffer
+					std::copy(reinterpret_cast<const uint8_t*>(&gMagic),
+						reinterpret_cast<const uint8_t*>(&gMagic) + sizeof(gMagic),
+						buffer_.data());
+					count += sizeof(gMagic);
+
+					// write packet type
+					buffer_[count] = static_cast<uint8_t>(PaquetType::Handshake);
+					++count;
+
+					// append uuid
+					std::copy(reinterpret_cast<const uint8_t*>(&guid_), reinterpret_cast<const uint8_t*>(&guid_) + sizeof(guid_), buffer_.data() + count);
+					count += sizeof(guid_);
+
+					boost::asio::async_write(socket_,
+						boost::asio::buffer(buffer_.data(), count),
+						std::bind(&Session::Handle_Write, this, std::placeholders::_1, std::placeholders::_2));
+				}
 			} else {
 				LOGE << "Received data doesn't validate magic";
 				server_.lock()->RequestCloseSesion(guid_);

@@ -21,8 +21,8 @@
 namespace Tonkatsu
 {
 	Server::Server()
-		: io_service_()
-		, acceptor_(io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242))
+		: io_service_{}
+		, acceptor_{ io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4242) }
 	{
 	}
 

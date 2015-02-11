@@ -78,7 +78,7 @@ public class SocketTest : MonoBehaviour
     {
         byte[] magicBuffer = new byte[4];
 
-        Buffer.BlockCopy(paquet, 0, magicBuffer_, 0, magicBuffer_.Length);
+        Buffer.BlockCopy(paquet, 0, magicBuffer, 0, magicBuffer_.Length);
         int magic = BitConverter.ToInt32(magicBuffer, 0);
 
         if (magic == magic_)
@@ -90,26 +90,28 @@ public class SocketTest : MonoBehaviour
     private void ReceiveCompletedCallback(object sender, SocketAsyncEventArgs e)
     {
         if (CheckForMagic(e.Buffer)) {
-            string msg = Encoding.ASCII.GetString(e.Buffer, magicBuffer_.Length, e.Buffer.Length - magicBuffer_.Length);
-            Debug.Log(msg);
+            int count = magicBuffer_.Length;
+
+            Paquet.Type type = (Paquet.Type)e.Buffer[count];
+            ++count;
+
+            if (type == Paquet.Type.Handshake) {
+                byte[] guidBytes = new byte[16];
+
+                Buffer.BlockCopy(e.Buffer, count, guidBytes, 0, guidBytes.Length);
+
+                Guid id = new Guid(guidBytes);
+
+                int i = 0;
+            }
         } else
             throw new UnityException("paquet doesn't have magic");
-    }
-
-    private void BufferFromString(string str)
-    {
-        if (str.Length + magicBuffer_.Length < BUFFER_SIZE) {
-            Buffer.BlockCopy(magicBuffer_, 0, buffer_, 0, magicBuffer_.Length);
-            Buffer.BlockCopy(str.ToCharArray(), 0, buffer_, magicBuffer_.Length, str.Length);
-        } else
-            throw new UnityException("buffer too small");
     }
 
     private void SendHeader(Paquet.Type type)
     {
         SocketAsyncEventArgs e = new SocketAsyncEventArgs();
 
-        BufferFromString("handshake");
         Buffer.BlockCopy(magicBuffer_, 0, buffer_, 0, magicBuffer_.Length);
 
         // write paquet type

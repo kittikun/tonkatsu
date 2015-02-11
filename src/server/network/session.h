@@ -56,7 +56,8 @@ namespace Tonkatsu
 	private:
 		enum class State : uint8_t
 		{
-			Undefined,
+			// Expect to receive a header to describe the incoming data
+			Header,
 			Hanshaking
 		};
 
