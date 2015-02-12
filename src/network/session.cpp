@@ -26,17 +26,17 @@
 namespace Tonkatsu
 {
 	Session::Session(boost::asio::io_service& io_service, std::weak_ptr<Server> server)
-		: socket_{ io_service }
-		, state_{ State::Header }
+		: state_{ State::Header }
 		, guid_(boost::uuids::random_generator()())
+		, socket_{ io_service }
 		, server_{ server }
 	{
 	}
 
 	Session::Session(Session&& other)
-		: socket_{ std::move(other.socket_) }
+		: guid_(std::move(other.guid_))
+		, socket_{ std::move(other.socket_) }
 		, buffer_(std::move(other.buffer_))
-		, guid_(std::move(other.guid_))
 	{
 	}
 
