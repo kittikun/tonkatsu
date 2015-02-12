@@ -12,43 +12,43 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\server\main.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\utility\log.cpp">
+    <ClInclude Include="..\..\src\network\definitions.h">
+      <Filter>source\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\server.h">
+      <Filter>source\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\session.h">
+      <Filter>source\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utility\log.h">
       <Filter>source\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\dominion.cpp">
+    </ClInclude>
+    <ClInclude Include="..\..\src\dominion.h">
       <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\network\server.cpp">
-      <Filter>source\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\app.cpp">
+    </ClInclude>
+    <ClInclude Include="..\..\src\app.h">
       <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\network\session.cpp">
-      <Filter>source\network</Filter>
-    </ClCompile>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\server\utility\log.h">
+    <ClCompile Include="..\..\src\network\server.cpp">
+      <Filter>source\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\session.cpp">
+      <Filter>source\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utility\log.cpp">
       <Filter>source\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\dominion.h">
+    </ClCompile>
+    <ClCompile Include="..\..\src\main.cpp">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\network\server.h">
-      <Filter>source\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\app.h">
+    </ClCompile>
+    <ClCompile Include="..\..\src\dominion.cpp">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\network\session.h">
-      <Filter>source\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\server\network\definitions.h">
-      <Filter>source\network</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClCompile Include="..\..\src\app.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

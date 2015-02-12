@@ -19,20 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\server\app.cpp" />
-    <ClCompile Include="..\..\src\server\dominion.cpp" />
-    <ClCompile Include="..\..\src\server\main.cpp" />
-    <ClCompile Include="..\..\src\server\network\server.cpp" />
-    <ClCompile Include="..\..\src\server\network\session.cpp" />
-    <ClCompile Include="..\..\src\server\utility\log.cpp" />
+    <ClInclude Include="..\..\src\app.h" />
+    <ClInclude Include="..\..\src\dominion.h" />
+    <ClInclude Include="..\..\src\network\definitions.h" />
+    <ClInclude Include="..\..\src\network\server.h" />
+    <ClInclude Include="..\..\src\network\session.h" />
+    <ClInclude Include="..\..\src\utility\log.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\server\app.h" />
-    <ClInclude Include="..\..\src\server\dominion.h" />
-    <ClInclude Include="..\..\src\server\network\definitions.h" />
-    <ClInclude Include="..\..\src\server\network\server.h" />
-    <ClInclude Include="..\..\src\server\network\session.h" />
-    <ClInclude Include="..\..\src\server\utility\log.h" />
+    <ClCompile Include="..\..\src\app.cpp" />
+    <ClCompile Include="..\..\src\dominion.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\network\server.cpp" />
+    <ClCompile Include="..\..\src\network\session.cpp" />
+    <ClCompile Include="..\..\src\utility\log.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{44DFB8D7-7AD1-4E2A-8B70-453EABE487AC}</ProjectGuid>
